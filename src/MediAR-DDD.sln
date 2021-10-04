@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31624.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{EA44FF16-938F-49F4-939B-F31823465FB9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{305F2D51-FCD2-497F-B6FA-66DED19BC6CF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{B8F5DAA6-FE60-4381-A8A9-2BE0A788701E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CorePlatform", "CorePlatform", "{B74CF1FA-9A0B-4401-9058-12B310454EF1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseMigrator", "Database\DatabaseMigrator\DatabaseMigrator.csproj", "{7CC89C48-636D-4FF5-8C9F-A1FDE89AB2BA}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "MediAR.Database", "Database\MediAR.Database\MediAR.Database.sqlproj", "{337DBEEF-24C8-45A9-982D-34139F7BBCEF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7CC89C48-636D-4FF5-8C9F-A1FDE89AB2BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CC89C48-636D-4FF5-8C9F-A1FDE89AB2BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CC89C48-636D-4FF5-8C9F-A1FDE89AB2BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CC89C48-636D-4FF5-8C9F-A1FDE89AB2BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{337DBEEF-24C8-45A9-982D-34139F7BBCEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{337DBEEF-24C8-45A9-982D-34139F7BBCEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{337DBEEF-24C8-45A9-982D-34139F7BBCEF}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{337DBEEF-24C8-45A9-982D-34139F7BBCEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{337DBEEF-24C8-45A9-982D-34139F7BBCEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{337DBEEF-24C8-45A9-982D-34139F7BBCEF}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7CC89C48-636D-4FF5-8C9F-A1FDE89AB2BA} = {305F2D51-FCD2-497F-B6FA-66DED19BC6CF}
+		{337DBEEF-24C8-45A9-982D-34139F7BBCEF} = {305F2D51-FCD2-497F-B6FA-66DED19BC6CF}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AC91CA91-5985-4450-A5AE-287888C78CF9}
+	EndGlobalSection
+EndGlobal

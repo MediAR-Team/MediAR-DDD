@@ -1,0 +1,7 @@
+﻿CREATE SCHEMA [membership] AUTHORIZATION [dbo]
+GO
+
+CREATE SCHEMA [tenants] AUTHORIZATION [dbo]
+GO
+
+

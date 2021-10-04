@@ -1,0 +1,74 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\vsabo\\source\\repos\\MediAR-DDD\\Database\\DatabaseMigrator\\DatabaseMigrator.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\vsabo\\source\\repos\\MediAR-DDD\\Database\\DatabaseMigrator\\DatabaseMigrator.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\vsabo\\source\\repos\\MediAR-DDD\\Database\\DatabaseMigrator\\DatabaseMigrator.csproj",
+        "projectName": "DatabaseMigrator",
+        "projectPath": "C:\\Users\\vsabo\\source\\repos\\MediAR-DDD\\Database\\DatabaseMigrator\\DatabaseMigrator.csproj",
+        "packagesPath": "C:\\Users\\vsabo\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\vsabo\\source\\repos\\MediAR-DDD\\Database\\DatabaseMigrator\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\vsabo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Users\\vsabo\\.amds\\deploy\\packages-local": {},
+          "https://advancedmd.jfrog.io/advancedmd/api/nuget/advancedmd-nuget-shared/": {},
+          "https://advancedmd.jfrog.io/advancedmd/api/nuget/development-local-nuget/": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "dependencies": {
+            "dbup": {
+              "target": "Package",
+              "version": "[4.5.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

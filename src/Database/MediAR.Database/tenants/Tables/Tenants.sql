@@ -1,0 +1,5 @@
+﻿CREATE TABLE [tenants].[Tenants] (
+	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY
+	,[Name] VARCHAR(256) NOT NULL
+	,[ConnectionString] VARCHAR(256) NOT NULL
+	)
