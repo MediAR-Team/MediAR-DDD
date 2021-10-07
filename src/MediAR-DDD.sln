@@ -15,11 +15,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseMigrator", "Databas
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "MediAR.Database", "Database\MediAR.Database\MediAR.Database.sqlproj", "{337DBEEF-24C8-45A9-982D-34139F7BBCEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediAR.Coreplatform.Domain", "Coreplatform\MediAR.Coreplatform.Domain\MediAR.Coreplatform.Domain.csproj", "{96DFDFDD-FE63-46DC-880A-2B8666F3AA08}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediAR.Coreplatform.Domain", "Coreplatform\MediAR.Coreplatform.Domain\MediAR.Coreplatform.Domain.csproj", "{96DFDFDD-FE63-46DC-880A-2B8666F3AA08}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediAR.Coreplatform.Application", "Coreplatform\MediAR.Coreplatform.Application\MediAR.Coreplatform.Application.csproj", "{29CE0738-82D4-4CD9-87DF-6336ABB01F88}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediAR.Coreplatform.Application", "Coreplatform\MediAR.Coreplatform.Application\MediAR.Coreplatform.Application.csproj", "{29CE0738-82D4-4CD9-87DF-6336ABB01F88}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediAR.Coreplatform.Infrastructure", "Coreplatform\MediAR.Coreplatform.Infrastructure\MediAR.Coreplatform.Infrastructure.csproj", "{148D97C2-E279-419E-8213-389DA0DBB070}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediAR.Coreplatform.Infrastructure", "Coreplatform\MediAR.Coreplatform.Infrastructure\MediAR.Coreplatform.Infrastructure.csproj", "{148D97C2-E279-419E-8213-389DA0DBB070}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Membership", "Membership", "{96C1F3AF-B445-47D1-8D3C-3A226CBD735F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediAR.Modules.Membership.Domain", "Modules\Membership\MediAR.Modules.Membership.Domain\MediAR.Modules.Membership.Domain.csproj", "{F4C4AA80-F0CE-46E0-A602-E2E914DC8D7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediAR.Modules.Membership.Application", "Modules\Membership\MediAR.Modules.Membership.Application\MediAR.Modules.Membership.Application.csproj", "{25E80C4E-DFFA-4169-AE21-F0E802F7E728}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +55,14 @@ Global
 		{148D97C2-E279-419E-8213-389DA0DBB070}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{148D97C2-E279-419E-8213-389DA0DBB070}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{148D97C2-E279-419E-8213-389DA0DBB070}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4C4AA80-F0CE-46E0-A602-E2E914DC8D7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4C4AA80-F0CE-46E0-A602-E2E914DC8D7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4C4AA80-F0CE-46E0-A602-E2E914DC8D7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4C4AA80-F0CE-46E0-A602-E2E914DC8D7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25E80C4E-DFFA-4169-AE21-F0E802F7E728}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25E80C4E-DFFA-4169-AE21-F0E802F7E728}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25E80C4E-DFFA-4169-AE21-F0E802F7E728}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25E80C4E-DFFA-4169-AE21-F0E802F7E728}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,6 +73,9 @@ Global
 		{96DFDFDD-FE63-46DC-880A-2B8666F3AA08} = {B74CF1FA-9A0B-4401-9058-12B310454EF1}
 		{29CE0738-82D4-4CD9-87DF-6336ABB01F88} = {B74CF1FA-9A0B-4401-9058-12B310454EF1}
 		{148D97C2-E279-419E-8213-389DA0DBB070} = {B74CF1FA-9A0B-4401-9058-12B310454EF1}
+		{96C1F3AF-B445-47D1-8D3C-3A226CBD735F} = {B8F5DAA6-FE60-4381-A8A9-2BE0A788701E}
+		{F4C4AA80-F0CE-46E0-A602-E2E914DC8D7B} = {96C1F3AF-B445-47D1-8D3C-3A226CBD735F}
+		{25E80C4E-DFFA-4169-AE21-F0E802F7E728} = {96C1F3AF-B445-47D1-8D3C-3A226CBD735F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AC91CA91-5985-4450-A5AE-287888C78CF9}

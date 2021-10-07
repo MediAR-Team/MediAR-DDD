@@ -88,5 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Migrations\001_init_membership_and_tenants.sql" />
+    <None Include="Scripts\Migrations\002_return_passwordhash.sql" />
+    <None Include="Scripts\Migrations\003_users_return_id.sql" />
   </ItemGroup>
 </Project>
