@@ -1,15 +1,11 @@
 ﻿using MediAR.Coreplatform.Application.Data;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MediAR.Coreplatform.Infrastructure.Data
 {
-  class SqlConnectionFactory : ISqlConnectionFactory, IDisposable
+  public class SqlConnectionFactory : ISqlConnectionFactory, IDisposable
   {
     private readonly SqlConfiguration _config;
     private SqlConnection _connection;

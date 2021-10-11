@@ -23,9 +23,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediAR.Coreplatform.Infrast
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Membership", "Membership", "{96C1F3AF-B445-47D1-8D3C-3A226CBD735F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediAR.Modules.Membership.Domain", "Modules\Membership\MediAR.Modules.Membership.Domain\MediAR.Modules.Membership.Domain.csproj", "{F4C4AA80-F0CE-46E0-A602-E2E914DC8D7B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediAR.Modules.Membership.Domain", "Modules\Membership\MediAR.Modules.Membership.Domain\MediAR.Modules.Membership.Domain.csproj", "{F4C4AA80-F0CE-46E0-A602-E2E914DC8D7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediAR.Modules.Membership.Application", "Modules\Membership\MediAR.Modules.Membership.Application\MediAR.Modules.Membership.Application.csproj", "{25E80C4E-DFFA-4169-AE21-F0E802F7E728}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediAR.Modules.Membership.Application", "Modules\Membership\MediAR.Modules.Membership.Application\MediAR.Modules.Membership.Application.csproj", "{25E80C4E-DFFA-4169-AE21-F0E802F7E728}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediAR.Modules.Membership.Infrastructure", "Modules\Membership\MediAR.Modules.Membership.Infrastructure\MediAR.Modules.Membership.Infrastructure.csproj", "{4F2A3C0B-BADF-44B9-B8F1-C4A0900C9F5A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{25E80C4E-DFFA-4169-AE21-F0E802F7E728}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{25E80C4E-DFFA-4169-AE21-F0E802F7E728}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{25E80C4E-DFFA-4169-AE21-F0E802F7E728}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F2A3C0B-BADF-44B9-B8F1-C4A0900C9F5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F2A3C0B-BADF-44B9-B8F1-C4A0900C9F5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F2A3C0B-BADF-44B9-B8F1-C4A0900C9F5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F2A3C0B-BADF-44B9-B8F1-C4A0900C9F5A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -76,6 +82,7 @@ Global
 		{96C1F3AF-B445-47D1-8D3C-3A226CBD735F} = {B8F5DAA6-FE60-4381-A8A9-2BE0A788701E}
 		{F4C4AA80-F0CE-46E0-A602-E2E914DC8D7B} = {96C1F3AF-B445-47D1-8D3C-3A226CBD735F}
 		{25E80C4E-DFFA-4169-AE21-F0E802F7E728} = {96C1F3AF-B445-47D1-8D3C-3A226CBD735F}
+		{4F2A3C0B-BADF-44B9-B8F1-C4A0900C9F5A} = {96C1F3AF-B445-47D1-8D3C-3A226CBD735F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AC91CA91-5985-4450-A5AE-287888C78CF9}
