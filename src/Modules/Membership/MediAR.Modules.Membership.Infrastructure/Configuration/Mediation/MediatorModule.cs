@@ -1,6 +1,6 @@
 ﻿using Autofac;
-using MediatR;
-using System.Reflection;
+using MediAR.Modules.Membership.Application.Users.RegisterUser;
+using MediatR.Extensions.Autofac.DependencyInjection;
 
 namespace MediAR.Modules.Membership.Infrastructure.Configuration.Mediation
 {
@@ -8,10 +8,7 @@ namespace MediAR.Modules.Membership.Infrastructure.Configuration.Mediation
   {
     protected override void Load(ContainerBuilder builder)
     {
-      builder.RegisterAssemblyTypes(typeof(IMediator).GetTypeInfo().Assembly)
-        .AsImplementedInterfaces()
-        .InstancePerLifetimeScope();
-
+      builder.RegisterMediatR(typeof(MediatorModule).Assembly, typeof(RegisterUserCommand).Assembly);
     }
   }
 }

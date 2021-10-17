@@ -1,24 +1,29 @@
-﻿using MediAR.Modules.Membership.Application.Contracts;
-using System;
+﻿using Autofac;
+using MediAR.Modules.Membership.Application.Contracts;
+using MediAR.Modules.Membership.Infrastructure.Configuration;
+using MediAR.Modules.Membership.Infrastructure.Configuration.Processing;
+using MediatR;
 using System.Threading.Tasks;
 
 namespace MediAR.Modules.Membership.Infrastructure
 {
   public class MembershipModule : IMembershipModule
   {
-    public Task<TResult> ExecuteCommandAsync<TResult>(ICommand<TResult> command)
+    public async Task<TResult> ExecuteCommandAsync<TResult>(ICommand<TResult> command)
     {
-      throw new NotImplementedException();
+      return await CommandsExecutor.Execute(command);
     }
 
-    public Task ExecuteCommandAsync(ICommand command)
+    public async Task ExecuteCommandAsync(ICommand command)
     {
-      throw new NotImplementedException();
+      await CommandsExecutor.Execute(command);
     }
 
-    public Task<TResult> ExecuteQueryAsync<TResult>(IQuery<TResult> command)
+    public async Task<TResult> ExecuteQueryAsync<TResult>(IQuery<TResult> query)
     {
-      throw new NotImplementedException();
+      using var scope = MembershipCompositionRoot.BeginLifetimeScope();
+      var mediator = scope.Resolve<IMediator>();
+      return await mediator.Send(query);
     }
   }
 }

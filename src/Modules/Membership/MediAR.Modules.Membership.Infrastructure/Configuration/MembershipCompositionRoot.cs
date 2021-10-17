@@ -2,16 +2,16 @@
 
 namespace MediAR.Modules.Membership.Infrastructure.Configuration
 {
-  static class MembershipCompositionRoot
+  internal static class MembershipCompositionRoot
   {
     private static IContainer _container;
 
-    static void SetContainer(IContainer container)
+    internal static void SetContainer(IContainer container)
     {
       _container = container;
     }
 
-    static ILifetimeScope BeginLifetimeScope()
+    internal static ILifetimeScope BeginLifetimeScope()
     {
       return _container.BeginLifetimeScope();
     }

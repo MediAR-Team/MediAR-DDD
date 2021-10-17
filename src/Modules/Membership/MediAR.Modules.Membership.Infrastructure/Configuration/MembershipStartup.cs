@@ -1,10 +1,10 @@
 ﻿using Autofac;
 using MediAR.Coreplatform.Application;
 using MediAR.Modules.Membership.Infrastructure.Configuration.DataAccess;
+using MediAR.Modules.Membership.Infrastructure.Configuration.Processing;
 using MediAR.Modules.Membership.Infrastructure.Configuration.Tenants;
 using MediAR.Modules.Membership.Infrastructure.Domain;
 using Microsoft.Extensions.Configuration;
-using System;
 
 namespace MediAR.Modules.Membership.Infrastructure.Configuration
 {
@@ -24,7 +24,13 @@ namespace MediAR.Modules.Membership.Infrastructure.Configuration
       containerBuilder.RegisterModule(new DomainModule());
       containerBuilder.RegisterModule(new DataAccessModule(configuration));
       containerBuilder.RegisterModule(new TenantModule(configuration));
-      throw new NotImplementedException();
+      containerBuilder.RegisterModule(new ProcessingModule());
+
+      containerBuilder.RegisterInstance(executionContextAccessor);
+
+      _container = containerBuilder.Build();
+
+      MembershipCompositionRoot.SetContainer(_container);
     }
   }
 }

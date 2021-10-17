@@ -2,7 +2,7 @@
 
 namespace MediAR.Modules.Membership.Application.Users.RegisterUser
 {
-  class RegisterUserCommand : CommandBase<RegisterUserCommandResult>
+  public class RegisterUserCommand : CommandBase<RegisterUserCommandResult>
   {
     public string UserName { get; }
     public string Email { get; }
