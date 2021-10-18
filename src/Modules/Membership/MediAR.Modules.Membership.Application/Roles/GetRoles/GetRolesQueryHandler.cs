@@ -26,7 +26,7 @@ namespace MediAR.Modules.Membership.Application.Roles.GetRoles
       var queryParams = new { Offset = request.PageSize * (request.Page - 1), Next = request.PageSize };
 
       var lookup = new Dictionary<Guid, RoleDto>();
-      var result = await connection.QueryAsync<RoleDto, PermissionDto, RoleDto>("[membership].[sel_Roles_with_Permissions]", (r, p) =>
+      await connection.QueryAsync<RoleDto, PermissionDto, RoleDto>("[membership].[sel_Roles_with_Permissions]", (r, p) =>
       {
         if (!lookup.TryGetValue(r.Id, out RoleDto role))
         {
@@ -38,6 +38,8 @@ namespace MediAR.Modules.Membership.Application.Roles.GetRoles
 
         return role;
       }, queryParams, commandType: CommandType.StoredProcedure, splitOn: "Name");
+
+      var result = lookup.Values;
 
       return result.ToList();
     }
