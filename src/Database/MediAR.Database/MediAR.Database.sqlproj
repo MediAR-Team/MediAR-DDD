@@ -68,6 +68,7 @@
     <Folder Include="app" />
     <Folder Include="app\Tables" />
     <Folder Include="Scripts\Seeds" />
+    <Folder Include="tenants\StoredProcedures" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schema.sql" />
@@ -87,6 +88,8 @@
     <Build Include="membership\StoredProcedures\assign_Role_to_User_by_Email.sql" />
     <Build Include="Scripts\Seeds\SeedPermissions.sql" />
     <Build Include="membership\StoredProcedures\sel_Roles_with_Permissions.sql" />
+    <Build Include="tenants\StoredProcedures\ins_Tenant.sql" />
+    <Build Include="tenants\StoredProcedures\del_Tenant.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Migrations\001_init_membership_and_tenants.sql" />
@@ -97,5 +100,7 @@
     <None Include="Scripts\Migrations\005_fix_insUser.sql" />
     <None Include="PermissionMapping.xml" />
     <None Include="Scripts\Migrations\006_sel_rolesWithPermissions.sql" />
+    <None Include="Scripts\Migrations\007_added_insTenant.sql" />
+    <None Include="Scripts\Migrations\008_added_delTenant.sql" />
   </ItemGroup>
 </Project>
