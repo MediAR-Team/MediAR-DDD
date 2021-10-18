@@ -2,7 +2,7 @@
 
 namespace MediAR.Modules.Membership.Application.Users.GetAuthenticatedUser
 {
-  class GetAuthenticatedUserQuery : QueryBase<UserDto>
+  public class GetAuthenticatedUserQuery : QueryBase<UserDto>
   {
   }
 }

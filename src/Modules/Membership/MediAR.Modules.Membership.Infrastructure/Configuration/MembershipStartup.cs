@@ -1,9 +1,10 @@
 ﻿using Autofac;
 using MediAR.Coreplatform.Application;
+using MediAR.Modules.Membership.Infrastructure.Configuration.Authentication;
 using MediAR.Modules.Membership.Infrastructure.Configuration.DataAccess;
+using MediAR.Modules.Membership.Infrastructure.Configuration.Mediation;
 using MediAR.Modules.Membership.Infrastructure.Configuration.Processing;
 using MediAR.Modules.Membership.Infrastructure.Configuration.Tenants;
-using MediAR.Modules.Membership.Infrastructure.Domain;
 using Microsoft.Extensions.Configuration;
 
 namespace MediAR.Modules.Membership.Infrastructure.Configuration
@@ -21,10 +22,11 @@ namespace MediAR.Modules.Membership.Infrastructure.Configuration
     {
       var containerBuilder = new ContainerBuilder();
 
-      containerBuilder.RegisterModule(new DomainModule());
       containerBuilder.RegisterModule(new DataAccessModule(configuration));
       containerBuilder.RegisterModule(new TenantModule(configuration));
+      containerBuilder.RegisterModule(new AuthenticationModule(configuration));
       containerBuilder.RegisterModule(new ProcessingModule());
+      containerBuilder.RegisterModule(new MediatorModule());
 
       containerBuilder.RegisterInstance(executionContextAccessor);
 

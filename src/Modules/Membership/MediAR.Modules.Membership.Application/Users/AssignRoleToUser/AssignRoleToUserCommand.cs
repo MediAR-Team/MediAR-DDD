@@ -2,10 +2,17 @@
 
 namespace MediAR.Modules.Membership.Application.Users.AssignRoleToUser
 {
-  class AssignRoleToUserCommand : CommandBase<AssignRoleToUserCommandResult>
+  public class AssignRoleToUserCommand : CommandBase<AssignRoleToUserCommandResult>
   {
     public string UserIdentifier { get; }
     public UserIdentifierOption IdentifierOption { get; }
-    public string RoleName { get; set; }
+    public string RoleName { get; }
+
+    public AssignRoleToUserCommand(UserIdentifierOption identifierOption, string identifier, string roleName)
+    {
+      IdentifierOption = identifierOption;
+      UserIdentifier = identifier;
+      RoleName = roleName;
+    }
   }
 }

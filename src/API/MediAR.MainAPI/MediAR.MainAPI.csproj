@@ -17,4 +17,8 @@
     <ProjectReference Include="..\..\Modules\Membership\MediAR.Modules.Membership.Infrastructure\MediAR.Modules.Membership.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Modules\TenantManagement\" />
+  </ItemGroup>
+
 </Project>

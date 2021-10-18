@@ -4,6 +4,8 @@ using MediAR.Coreplatform.Application;
 using MediAR.MainAPI.Configuration.Authorization;
 using MediAR.MainAPI.Configuration.ErrorHandling;
 using MediAR.MainAPI.Configuration.ExecutionContext;
+using MediAR.MainAPI.Modules.Membership;
+using MediAR.Modules.Membership.Infrastructure;
 using MediAR.Modules.Membership.Infrastructure.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -23,12 +25,20 @@ namespace MediAR.MainAPI
       _configuration = configuration;
     }
 
+    public void ConfigureContainer(ContainerBuilder builder)
+    {
+      builder.RegisterModule(new MembershipAutofacModule());
+    }
+
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddControllers();
 
       services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
       services.AddSingleton<IExecutionContextAccessor, ExecutionContextAccessor>();
+
+      //services.AddAuthentication()
+      //  .AddJwtBearer
 
       services.AddAuthorization(options =>
       {

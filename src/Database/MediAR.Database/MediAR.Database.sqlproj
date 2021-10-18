@@ -67,6 +67,7 @@
     <Folder Include="Scripts\Migrations" />
     <Folder Include="app" />
     <Folder Include="app\Tables" />
+    <Folder Include="Scripts\Seeds" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schema.sql" />
@@ -81,14 +82,20 @@
     <Build Include="membership\Views\v_UserPermissions.sql" />
     <Build Include="membership\Views\v_Users.sql" />
     <Build Include="membership\Views\v_UserRoles.sql" />
-    <Build Include="membership\StoredProcedures\count_Users_With_UserName_or_Email.sql" />
     <Build Include="membership\StoredProcedures\ins_User.sql" />
     <Build Include="membership\StoredProcedures\assign_Role_to_User_by_UserName.sql" />
     <Build Include="membership\StoredProcedures\assign_Role_to_User_by_Email.sql" />
+    <Build Include="Scripts\Seeds\SeedPermissions.sql" />
+    <Build Include="membership\StoredProcedures\sel_Roles_with_Permissions.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Migrations\001_init_membership_and_tenants.sql" />
     <None Include="Scripts\Migrations\002_return_passwordhash.sql" />
     <None Include="Scripts\Migrations\003_users_return_id.sql" />
+    <None Include="Scripts\Seeds\SeedTenants.sql" />
+    <None Include="Scripts\Migrations\004_userCount_in_insUser.sql" />
+    <None Include="Scripts\Migrations\005_fix_insUser.sql" />
+    <None Include="PermissionMapping.xml" />
+    <None Include="Scripts\Migrations\006_sel_rolesWithPermissions.sql" />
   </ItemGroup>
 </Project>

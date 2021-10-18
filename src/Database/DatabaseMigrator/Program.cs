@@ -1,4 +1,5 @@
 ﻿using DbUp;
+using DbUp.Helpers;
 using System;
 using System.IO;
 
@@ -6,6 +7,9 @@ namespace DatabaseMigrator
 {
   class Program
   {
+    private const string MigrationsSubdir = "Migrations";
+    private const string SeedsSubdir = "Seeds";
+
     static void Main(string[] args)
     {
       if (args.Length != 2)
@@ -30,7 +34,7 @@ namespace DatabaseMigrator
       var upgrader = DeployChanges
         .To
         .SqlDatabase(connectionString)
-        .WithScriptsFromFileSystem(scripsPath)
+        .WithScriptsFromFileSystem($"{scripsPath}/{MigrationsSubdir}")
         .JournalToSqlTable("app", "MigrationsJournal")
         .Build();
 
@@ -43,6 +47,23 @@ namespace DatabaseMigrator
       }
 
       Console.WriteLine("Migration succeded");
+
+      var seeder = DeployChanges
+        .To
+        .SqlDatabase(connectionString)
+        .WithScriptsFromFileSystem($"{scripsPath}/{SeedsSubdir}")
+        .JournalTo(new NullJournal())
+        .Build();
+
+      var seedResult = seeder.PerformUpgrade();
+
+      if (!seedResult.Successful)
+      {
+        Console.WriteLine("Seeding did not succeed");
+        return;
+      }
+
+      Console.WriteLine("Seeding succeded");
     }
   }
 }

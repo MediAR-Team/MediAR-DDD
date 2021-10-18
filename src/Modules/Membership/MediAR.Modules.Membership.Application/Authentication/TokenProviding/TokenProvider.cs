@@ -8,7 +8,7 @@ using System.Text;
 
 namespace MediAR.Modules.Membership.Application.Authentication.TokenProviding
 {
-  class TokenProvider : ITokenProvider
+  public class TokenProvider : ITokenProvider
   {
     private readonly TokenConfiguration _config;
 

@@ -4,7 +4,7 @@ using MediatR.Extensions.Autofac.DependencyInjection;
 
 namespace MediAR.Modules.Membership.Infrastructure.Configuration.Mediation
 {
-  class MediatorModule : Autofac.Module
+  class MediatorModule : Module
   {
     protected override void Load(ContainerBuilder builder)
     {

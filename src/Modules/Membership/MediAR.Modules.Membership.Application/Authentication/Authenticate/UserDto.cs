@@ -2,7 +2,7 @@
 
 namespace MediAR.Modules.Membership.Application.Authentication.Authenticate
 {
-  class UserDto
+  public class UserDto
   {
     public Guid Id { get; set; }
     public string UserName { get; set; }

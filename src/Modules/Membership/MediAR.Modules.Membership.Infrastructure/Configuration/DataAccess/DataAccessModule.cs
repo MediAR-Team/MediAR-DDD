@@ -23,7 +23,7 @@ namespace MediAR.Modules.Membership.Infrastructure.Configuration.DataAccess
       builder.Register(x =>
       {
         var sqlConfig = new SqlConfiguration();
-        _configuration.GetSection("sqlConfiguration").Bind(sqlConfig);
+        _configuration.GetSection("sqlConfig").Bind(sqlConfig);
 
         return sqlConfig;
       })

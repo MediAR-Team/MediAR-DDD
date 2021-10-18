@@ -25,14 +25,14 @@ namespace MediAR.Modules.Membership.Application.Authentication.Authenticate
       var connection = _connectionFactory.GetOpenConnection();
 
       const string sql = @"SELECT
-                          [User].[Id],
-                          [User].[UserName]
-                          [User].[PasswordHash],
-                          [User].[Email],
-                          [User].[FirstName],
-                          [User].[LastName],
-                          [User].[TenantId]
-                          FROM [memebrship].[v_Users] [User]
+                            [U].[Id],
+                            [U].[UserName],
+                            [U].[PasswordHash],
+                            [U].[Email],
+                            [U].[FirstName],
+                            [U].[LastName],
+                            [U].[TenantId]
+                          FROM [membership].[v_Users] [U]
                           WHERE UserName = @UserName";
 
       var user = await connection.QuerySingleOrDefaultAsync<UserDto>(sql, new { UserName = request.UserName });
