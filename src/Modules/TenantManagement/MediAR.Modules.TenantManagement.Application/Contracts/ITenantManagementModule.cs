@@ -2,7 +2,7 @@
 
 namespace MediAR.Modules.TenantManagement.Application.Contracts
 {
-  public interface IMembershipModule
+  public interface ITenantManagementModule
   {
     Task<TResult> ExecuteCommandAsync<TResult>(ICommand<TResult> command);
     Task ExecuteCommandAsync(ICommand command);

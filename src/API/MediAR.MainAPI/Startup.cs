@@ -5,8 +5,9 @@ using MediAR.MainAPI.Configuration.Authorization;
 using MediAR.MainAPI.Configuration.ErrorHandling;
 using MediAR.MainAPI.Configuration.ExecutionContext;
 using MediAR.MainAPI.Modules.Membership;
-using MediAR.Modules.Membership.Infrastructure;
+using MediAR.MainAPI.Modules.TenantManagement;
 using MediAR.Modules.Membership.Infrastructure.Configuration;
+using MediAR.Modules.TenantManagement.Infrastructure.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -28,6 +29,7 @@ namespace MediAR.MainAPI
     public void ConfigureContainer(ContainerBuilder builder)
     {
       builder.RegisterModule(new MembershipAutofacModule());
+      builder.RegisterModule(new TenantManagementAutofacModule());
     }
 
     public void ConfigureServices(IServiceCollection services)
@@ -77,6 +79,7 @@ namespace MediAR.MainAPI
       var executionContextAccessor = new ExecutionContextAccessor(httpContextAccessor);
 
       MembershipStartup.Initialize(_configuration, executionContextAccessor);
+      TenantManagementStartup.Initialize(_configuration, executionContextAccessor);
     }
   }
 }

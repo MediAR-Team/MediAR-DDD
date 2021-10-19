@@ -15,10 +15,7 @@
     <ProjectReference Include="..\..\Coreplatform\MediAR.Coreplatform.Infrastructure\MediAR.Coreplatform.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Modules\Membership\MediAR.Modules.Membership.Application\MediAR.Modules.Membership.Application.csproj" />
     <ProjectReference Include="..\..\Modules\Membership\MediAR.Modules.Membership.Infrastructure\MediAR.Modules.Membership.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Modules\TenantManagement\" />
+    <ProjectReference Include="..\..\Modules\TenantManagement\MediAR.Modules.TenantManagement.Infrastructure\MediAR.Modules.TenantManagement.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

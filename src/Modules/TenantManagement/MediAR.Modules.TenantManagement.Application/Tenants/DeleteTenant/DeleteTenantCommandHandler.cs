@@ -1,7 +1,7 @@
 ﻿using Dapper;
 using MediAR.Coreplatform.Application.Data;
 using MediAR.Coreplatform.Domain;
-using MediAR.Modules.TenantManagement.Configuration.Commands;
+using MediAR.Modules.TenantManagement.Application.Configuration.Commands;
 using MediatR;
 using System.Data;
 using System.Data.SqlClient;

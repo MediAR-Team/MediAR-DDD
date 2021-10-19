@@ -26,13 +26,14 @@ namespace MediAR.Modules.TenantManagement.Application.Tenants.GetTenants
       queryParams.Add(PagedQueryHelper.Next, pageData.Next);
       queryParams.Add(PagedQueryHelper.Offset, pageData.Offset);
 
-      const string sql = @"SELECT
+      var sql = @"SELECT
                           [Tenant].[Id] AS [Id],
                           [Tenant].[Name] AS [Name],
                           [Tenant].[ConnectionString] AS [ConnectionString]
+                          FROM [tenants].[v_Tenants] [Tenant]
                           ORDER BY [Id]";
 
-      PagedQueryHelper.AppendPageStatement(sql);
+      sql = PagedQueryHelper.AppendPageStatement(sql);
 
       var result = await connection.QueryAsync<TenantDto>(sql, queryParams);
 
