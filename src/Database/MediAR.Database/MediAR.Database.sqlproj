@@ -69,6 +69,10 @@
     <Folder Include="app\Tables" />
     <Folder Include="Scripts\Seeds" />
     <Folder Include="tenants\StoredProcedures" />
+    <Folder Include="learning" />
+    <Folder Include="learning\Tables" />
+    <Folder Include="learning\Views" />
+    <Folder Include="learning\StoredProcedures" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schema.sql" />
@@ -90,6 +94,15 @@
     <Build Include="membership\StoredProcedures\sel_Roles_with_Permissions.sql" />
     <Build Include="tenants\StoredProcedures\ins_Tenant.sql" />
     <Build Include="tenants\StoredProcedures\del_Tenant.sql" />
+    <Build Include="learning\Tables\StudentToGroup.sql" />
+    <Build Include="learning\Tables\Groups.sql" />
+    <Build Include="learning\Tables\Courses.sql" />
+    <Build Include="learning\Tables\Modules.sql" />
+    <Build Include="learning\Tables\ContentEntries.sql" />
+    <Build Include="learning\Tables\EntryTypes.sql" />
+    <Build Include="learning\Tables\Resources.sql" />
+    <Build Include="learning\Tables\ResourceToCourse.sql" />
+    <Build Include="learning\Indexes.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Migrations\001_init_membership_and_tenants.sql" />
@@ -102,5 +115,6 @@
     <None Include="Scripts\Migrations\006_sel_rolesWithPermissions.sql" />
     <None Include="Scripts\Migrations\007_added_insTenant.sql" />
     <None Include="Scripts\Migrations\008_added_delTenant.sql" />
+    <None Include="Scripts\Migrations\009_init_learning.sql" />
   </ItemGroup>
 </Project>

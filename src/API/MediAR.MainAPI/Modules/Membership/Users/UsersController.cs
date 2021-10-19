@@ -1,6 +1,7 @@
 ﻿using MediAR.Modules.Membership.Application.Contracts;
 using MediAR.Modules.Membership.Application.Users;
 using MediAR.Modules.Membership.Application.Users.AssignRoleToUser;
+using MediAR.Modules.Membership.Application.Users.CreateUser;
 using MediAR.Modules.Membership.Application.Users.GetAuthenticatedUser;
 using MediAR.Modules.Membership.Application.Users.GetUser;
 using MediAR.Modules.Membership.Application.Users.RegisterUser;
@@ -24,6 +25,15 @@ namespace MediAR.MainAPI.Modules.Membership.Users
     public async Task<IActionResult> RegisterNewUser(RegisterUserRequest request)
     {
       var result = await _membershipModule.ExecuteCommandAsync(new RegisterUserCommand(
+        request.UserName, request.Email, request.Password, request.FirstName, request.LastName));
+
+      return Ok(result);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateNewUser(CreateNewUserRequest request)
+    {
+      var result = await _membershipModule.ExecuteCommandAsync(new CreateUserCommand(
         request.UserName, request.Email, request.Password, request.FirstName, request.LastName));
 
       return Ok(result);

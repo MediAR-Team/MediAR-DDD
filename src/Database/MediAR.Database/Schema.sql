@@ -4,4 +4,7 @@ GO
 CREATE SCHEMA [tenants] AUTHORIZATION [dbo]
 GO
 
+CREATE SCHEMA [learning] AUTHORIZATION [dbo]
+GO
+
 

@@ -1,6 +1,6 @@
 ﻿using Dapper;
+using MediAR.Coreplatform.Application;
 using MediAR.Coreplatform.Application.Data;
-using MediAR.Coreplatform.Application.Tenants;
 using MediAR.Coreplatform.Domain;
 using MediAR.Modules.Membership.Application.Configuration.Commands;
 using System.Data;
@@ -8,20 +8,20 @@ using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MediAR.Modules.Membership.Application.Users.RegisterUser
+namespace MediAR.Modules.Membership.Application.Users.CreateUser
 {
-  class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, RegisterUserCommandResult>
+  class CreateUserCommandHandler : ICommandHandler<CreateUserCommand, CreateUserCommandResult>
   {
     private readonly ISqlConnectionFactory _connectionFactory;
-    private readonly TenantConfiguration _tenantConfig;
+    private readonly IExecutionContextAccessor _executionContextAccessor;
 
-    public RegisterUserCommandHandler(ISqlConnectionFactory connectionFactory, TenantConfiguration tenantConfig)
+    public CreateUserCommandHandler(ISqlConnectionFactory connectionFactory, IExecutionContextAccessor executionContextAccessor)
     {
       _connectionFactory = connectionFactory;
-      _tenantConfig = tenantConfig;
+      _executionContextAccessor = executionContextAccessor;
     }
 
-    public async Task<RegisterUserCommandResult> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
+    public async Task<CreateUserCommandResult> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
       var connection = _connectionFactory.GetOpenConnection();
 
@@ -34,7 +34,7 @@ namespace MediAR.Modules.Membership.Application.Users.RegisterUser
         PasswordHash = passwordHash,
         request.FirstName,
         request.LastName,
-        TenantId = _tenantConfig.DefaultTenantId
+        _executionContextAccessor.TenantId
       };
 
       try
@@ -46,8 +46,7 @@ namespace MediAR.Modules.Membership.Application.Users.RegisterUser
         throw new BusinessRuleValidationException(ex.Message);
       }
 
-      // TODO: maybe return auth response or something
-      return new RegisterUserCommandResult();
+      return new CreateUserCommandResult();
     }
   }
 }
