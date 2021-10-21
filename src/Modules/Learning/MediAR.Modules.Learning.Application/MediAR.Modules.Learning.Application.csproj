@@ -11,10 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Groups\GetGroups\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\..\Coreplatform\MediAR.Coreplatform.Application\MediAR.Coreplatform.Application.csproj" />
   </ItemGroup>
 
