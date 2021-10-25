@@ -32,11 +32,6 @@ namespace MediAR.Modules.Learning.Application.Groups.GetGroups
       var pageData = PagedQueryHelper.GetPageData(request);
       requestParams.Add(PagedQueryHelper.Next, pageData.Next);
       requestParams.Add(PagedQueryHelper.Offset, pageData.Offset);
-      var isMasterTenant = _executionContextAccessor.TenantId == _tenantConfig.MasterTenantId;
-      if (!isMasterTenant)
-      {
-        requestParams.Add("TenantId", _executionContextAccessor.TenantId);
-      }
 
       var sql = @"SELECT
                   [Group].[Id] AS [Id],
@@ -44,9 +39,11 @@ namespace MediAR.Modules.Learning.Application.Groups.GetGroups
                   [Group].[TenantId] AS [TenantId]
                   FROM [learning].[v_Groups] [Group]";
 
+      var isMasterTenant = _executionContextAccessor.TenantId == _tenantConfig.MasterTenantId;
       if (!isMasterTenant)
       {
         sql += "WHERE [TenantId] = @TenantId";
+        requestParams.Add("TenantId", _executionContextAccessor.TenantId);
       }
 
       sql += "ORDER BY [Id]";

@@ -6,7 +6,7 @@ DELETE FROM [membership].[Permissions];
 DECLARE @Data XML;
 SELECT @Data = CONVERT(XML, BulkColumn)
 -- Substitute with the correct absolute path before executing
-FROM OPENROWSET(BULK 'C:\projects\MediAR-DDD\src\Database\MediAR.Database\PermissionMapping.xml', SINGLE_BLOB) as x;
+FROM OPENROWSET(BULK 'C:\Users\vsabo\source\repos\MediAR-DDD\src\Database\MediAR.Database\PermissionMapping.xml', SINGLE_BLOB) as x;
 
 INSERT INTO [membership].[Roles] ([Id], [Name], [Description])
 SELECT NEWID(), X.y.value('@name', 'VARCHAR(256)'), X.y.value('@description', 'VARCHAR(512)')
