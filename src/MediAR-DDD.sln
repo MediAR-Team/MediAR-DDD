@@ -39,7 +39,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Learning", "Learning", "{7A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediAR.Modules.Learning.Application", "Modules\Learning\MediAR.Modules.Learning.Application\MediAR.Modules.Learning.Application.csproj", "{B531C07F-442C-4F2E-9E83-6C2952CACDDE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediAR.Coreplatform.EventBus", "Coreplatform\MediAR.Coreplatform.EventBus\MediAR.Coreplatform.EventBus.csproj", "{56A14FF2-869C-4517-B412-E3218F195AD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediAR.Coreplatform.EventBus", "Coreplatform\MediAR.Coreplatform.EventBus\MediAR.Coreplatform.EventBus.csproj", "{56A14FF2-869C-4517-B412-E3218F195AD8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediAR.Modules.Membership.IntegrationEvents", "Modules\Membership\MediAR.Modules.Membership.IntegrationEvents\MediAR.Modules.Membership.IntegrationEvents.csproj", "{55E55D96-A792-4EEE-A8EF-DCC194E00CA3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -97,6 +99,10 @@ Global
 		{56A14FF2-869C-4517-B412-E3218F195AD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56A14FF2-869C-4517-B412-E3218F195AD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56A14FF2-869C-4517-B412-E3218F195AD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55E55D96-A792-4EEE-A8EF-DCC194E00CA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55E55D96-A792-4EEE-A8EF-DCC194E00CA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55E55D96-A792-4EEE-A8EF-DCC194E00CA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55E55D96-A792-4EEE-A8EF-DCC194E00CA3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -117,6 +123,7 @@ Global
 		{7AB7FCC6-F6A3-4738-A2A6-283E2920BE64} = {B8F5DAA6-FE60-4381-A8A9-2BE0A788701E}
 		{B531C07F-442C-4F2E-9E83-6C2952CACDDE} = {7AB7FCC6-F6A3-4738-A2A6-283E2920BE64}
 		{56A14FF2-869C-4517-B412-E3218F195AD8} = {B74CF1FA-9A0B-4401-9058-12B310454EF1}
+		{55E55D96-A792-4EEE-A8EF-DCC194E00CA3} = {7AB7FCC6-F6A3-4738-A2A6-283E2920BE64}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AC91CA91-5985-4450-A5AE-287888C78CF9}

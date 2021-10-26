@@ -5,9 +5,7 @@ namespace MediAR.Coreplatform.EventBus
 {
   public class InMemoryBusClient : IEventBus
   {
-    public void Dispose()
-    {
-    }
+    public void Dispose() { }
 
     public async Task Publish<T>(T @event) where T : IntegrationEvent
     {

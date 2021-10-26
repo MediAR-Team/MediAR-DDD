@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace MediAR.Modules.Membership.Infrastructure.Configuration.Processing.Outbox
+namespace MediAR.Modules.Membership.Infrastructure.Configuration.Processing.InternalCommands
 {
-  public class OutboxMessageDto
+  class InternalCommandDto
   {
     public Guid Id { get; set; }
     public DateTime OccuredOn { get; set; }
