@@ -14,6 +14,7 @@
     <ProjectReference Include="..\..\Coreplatform\MediAR.Coreplatform.Application\MediAR.Coreplatform.Application.csproj" />
     <ProjectReference Include="..\..\Coreplatform\MediAR.Coreplatform.Domain\MediAR.Coreplatform.Domain.csproj" />
     <ProjectReference Include="..\..\Coreplatform\MediAR.Coreplatform.Infrastructure\MediAR.Coreplatform.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Modules\Learning\MediAR.Modules.Learning.Infrastructure\MediAR.Modules.Learning.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Modules\Membership\MediAR.Modules.Membership.Application\MediAR.Modules.Membership.Application.csproj" />
     <ProjectReference Include="..\..\Modules\Membership\MediAR.Modules.Membership.Infrastructure\MediAR.Modules.Membership.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Modules\TenantManagement\MediAR.Modules.TenantManagement.Infrastructure\MediAR.Modules.TenantManagement.Infrastructure.csproj" />

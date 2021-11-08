@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Coreplatform\MediAR.Coreplatform.Application\MediAR.Coreplatform.Application.csproj" />
+    <ProjectReference Include="..\..\Membership\MediAR.Modules.Membership.IntegrationEvents\MediAR.Modules.Membership.IntegrationEvents.csproj" />
   </ItemGroup>
 
 </Project>

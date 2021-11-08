@@ -1,0 +1,7 @@
+﻿CREATE TABLE [membership].[InternalCommands] (
+	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY
+	,[CreatedOn] DATETIME NOT NULL
+	,[Type] NVARCHAR(256) NOT NULL
+	,[Data] NVARCHAR(MAX) NOT NULL
+	,[ProcessedOn] DATETIME
+	)

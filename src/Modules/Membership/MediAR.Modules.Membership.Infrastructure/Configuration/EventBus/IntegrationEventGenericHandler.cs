@@ -20,7 +20,7 @@ namespace MediAR.Modules.Membership.Infrastructure.Configuration.EventBus
         ContractResolver = new AllPropertiesContractResolver()
       });
 
-      const string sql = "INSERT INTO [membership].[InboxMessages] (Id, OccuredOn, Type, Data) VALUES (@Id, @OccuredOn, @Type, @Data)";
+      const string sql = "INSERT INTO [membership].[InboxMessages] ([Id], [OccuredOn], [Type], [Data]) VALUES (@Id, @OccuredOn, @Type, @Data)";
 
       await connection.ExecuteScalarAsync(sql, new
       {

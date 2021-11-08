@@ -65,8 +65,6 @@
     <Folder Include="membership\StoredProcedures" />
     <Folder Include="Scripts" />
     <Folder Include="Scripts\Migrations" />
-    <Folder Include="app" />
-    <Folder Include="app\Tables" />
     <Folder Include="Scripts\Seeds" />
     <Folder Include="tenants\StoredProcedures" />
     <Folder Include="learning" />
@@ -103,6 +101,19 @@
     <Build Include="learning\Tables\Resources.sql" />
     <Build Include="learning\Tables\ResourceToCourse.sql" />
     <Build Include="learning\Indexes.sql" />
+    <Build Include="membership\Tables\InternalCommands.sql" />
+    <Build Include="membership\Tables\InboxMessages.sql" />
+    <Build Include="tenants\Tables\InboxMessages.sql" />
+    <Build Include="tenants\Tables\InternalCommands.sql" />
+    <Build Include="learning\Tables\InboxMessages.sql" />
+    <Build Include="learning\Tables\InternalCommands.sql" />
+    <Build Include="learning\Tables\Students.sql" />
+    <Build Include="learning\StoredProcedures\add_Student_to_Group.sql" />
+    <Build Include="learning\StoredProcedures\ins_Course.sql" />
+    <Build Include="learning\StoredProcedures\del_Group.sql" />
+    <Build Include="learning\Views\v_Groups.sql" />
+    <Build Include="learning\StoredProcedures\ins_Student.sql" />
+    <Build Include="learning\Views\v_GroupMembers.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Migrations\001_init_membership_and_tenants.sql" />
@@ -116,5 +127,7 @@
     <None Include="Scripts\Migrations\007_added_insTenant.sql" />
     <None Include="Scripts\Migrations\008_added_delTenant.sql" />
     <None Include="Scripts\Migrations\009_init_learning.sql" />
+    <None Include="Scripts\Migrations\010_command_tables.sql" />
+    <None Include="Scripts\Migrations\011_learning_sprocs.sql" />
   </ItemGroup>
 </Project>

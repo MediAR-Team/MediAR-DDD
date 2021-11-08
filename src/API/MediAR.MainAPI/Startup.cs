@@ -4,8 +4,10 @@ using MediAR.Coreplatform.Application;
 using MediAR.MainAPI.Configuration.Authorization;
 using MediAR.MainAPI.Configuration.ErrorHandling;
 using MediAR.MainAPI.Configuration.ExecutionContext;
+using MediAR.MainAPI.Modules.Learning;
 using MediAR.MainAPI.Modules.Membership;
 using MediAR.MainAPI.Modules.TenantManagement;
+using MediAR.Modules.Learning.Infrastructure.Configuration;
 using MediAR.Modules.Membership.Application.Authentication.TokenProviding;
 using MediAR.Modules.Membership.Infrastructure.Configuration;
 using MediAR.Modules.TenantManagement.Infrastructure.Configuration;
@@ -33,6 +35,7 @@ namespace MediAR.MainAPI
     {
       builder.RegisterModule(new MembershipAutofacModule());
       builder.RegisterModule(new TenantManagementAutofacModule());
+      builder.RegisterModule(new LearningAutofacModule());
     }
 
     public void ConfigureServices(IServiceCollection services)
@@ -102,6 +105,7 @@ namespace MediAR.MainAPI
 
       MembershipStartup.Initialize(_configuration, executionContextAccessor);
       TenantManagementStartup.Initialize(_configuration, executionContextAccessor);
+      LearningStartup.Initialize(_configuration, executionContextAccessor);
     }
   }
 }

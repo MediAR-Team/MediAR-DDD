@@ -35,7 +35,8 @@ namespace MediAR.Modules.Learning.Application.Groups.GetGroups
 
       var sql = @"SELECT
                   [Group].[Id] AS [Id],
-                  [Group].[Name] AS [Name]
+                  [Group].[Name] AS [Name],
+                  [Group].[Description] AS [Description]
                   [Group].[TenantId] AS [TenantId]
                   FROM [learning].[v_Groups] [Group]";
 

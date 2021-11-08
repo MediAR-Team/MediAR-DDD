@@ -33,7 +33,7 @@ namespace MediAR.Modules.Learning.Application.Groups.CreateGroup
 
       try
       {
-        var result = await connection.QueryFirstOrDefaultAsync<GroupDto>("[learning].[ins_Course]", queryParams, commandType: CommandType.StoredProcedure);
+        var result = await connection.QueryFirstOrDefaultAsync<GroupDto>("[learning].[ins_Group]", queryParams, commandType: CommandType.StoredProcedure);
         return result;
       }
       catch (SqlException ex)

@@ -29,7 +29,6 @@ namespace MediAR.Modules.Learning.Application.Groups.AddStudentToGroup
       var queryParams = new
       {
         request.StudentId,
-        request.StudentUserName,
         request.GroupId,
         TenantId = request.TenantId ?? _executionContextAccessor.TenantId
       };

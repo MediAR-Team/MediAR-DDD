@@ -46,14 +46,13 @@ namespace MediAR.Modules.Membership.Infrastructure.Configuration.Processing.Inbo
         try
         {
           await _mediator.Publish((INotification)request, cancellationToken);
+          await connection.ExecuteScalarAsync(updateSql, new { message.Id });
         }
         catch(Exception e)
         {
           Console.WriteLine(e);
           throw;
         }
-
-        await connection.ExecuteScalarAsync(updateSql, new { message.Id });
       }
 
       return Unit.Value;

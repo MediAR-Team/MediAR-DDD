@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using MediAR.Coreplatform.Application.Data;
 using MediAR.Modules.Membership.Application.Configuration.Commands;
+using MediAR.Modules.Membership.Application.Contracts;
 using System;
 using System.Data;
 using System.Data.SqlClient;
@@ -12,10 +13,12 @@ namespace MediAR.Modules.Membership.Application.Users.AssignRoleToUser
   class AssignRoleToUserCommandHandler : ICommandHandler<AssignRoleToUserCommand, AssignRoleToUserCommandResult>
   {
     private readonly ISqlConnectionFactory _connectionFactory;
+    private readonly IInternalCommandScheduler _commandScheduler;
 
-    public AssignRoleToUserCommandHandler(ISqlConnectionFactory connectionFactory)
+    public AssignRoleToUserCommandHandler(ISqlConnectionFactory connectionFactory, IInternalCommandScheduler commandScheduler)
     {
       _connectionFactory = connectionFactory;
+      _commandScheduler = commandScheduler;
     }
 
     public async Task<AssignRoleToUserCommandResult> Handle(AssignRoleToUserCommand request, CancellationToken cancellationToken)
@@ -34,6 +37,8 @@ namespace MediAR.Modules.Membership.Application.Users.AssignRoleToUser
           break;
       }
 
+      await _commandScheduler.EnqueueAsync(new PublishUserAddedToRoleIntegrationEventCommand(request.UserIdentifier, request.RoleName));
+
       return result;
     }
 
@@ -41,7 +46,7 @@ namespace MediAR.Modules.Membership.Application.Users.AssignRoleToUser
     {
       try
       {
-        await connection.QueryAsync("assign_Role_to_User_by_UserName", new { UserName = request.UserIdentifier, request.RoleName }, commandType: CommandType.StoredProcedure);
+        await connection.QueryAsync("[membership].[assign_Role_to_User_by_UserName]", new { UserName = request.UserIdentifier, request.RoleName }, commandType: CommandType.StoredProcedure);
         return new AssignRoleToUserCommandResult();
       }
       catch (Exception ex)
@@ -54,7 +59,7 @@ namespace MediAR.Modules.Membership.Application.Users.AssignRoleToUser
     {
       try
       {
-        await connection.QueryAsync("assign_Role_to_User_by_Email", new { Email = request.UserIdentifier, request.RoleName }, commandType: CommandType.StoredProcedure);
+        await connection.QueryAsync("[membership].[assign_Role_to_User_by_Email]", new { Email = request.UserIdentifier, request.RoleName }, commandType: CommandType.StoredProcedure);
         return new AssignRoleToUserCommandResult();
       }
       catch (SqlException ex)

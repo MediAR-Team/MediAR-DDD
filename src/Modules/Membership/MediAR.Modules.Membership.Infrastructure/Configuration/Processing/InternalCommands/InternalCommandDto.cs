@@ -5,7 +5,7 @@ namespace MediAR.Modules.Membership.Infrastructure.Configuration.Processing.Inte
   class InternalCommandDto
   {
     public Guid Id { get; set; }
-    public DateTime OccuredOn { get; set; }
+    public DateTime CreatedOn { get; set; }
     public string Type { get; set; }
     public string Data { get; set; }
   }
