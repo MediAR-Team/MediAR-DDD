@@ -114,6 +114,14 @@
     <Build Include="learning\Views\v_Groups.sql" />
     <Build Include="learning\StoredProcedures\ins_Student.sql" />
     <Build Include="learning\Views\v_GroupMembers.sql" />
+    <Build Include="learning\Views\v_CourseAggregate.sql" />
+    <Build Include="learning\Views\v_EntryTypes.sql" />
+    <Build Include="learning\StoredProcedures\del_Course.sql" />
+    <Build Include="learning\StoredProcedures\ins_Group.sql" />
+    <Build Include="learning\StoredProcedures\ins_Module.sql" />
+    <Build Include="learning\StoredProcedures\del_Module.sql" />
+    <Build Include="learning\StoredProcedures\ins_ContentEntry.sql" />
+    <Build Include="Scripts\Seeds\SeedEntryTypes.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Migrations\001_init_membership_and_tenants.sql" />
@@ -129,5 +137,8 @@
     <None Include="Scripts\Migrations\009_init_learning.sql" />
     <None Include="Scripts\Migrations\010_command_tables.sql" />
     <None Include="Scripts\Migrations\011_learning_sprocs.sql" />
+    <None Include="Scripts\Migrations\012_contentEntry_module_fk.sql" />
+    <None Include="Scripts\Migrations\013_courseAggregate_view.sql" />
+    <None Include="Scripts\Migrations\014_learning.sql" />
   </ItemGroup>
 </Project>

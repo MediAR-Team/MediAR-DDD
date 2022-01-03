@@ -50,6 +50,7 @@ CREATE TABLE [learning].[ContentEntries] (
 	,[TypeId] INT NOT NULL
 	,[Configuration] XML NOT NULL
 	,[Data] XML NOT NULL
+	,[ModuleId] INT NOT NULL
 	,CONSTRAINT [PK_ContentEntries] PRIMARY KEY CLUSTERED (
 		[Id] ASC
 		,[TenantId] ASC
