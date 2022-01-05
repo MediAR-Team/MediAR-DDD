@@ -2,6 +2,7 @@
 using MediAR.Coreplatform.Application;
 using MediAR.Coreplatform.Application.Data;
 using MediAR.Modules.Learning.Application.Configuration.Queries;
+using MediAR.Modules.Learning.Application.ContentEntries;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -32,6 +33,7 @@ namespace MediAR.Modules.Learning.Application.Courses.GetCourse
                           [CMC].[ModuleId] AS [Id],
                           [CMC].[ModuleName] AS [Name],
                           [CMC].[EntryId] AS [Id],
+                          [CMC].[EntryTypeName] AS [TypeName],
                           [CMC].[EntryConfiguration] AS [Configuration],
                           [CMC].[EntryData] AS [Data]
                           FROM [learning].[v_CourseAggregate] AS [CMC]
@@ -43,10 +45,19 @@ namespace MediAR.Modules.Learning.Application.Courses.GetCourse
         TenantId = request.TenantId ?? _executionContextAccessor.TenantId
       };
 
-      var courses = await connection.QueryAsync<CourseDto, ModuleDto, ContentEntryDto, CourseDto>(sql, (c, m, ce) =>
+      var courses = await connection.QueryAsync<CourseDto, ModuleDto, DbContentEntry, CourseDto>(sql, (c, m, ce) =>
       {
         c.Modules.Add(m);
-        m.ContentEntries.Add(ce);
+        var (data, config) = EntryMapper.MapEntry(ce);
+        var ceDto = new ContentEntryDto
+        {
+          Id = ce.Id,
+          TypeName = ce.TypeName,
+          Data = data,
+          Configuration = config
+        };
+
+        m.ContentEntries.Add(ceDto);
         return c;
       }, queryParams, splitOn: "Id, Id");
 

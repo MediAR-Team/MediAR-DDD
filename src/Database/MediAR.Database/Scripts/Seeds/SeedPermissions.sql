@@ -1,8 +1,37 @@
 ﻿DECLARE @Data XML;
 
-SELECT @Data = CONVERT(XML, BulkColumn)
--- Substitute with the correct absolute path before executing
-FROM OPENROWSET(BULK 'C:\projects\MediAR-DDD\src\Database\MediAR.Database\PermissionMapping.xml', SINGLE_BLOB) AS x;
+--SELECT @Data = CONVERT(XML, BulkColumn)
+---- Substitute with the correct absolute path before executing
+--FROM OPENROWSET(BULK 'C:\projects\MediAR-DDD\src\Database\MediAR.Database\PermissionMapping.xml', SINGLE_BLOB) AS x;
+
+SET @Data = '<?xml version="1.0" encoding="utf-8" ?>
+<root>
+	<role name="SuperAdmin" description="Super admin (master tenant)">
+		<permission name="CreateTenant" description=""></permission>
+		<permission name="UpdateTenant" description=""></permission>
+		<permission name="DeleteTenant" description=""></permission>
+		<permission name="CreatePublicCourse" description=""></permission>
+		<permission name="CreatePrivateCourse" description=""></permission>
+		<permission name="UpdateAnyCourse" description=""></permission>
+		<permission name="DeleteAnyCourse" description=""></permission>
+	</role>
+	<role name="Admin" description="Admin (per tenant)">
+		<permission name="CreatePublicCourse" description=""></permission>
+		<permission name="CreatePrivateCourse" description=""></permission>
+		<permission name="UpdateAnyCourse" description=""></permission>
+		<permission name="DeleteAnyCourse" description=""></permission>
+	</role>
+	<role name="Instructor" description="Instructor (per tenant)">
+		<permission name="CreatePublicCourse" description=""></permission>
+		<permission name="CreatePrivateCourse" description=""></permission>
+		<permission name="UpdateOwnCourse" description=""></permission>
+		<permission name="DeleteOwnCourse" description=""></permission>
+	</role>
+	<role name="Student" description="Student (per tenant)">
+		<permission name="CreatePrivateCourse" description=""></permission>
+		<permission name="ReadAddedCourse" description=""></permission>
+	</role>
+</root>';
 
 MERGE INTO [membership].[Roles] [Role]
 USING @Data.nodes('root/role') X(y)

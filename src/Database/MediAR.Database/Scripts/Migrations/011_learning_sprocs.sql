@@ -1,12 +1,4 @@
 ﻿GO
-PRINT N'Dropping Foreign Key unnamed constraint on [learning].[StudentToGroup]...';
-
-
-GO
-ALTER TABLE [learning].[StudentToGroup] DROP CONSTRAINT [FK__StudentToGroup__4E88ABD4];
-
-
-GO
 PRINT N'Creating Table [learning].[Students]...';
 
 

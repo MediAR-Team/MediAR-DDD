@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MediAR.Modules.Learning.Application.ContentEntries;
+using System;
 using System.Collections.Generic;
 
 namespace MediAR.Modules.Learning.Application.Courses.GetCourse
@@ -23,7 +24,8 @@ namespace MediAR.Modules.Learning.Application.Courses.GetCourse
   public class ContentEntryDto
   {
     public int Id { get; set; }
-    public dynamic Configuration { get; set; }
-    public dynamic Data { get; set; }
+    public string TypeName { get; set; }
+    public object Configuration { get; set; }
+    public object Data { get; set; }
   }
 }

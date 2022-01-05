@@ -10,6 +10,7 @@ using MediAR.MainAPI.Modules.TenantManagement;
 using MediAR.Modules.Learning.Infrastructure.Configuration;
 using MediAR.Modules.Membership.Application.Authentication.TokenProviding;
 using MediAR.Modules.Membership.Infrastructure.Configuration;
+using MediAR.Modules.TenantManagement.Application.Contracts;
 using MediAR.Modules.TenantManagement.Infrastructure.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -101,7 +102,8 @@ namespace MediAR.MainAPI
     private void InitializeModules(ILifetimeScope container)
     {
       var httpContextAccessor = container.Resolve<IHttpContextAccessor>();
-      var executionContextAccessor = new ExecutionContextAccessor(httpContextAccessor);
+      var tenantManagement = container.Resolve<ITenantManagementModule>();
+      var executionContextAccessor = new ExecutionContextAccessor(httpContextAccessor, tenantManagement);
 
       MembershipStartup.Initialize(_configuration, executionContextAccessor);
       TenantManagementStartup.Initialize(_configuration, executionContextAccessor);

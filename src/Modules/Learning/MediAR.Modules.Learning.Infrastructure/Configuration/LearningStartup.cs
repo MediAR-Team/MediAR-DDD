@@ -6,7 +6,6 @@ using MediAR.Modules.Learning.Infrastructure.Configuration.EventBus;
 using MediAR.Modules.Learning.Infrastructure.Configuration.Mediation;
 using MediAR.Modules.Learning.Infrastructure.Configuration.Processing;
 using MediAR.Modules.Learning.Infrastructure.Configuration.Quartz;
-using MediAR.Modules.Learning.Infrastructure.Configuration.Tenants;
 using Microsoft.Extensions.Configuration;
 
 namespace MediAR.Modules.Learning.Infrastructure.Configuration
@@ -27,7 +26,6 @@ namespace MediAR.Modules.Learning.Infrastructure.Configuration
       var containerBuilder = new ContainerBuilder();
 
       containerBuilder.RegisterModule(new DataAccessModule(configuration));
-      containerBuilder.RegisterModule(new TenantModule(configuration));
       containerBuilder.RegisterModule(new EventBusModule(null));
       containerBuilder.RegisterModule(new ProcessingModule());
       containerBuilder.RegisterModule(new MediatorModule());

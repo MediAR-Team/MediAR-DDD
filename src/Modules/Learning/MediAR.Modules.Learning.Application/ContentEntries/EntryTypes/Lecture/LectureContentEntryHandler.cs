@@ -2,10 +2,6 @@
 using MediAR.Coreplatform.Application.Data;
 using MediAR.Modules.Learning.Application.ContentEntries.EntryTypes.Lecture.Commands;
 using MediAR.Modules.Learning.Application.ContentEntries.TypeHandlers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MediAR.Modules.Learning.Application.ContentEntries.EntryTypes.Lecture
@@ -30,7 +26,17 @@ namespace MediAR.Modules.Learning.Application.ContentEntries.EntryTypes.Lecture
 
       await _contentEntriesRepository.SaveEntryAsync(lecture);
 
-      return null;
+      return lecture;
+    }
+
+    [ContentEntryAction("update")]
+    public async Task<dynamic> UpdateAsync(UpdateCommand command)
+    {
+      var lecture = new LectureContentEntry(command.EntryId, _executionContextAccessor.TenantId, default(int), new LectureData(command.TextData), new LectureConfiguration());
+
+      await _contentEntriesRepository.UpdateEntryAsync(lecture);
+
+      return lecture;
     }
   }
 }

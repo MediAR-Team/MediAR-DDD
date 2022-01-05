@@ -3,4 +3,5 @@ AS
 SELECT [Id]
 	,[Name]
 	,[ConnectionString]
+	,[ReferUrl]
 FROM [tenants].[Tenants]

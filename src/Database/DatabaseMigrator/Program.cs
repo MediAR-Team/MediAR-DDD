@@ -7,6 +7,7 @@ namespace DatabaseMigrator
 {
   class Program
   {
+    private const string PreSubdir = "PreScripts";
     private const string MigrationsSubdir = "Migrations";
     private const string SeedsSubdir = "Seeds";
 
@@ -28,6 +29,21 @@ namespace DatabaseMigrator
       if (!Directory.Exists(scripsPath))
       {
         Console.WriteLine("Invalid path");
+        return;
+      }
+
+      var preUpgrader = DeployChanges
+          .To
+          .SqlDatabase(connectionString)
+          .WithScriptsFromFileSystem($"{scripsPath}/{PreSubdir}")
+          .JournalTo(new NullJournal())
+          .Build();
+
+      var preResult = preUpgrader.PerformUpgrade();
+
+      if (!preResult.Successful)
+      {
+        Console.WriteLine("Pre scripts unsuccessful");
         return;
       }
 

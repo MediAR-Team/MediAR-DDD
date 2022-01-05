@@ -71,6 +71,7 @@
     <Folder Include="learning\Tables" />
     <Folder Include="learning\Views" />
     <Folder Include="learning\StoredProcedures" />
+    <Folder Include="Scripts\PreScripts" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schema.sql" />
@@ -140,5 +141,6 @@
     <None Include="Scripts\Migrations\012_contentEntry_module_fk.sql" />
     <None Include="Scripts\Migrations\013_courseAggregate_view.sql" />
     <None Include="Scripts\Migrations\014_learning.sql" />
+    <None Include="Scripts\PreScripts\app_schema.sql" />
   </ItemGroup>
 </Project>

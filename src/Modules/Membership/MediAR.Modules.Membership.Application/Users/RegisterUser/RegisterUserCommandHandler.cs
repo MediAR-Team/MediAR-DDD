@@ -1,6 +1,6 @@
 ﻿using Dapper;
+using MediAR.Coreplatform.Application;
 using MediAR.Coreplatform.Application.Data;
-using MediAR.Coreplatform.Application.Tenants;
 using MediAR.Coreplatform.Domain;
 using MediAR.Modules.Membership.Application.Configuration.Commands;
 using System.Data;
@@ -13,12 +13,12 @@ namespace MediAR.Modules.Membership.Application.Users.RegisterUser
   class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, RegisterUserCommandResult>
   {
     private readonly ISqlConnectionFactory _connectionFactory;
-    private readonly TenantConfiguration _tenantConfig;
+    private readonly IExecutionContextAccessor _executionContextAccessor;
 
-    public RegisterUserCommandHandler(ISqlConnectionFactory connectionFactory, TenantConfiguration tenantConfig)
+    public RegisterUserCommandHandler(ISqlConnectionFactory connectionFactory, IExecutionContextAccessor executionContextAccessor)
     {
       _connectionFactory = connectionFactory;
-      _tenantConfig = tenantConfig;
+      _executionContextAccessor = executionContextAccessor;
     }
 
     public async Task<RegisterUserCommandResult> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
@@ -34,7 +34,7 @@ namespace MediAR.Modules.Membership.Application.Users.RegisterUser
         PasswordHash = passwordHash,
         request.FirstName,
         request.LastName,
-        TenantId = _tenantConfig.DefaultTenantId
+        _executionContextAccessor.TenantId
       };
 
       try

@@ -50,5 +50,38 @@ namespace MediAR.Modules.Learning.Infrastructure.Domain.ContentEntries
 
       await connection.ExecuteAsync("[learning].[ins_ContentEntry]", queryParams, commandType: CommandType.StoredProcedure);
     }
+
+    public async Task UpdateEntryAsync<TData, TConfig>(IContentEntry<TData, TConfig> entry)
+      where TData : IXmlSerializable
+      where TConfig : IXmlSerializable
+    {
+      var dataSerializer = new XmlSerializer(typeof(TData));
+      var configSerializer = new XmlSerializer(typeof(TConfig));
+      var data = string.Empty;
+      var config = string.Empty;
+      using (var textWriter = new StringWriter())
+      {
+        dataSerializer.Serialize(textWriter, entry.Data);
+        data = textWriter.ToString();
+      }
+
+      using (var textWriter = new StringWriter())
+      {
+        configSerializer.Serialize(textWriter, entry.Configuration);
+        config = textWriter.ToString();
+      }
+
+      var queryParams = new
+      {
+        entry.Id,
+        entry.TenantId,
+        Data = data,
+        Config = config
+      };
+
+      var connection = _connectionFactory.GetOpenConnection();
+
+      await connection.ExecuteAsync("[learning].[upd_ContentEntry]", queryParams, commandType: CommandType.StoredProcedure);
+    }
   }
 }

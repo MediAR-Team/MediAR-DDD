@@ -7,8 +7,10 @@
 	M.[Id] AS [ModuleId],
 	M.[Name] AS [ModuleName],
 	CE.[Id] AS [EntryId],
+	ET.[Name] AS [EntryTypeName],
 	CE.[Configuration] AS [EntryConfiguration],
 	CE.[Data] AS [EntryData]
 	FROM [learning].[Courses] C
 	LEFT JOIN [learning].[Modules] M ON M.[CourseId] = C.[Id] AND M.[TenantId] = C.[TenantId]
 	LEFT JOIN [learning].[ContentEntries] CE ON CE.[ModuleId] = M.[Id] AND CE.[TenantId] = M.[TenantId]
+	LEFT JOIN [learning].[EntryTypes] ET ON ET.Id = CE.TypeId;

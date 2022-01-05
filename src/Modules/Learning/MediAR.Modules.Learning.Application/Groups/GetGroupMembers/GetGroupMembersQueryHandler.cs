@@ -1,7 +1,6 @@
 ﻿using Dapper;
 using MediAR.Coreplatform.Application;
 using MediAR.Coreplatform.Application.Data;
-using MediAR.Coreplatform.Application.Tenants;
 using MediAR.Modules.Learning.Application.Configuration.Queries;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,13 +13,11 @@ namespace MediAR.Modules.Learning.Application.Groups.GetGroupMembers
   {
     private readonly ISqlConnectionFactory _connectionFactory;
     private readonly IExecutionContextAccessor _executionContextAccessor;
-    private readonly TenantConfiguration _tenantConfig;
 
-    public GetGroupMembersQueryHandler(ISqlConnectionFactory connectionFactory, IExecutionContextAccessor executionContextAccessor, TenantConfiguration tenantConfig)
+    public GetGroupMembersQueryHandler(ISqlConnectionFactory connectionFactory, IExecutionContextAccessor executionContextAccessor)
     {
       _connectionFactory = connectionFactory;
       _executionContextAccessor = executionContextAccessor;
-      _tenantConfig = tenantConfig;
     }
 
     public async Task<List<GroupMemberDto>> Handle(GetGroupMembersQuery request, CancellationToken cancellationToken)

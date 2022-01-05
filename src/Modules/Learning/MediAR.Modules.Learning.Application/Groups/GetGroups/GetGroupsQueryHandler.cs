@@ -2,7 +2,6 @@
 using MediAR.Coreplatform.Application;
 using MediAR.Coreplatform.Application.Data;
 using MediAR.Coreplatform.Application.Queries;
-using MediAR.Coreplatform.Application.Tenants;
 using MediAR.Modules.Learning.Application.Configuration.Queries;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,13 +14,11 @@ namespace MediAR.Modules.Learning.Application.Groups.GetGroups
   {
     private readonly ISqlConnectionFactory _connectionFactory;
     private readonly IExecutionContextAccessor _executionContextAccessor;
-    private readonly TenantConfiguration _tenantConfig;
 
-    public GetGroupsQueryHandler(ISqlConnectionFactory connectionFactory, IExecutionContextAccessor executionContextAccessor, TenantConfiguration tenantConfig)
+    public GetGroupsQueryHandler(ISqlConnectionFactory connectionFactory, IExecutionContextAccessor executionContextAccessor)
     {
       _connectionFactory = connectionFactory;
       _executionContextAccessor = executionContextAccessor;
-      _tenantConfig = tenantConfig;
     }
 
     public async Task<List<GroupDto>> Handle(GetGroupsQuery request, CancellationToken cancellationToken)
@@ -38,14 +35,10 @@ namespace MediAR.Modules.Learning.Application.Groups.GetGroups
                   [Group].[Name] AS [Name],
                   [Group].[Description] AS [Description]
                   [Group].[TenantId] AS [TenantId]
-                  FROM [learning].[v_Groups] [Group]";
+                  FROM [learning].[v_Groups] [Group]
+                  WHERE [TenantId] = @TenantId";
 
-      var isMasterTenant = _executionContextAccessor.TenantId == _tenantConfig.MasterTenantId;
-      if (!isMasterTenant)
-      {
-        sql += "WHERE [TenantId] = @TenantId";
-        requestParams.Add("TenantId", _executionContextAccessor.TenantId);
-      }
+      requestParams.Add("TenantId", _executionContextAccessor.TenantId);
 
       sql += "ORDER BY [Id]";
 

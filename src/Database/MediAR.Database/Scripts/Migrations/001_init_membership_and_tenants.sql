@@ -137,6 +137,7 @@ CREATE TABLE [tenants].[Tenants] (
     [Id]               UNIQUEIDENTIFIER NOT NULL,
     [Name]             VARCHAR (256)    NOT NULL,
     [ConnectionString] VARCHAR (256)    NOT NULL,
+	[ReferUrl] VARCHAR(256) DEFAULT '',
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
@@ -233,6 +234,7 @@ AS
 SELECT [Id]
 	,[Name]
 	,[ConnectionString]
+	,[ReferUrl]
 FROM [tenants].[Tenants]
 GO
 PRINT N'Creating Procedure [membership].[count_Users_With_UserName_or_Email]...';

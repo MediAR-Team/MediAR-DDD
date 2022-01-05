@@ -29,12 +29,12 @@ namespace MediAR.Modules.Learning.Infrastructure.Configuration.Processing.Intern
                           [Command].[CreatedOn] AS [CreatedOn],
                           [Command].[Type] AS [Type],
                           [Command].[Data] AS [Data]
-                          FROM [membership].[InternalCommands] [Command]
+                          FROM [learning].[InternalCommands] [Command]
                           WHERE ProcessedOn IS NULL";
 
       var commands = await connection.QueryAsync<InternalCommandDto>(sql);
 
-      const string completeSql = @"UPDATE [membership].[InternalCommands] SET [ProcessedOn] = GETDATE() WHERE [Id] = @Id";
+      const string completeSql = @"UPDATE [learning].[InternalCommands] SET [ProcessedOn] = GETDATE() WHERE [Id] = @Id";
 
       foreach (var command in commands)
       {

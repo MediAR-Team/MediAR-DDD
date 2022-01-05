@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MediAR.Modules.Learning.Application.ContentEntries.EntryTypeActions
 {
-  public class EntryTypeActionsQuery : QueryBase<List<string>>
+  public class EntryTypeActionsQuery : QueryBase<List<EntryTypeActionDto>>
   {
     public string EntryTypeName { get; }
 

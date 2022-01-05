@@ -6,7 +6,6 @@ using MediAR.Modules.Membership.Infrastructure.Configuration.EventBus;
 using MediAR.Modules.Membership.Infrastructure.Configuration.Mediation;
 using MediAR.Modules.Membership.Infrastructure.Configuration.Processing;
 using MediAR.Modules.Membership.Infrastructure.Configuration.Quartz;
-using MediAR.Modules.Membership.Infrastructure.Configuration.Tenants;
 using Microsoft.Extensions.Configuration;
 
 namespace MediAR.Modules.Membership.Infrastructure.Configuration
@@ -27,7 +26,6 @@ namespace MediAR.Modules.Membership.Infrastructure.Configuration
       var containerBuilder = new ContainerBuilder();
 
       containerBuilder.RegisterModule(new DataAccessModule(configuration));
-      containerBuilder.RegisterModule(new TenantModule(configuration));
       containerBuilder.RegisterModule(new AuthenticationModule(configuration));
       containerBuilder.RegisterModule(new EventBusModule(null));
       containerBuilder.RegisterModule(new ProcessingModule());
