@@ -38,7 +38,8 @@ namespace MediAR.MainAPI.Configuration.ExecutionContext
         {
           return Guid.Parse(_httpContextAccessor.HttpContext.User.FindFirst("tenantId").Value);
         }
-        else if (_httpContextAccessor.HttpContext.Request.Headers.TryGetValue("Refer", out var referUrl))
+        // TODO: maybe wrap it in a chain of responsibility
+        else if (_httpContextAccessor.HttpContext.Request.Headers.TryGetValue("Origin", out var referUrl))
         {
           var tenant = _tenantManagementModule.ExecuteQueryAsync(new GetTenantByReferQuery(referUrl)).GetAwaiter().GetResult();
 
