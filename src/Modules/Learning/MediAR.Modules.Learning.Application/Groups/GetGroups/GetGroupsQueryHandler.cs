@@ -33,14 +33,13 @@ namespace MediAR.Modules.Learning.Application.Groups.GetGroups
       var sql = @"SELECT
                   [Group].[Id] AS [Id],
                   [Group].[Name] AS [Name],
-                  [Group].[Description] AS [Description]
                   [Group].[TenantId] AS [TenantId]
                   FROM [learning].[v_Groups] [Group]
                   WHERE [TenantId] = @TenantId";
 
       requestParams.Add("TenantId", _executionContextAccessor.TenantId);
 
-      sql += "ORDER BY [Id]";
+      sql += "\nORDER BY [Id]";
 
       sql = PagedQueryHelper.AppendPageStatement(sql);
 

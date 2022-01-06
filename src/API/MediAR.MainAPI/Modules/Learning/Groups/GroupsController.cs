@@ -1,11 +1,11 @@
-﻿using MediAR.Modules.Learning.Application.Groups.AddStudentToGroup;
+﻿using MediAR.Modules.Learning.Application.Contracts;
+using MediAR.Modules.Learning.Application.Groups.AddStudentToGroup;
 using MediAR.Modules.Learning.Application.Groups.CreateGroup;
 using MediAR.Modules.Learning.Application.Groups.DeleteGroup;
 using MediAR.Modules.Learning.Application.Groups.GetGroupMembers;
 using MediAR.Modules.Learning.Application.Groups.GetGroups;
 using MediAR.Modules.Learning.Application.Groups.GetGroupsForAuthenticatedUser;
 using MediAR.Modules.Learning.Application.Groups.GetGroupsForStudent;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -15,17 +15,17 @@ namespace MediAR.MainAPI.Modules.Learning.Groups
   [Route("api/learning/[controller]")]
   public class GroupsController : ControllerBase
   {
-    private readonly IMediator _mediator;
+    private readonly ILearningModule _mediator;
 
-    public GroupsController(IMediator mediator)
+    public GroupsController(ILearningModule mediator)
     {
       _mediator = mediator;
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetGroups([FromQuery] int pageSize, [FromQuery] int page)
+    public async Task<IActionResult> GetGroups([FromQuery] int pageSize = 20, [FromQuery] int page = 1)
     {
-      var groups = await _mediator.Send(new GetGroupsQuery(page, pageSize));
+      var groups = await _mediator.ExecuteQueryAsync(new GetGroupsQuery(page, pageSize));
 
       return Ok(groups);
     }
@@ -33,7 +33,7 @@ namespace MediAR.MainAPI.Modules.Learning.Groups
     [HttpPost]
     public async Task<IActionResult> CreateGroup(CreateGroupRequest request)
     {
-      var result = await _mediator.Send(new CreateGroupCommand(request.Name));
+      var result = await _mediator.ExecuteCommandAsync(new CreateGroupCommand(request.Name));
       // TODO: add group by id endpoint and return created at
       return Ok(result);
     }
@@ -41,7 +41,7 @@ namespace MediAR.MainAPI.Modules.Learning.Groups
     [HttpDelete("groupId")]
     public async Task<IActionResult> DeleteGroup(int groupId)
     {
-      await _mediator.Send(new DeleteGroupCommand(groupId));
+      await _mediator.ExecuteCommandAsync(new DeleteGroupCommand(groupId));
 
       return Ok();
     }
@@ -49,7 +49,7 @@ namespace MediAR.MainAPI.Modules.Learning.Groups
     [HttpGet("{groupId}/members")]
     public async Task<IActionResult> GetGroupMembers(int groupId)
     {
-      var members = await _mediator.Send(new GetGroupMembersQuery(groupId));
+      var members = await _mediator.ExecuteQueryAsync(new GetGroupMembersQuery(groupId));
 
       return Ok(members);
     }
@@ -57,15 +57,15 @@ namespace MediAR.MainAPI.Modules.Learning.Groups
     [HttpPost("{groupId}/members")]
     public async Task<IActionResult> AddMemberToGroup(int groupId, AddMemberToGroupRequest request)
     {
-      var members = await _mediator.Send(new AddStudentToGroupCommand(groupId, request.StudentId));
+      await _mediator.ExecuteCommandAsync(new AddStudentToGroupCommand(groupId, request.StudentId));
 
-      return Ok(members);
+      return Ok();
     }
 
     [HttpGet("foruser/{userIdentifier}")]
     public async Task<IActionResult> GetGroupsForUser(string userIdentifier)
     {
-      var result = await _mediator.Send(new GetGroupsForStudentQuery(userIdentifier));
+      var result = await _mediator.ExecuteQueryAsync(new GetGroupsForStudentQuery(userIdentifier));
 
       return Ok(result);
     }
@@ -73,7 +73,7 @@ namespace MediAR.MainAPI.Modules.Learning.Groups
     [HttpGet("foruser/me")]
     public async Task<IActionResult> GetGroupsForAuthenticatedUser()
     {
-      var result = await _mediator.Send(new GetGroupsForAuthenticatedUserQuery());
+      var result = await _mediator.ExecuteQueryAsync(new GetGroupsForAuthenticatedUserQuery());
 
       return Ok(result);
     }

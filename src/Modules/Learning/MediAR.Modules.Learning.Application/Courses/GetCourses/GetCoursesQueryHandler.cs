@@ -1,31 +1,39 @@
 ﻿using Dapper;
 using MediAR.Coreplatform.Application;
 using MediAR.Coreplatform.Application.Data;
+using MediAR.Coreplatform.Application.Queries;
 using MediAR.Modules.Learning.Application.Configuration.Queries;
 using MediAR.Modules.Learning.Application.ContentEntries;
 using MediAR.Modules.Learning.Application.Courses.GetCourse;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace MediAR.Modules.Learning.Application.Courses.GetCourses
 {
-  class GetCourseQueryHandler : IQueryHandler<GetCourseQuery, CourseDto>
+  class GetCoursesQueryHandler : IQueryHandler<GetCoursesQuery, List<CourseDto>>
   {
     private readonly ISqlConnectionFactory _connectionFactory;
     private readonly IExecutionContextAccessor _executionContextAccessor;
 
-    public GetCourseQueryHandler(ISqlConnectionFactory connectionFactory, IExecutionContextAccessor executionContextAccessor)
+    public GetCoursesQueryHandler(ISqlConnectionFactory connectionFactory, IExecutionContextAccessor executionContextAccessor)
     {
       _connectionFactory = connectionFactory;
       _executionContextAccessor = executionContextAccessor;
     }
 
-    public async Task<CourseDto> Handle(GetCourseQuery request, CancellationToken cancellationToken)
+    public async Task<List<CourseDto>> Handle(GetCoursesQuery request, CancellationToken cancellationToken)
     {
       var connection = _connectionFactory.GetOpenConnection();
 
-      const string sql = @"SELECT
+      var pageData = PagedQueryHelper.GetPageData(request);
+      var queryParams = new DynamicParameters();
+      queryParams.Add(PagedQueryHelper.Next, pageData.Next);
+      queryParams.Add(PagedQueryHelper.Offset, pageData.Offset);
+      queryParams.Add("TenantId", _executionContextAccessor.TenantId);
+
+      var sql = @"SELECT
                           [CMC].[CourseId] AS [Id],
                           [CMC].[TenantId] AS [TenantId],
                           [CMC].[CourseName] AS [Name],
@@ -38,13 +46,10 @@ namespace MediAR.Modules.Learning.Application.Courses.GetCourses
                           [CMC].[EntryConfiguration] AS [Configuration],
                           [CMC].[EntryData] AS [Data]
                           FROM [learning].[v_CourseAggregate] AS [CMC]
-                          WHERE [CMC].[TenantId] = @TenantId AND [CMC].[CourseId] = @CourseId";
+                          WHERE [CMC].[TenantId] = @TenantId
+                          ORDER BY [CMC].[CourseId]";
 
-      var queryParams = new
-      {
-        request.CourseId,
-        TenantId = request.TenantId ?? _executionContextAccessor.TenantId
-      };
+      sql = PagedQueryHelper.AppendPageStatement(sql);
 
       var courses = await connection.QueryAsync<CourseDto, ModuleDto, DbContentEntry, CourseDto>(sql, (c, m, ce) =>
       {
@@ -75,20 +80,20 @@ namespace MediAR.Modules.Learning.Application.Courses.GetCourses
         {
 
           groupedCourse.Modules = courseGroup.Select(x => x.Modules.Single()).GroupBy(m => m.Id).Select(moduleGroup =>
-          {
-            var groupedModule = moduleGroup.First();
-            if (groupedModule.ContentEntries.Count != 0)
             {
-              groupedModule.ContentEntries = moduleGroup.Select(m => m.ContentEntries.Single()).ToList();
-            }
-            return groupedModule;
-          }).ToList();
+              var groupedModule = moduleGroup.First();
+              if (groupedModule.ContentEntries.Count != 0)
+              {
+                groupedModule.ContentEntries = moduleGroup.Select(m => m.ContentEntries.Single()).ToList();
+              }
+              return groupedModule;
+            }).ToList();
 
         }
         return groupedCourse;
-      }).FirstOrDefault();
+      });
 
-      return result;
+      return result.ToList();
     }
   }
 }
