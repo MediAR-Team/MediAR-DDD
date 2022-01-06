@@ -123,24 +123,12 @@
     <Build Include="learning\StoredProcedures\del_Module.sql" />
     <Build Include="learning\StoredProcedures\ins_ContentEntry.sql" />
     <Build Include="Scripts\Seeds\SeedEntryTypes.sql" />
+    <Build Include="learning\StoredProcedures\upd_ContentEntry.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Scripts\Migrations\001_init_membership_and_tenants.sql" />
-    <None Include="Scripts\Migrations\002_return_passwordhash.sql" />
-    <None Include="Scripts\Migrations\003_users_return_id.sql" />
     <None Include="Scripts\Seeds\SeedTenants.sql" />
-    <None Include="Scripts\Migrations\004_userCount_in_insUser.sql" />
-    <None Include="Scripts\Migrations\005_fix_insUser.sql" />
     <None Include="PermissionMapping.xml" />
-    <None Include="Scripts\Migrations\006_sel_rolesWithPermissions.sql" />
-    <None Include="Scripts\Migrations\007_added_insTenant.sql" />
-    <None Include="Scripts\Migrations\008_added_delTenant.sql" />
-    <None Include="Scripts\Migrations\009_init_learning.sql" />
-    <None Include="Scripts\Migrations\010_command_tables.sql" />
-    <None Include="Scripts\Migrations\011_learning_sprocs.sql" />
-    <None Include="Scripts\Migrations\012_contentEntry_module_fk.sql" />
-    <None Include="Scripts\Migrations\013_courseAggregate_view.sql" />
-    <None Include="Scripts\Migrations\014_learning.sql" />
     <None Include="Scripts\PreScripts\app_schema.sql" />
+    <None Include="Scripts\Migrations\001_initial.sql" />
   </ItemGroup>
 </Project>

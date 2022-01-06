@@ -1,7 +1,9 @@
 ﻿using Dapper;
 using MediAR.Coreplatform.Application.Data;
+using MediAR.Coreplatform.Domain;
 using MediAR.Modules.Learning.Application.ContentEntries;
 using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -76,12 +78,20 @@ namespace MediAR.Modules.Learning.Infrastructure.Domain.ContentEntries
         entry.Id,
         entry.TenantId,
         Data = data,
-        Config = config
+        Config = config,
+        entry.TypeId
       };
 
       var connection = _connectionFactory.GetOpenConnection();
 
-      await connection.ExecuteAsync("[learning].[upd_ContentEntry]", queryParams, commandType: CommandType.StoredProcedure);
+      try
+      {
+        await connection.ExecuteAsync("[learning].[upd_ContentEntry]", queryParams, commandType: CommandType.StoredProcedure);
+      }
+      catch (SqlException ex)
+      {
+        throw new BusinessRuleValidationException(ex.Message);
+      }
     }
   }
 }

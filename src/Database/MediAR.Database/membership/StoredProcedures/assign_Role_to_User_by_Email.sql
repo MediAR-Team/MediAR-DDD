@@ -1,5 +1,6 @@
 ﻿CREATE PROCEDURE [membership].[assign_Role_to_User_by_Email] @Email VARCHAR(256)
-	,@RoleName VARCHAR(256)
+	,@RoleName VARCHAR(256),
+	@TenantId uniqueidentifier
 AS
 BEGIN
 	DECLARE @UserCount INT
@@ -11,6 +12,7 @@ BEGIN
 		,@UserId = Id
 	FROM [membership].[Users]
 	WHERE Email = @Email
+	AND TenantId = @TenantId
 	GROUP BY Id
 
 	SELECT @RoleCount = count(*)
@@ -27,7 +29,21 @@ BEGIN
 			;
 
 		THROW 60000
-			,'No user with Email'
+			,'No user with Email or role does not exist'
+			,5;
+	END
+
+	IF EXISTS (
+			SELECT 1
+			FROM [membership].[UsersToRoles]
+			WHERE [UserId] = @UserId
+				AND [RoleId] = @RoleId
+			)
+	BEGIN
+			;
+
+		THROW 60000
+			,'User already added to role'
 			,5;
 	END
 
