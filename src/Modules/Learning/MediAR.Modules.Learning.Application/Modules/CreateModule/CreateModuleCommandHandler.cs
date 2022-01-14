@@ -28,7 +28,7 @@ namespace MediAR.Modules.Learning.Application.Modules.CreateModule
       var queryParams = new
       {
         request.Name,
-        request.TenantId,
+        TenantId = request.TenantId ?? _executionContextAccessor.TenantId,
         request.CourseId
       };
 

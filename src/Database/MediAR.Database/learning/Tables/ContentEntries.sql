@@ -5,6 +5,7 @@
 	,[Configuration] XML NOT NULL
 	,[Data] XML NOT NULL
 	,[ModuleId] INT NOT NULL
+	,[Ordinal] INT NOT NULL
 	,CONSTRAINT [PK_ContentEntries] PRIMARY KEY (
 		[Id]
 		,[TenantId]
@@ -14,4 +15,9 @@
 		,[TenantId]
 		) REFERENCES [learning].[Modules]([Id], [TenantId])
 	,CONSTRAINT [FK_ContentEntries_EntryTypes] FOREIGN KEY ([TypeId]) REFERENCES [learning].[EntryTypes]([Id])
+	,CONSTRAINT [UQ_ContentEntries_ModuleOrdinals] UNIQUE (
+		[TenantId]
+		,[ModuleId]
+		,[Ordinal]
+		)
 	);

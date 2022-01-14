@@ -1,4 +1,6 @@
-﻿INSERT INTO [learning].[EntryTypes] (
+﻿GO
+
+INSERT INTO [learning].[EntryTypes] (
 	[Name]
 	,[HandlerClass]
 	)

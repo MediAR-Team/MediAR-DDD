@@ -10,14 +10,12 @@ namespace MediAR.Modules.Learning.Application.Courses.CreateCourse
     public string BackgroundImageUrl { get; }
     public Guid? TenantId { get; }
 
-    public CreateCourseCommand(string name, string description, string backgroundImageUrl, Guid? tenantId)
+    public CreateCourseCommand(string name, string description, string backgroundImageUrl, Guid? tenantId = null)
     {
       Name = name;
       Description = description;
       BackgroundImageUrl = backgroundImageUrl;
       TenantId = tenantId;
     }
-
-    public CreateCourseCommand(string name, string description, string backgroundImageUrl) : this(name, description, backgroundImageUrl, null) { }
   }
 }

@@ -16,12 +16,13 @@
     <ModelCollation>1033, CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <TargetLanguage>CS</TargetLanguage>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <SqlServerVerification>False</SqlServerVerification>
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <TargetDatabaseSet>True</TargetDatabaseSet>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -72,6 +73,7 @@
     <Folder Include="learning\Views" />
     <Folder Include="learning\StoredProcedures" />
     <Folder Include="Scripts\PreScripts" />
+    <Folder Include="learning\UserDefinedTableTypes" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schema.sql" />
@@ -122,13 +124,17 @@
     <Build Include="learning\StoredProcedures\ins_Module.sql" />
     <Build Include="learning\StoredProcedures\del_Module.sql" />
     <Build Include="learning\StoredProcedures\ins_ContentEntry.sql" />
-    <Build Include="Scripts\Seeds\SeedEntryTypes.sql" />
+    <None Include="Scripts\Seeds\SeedEntryTypes.sql" />
     <Build Include="learning\StoredProcedures\upd_ContentEntry.sql" />
+    <Build Include="learning\UserDefinedTableTypes\ut_OrdinalUpdate.sql" />
+    <Build Include="learning\StoredProcedures\upd_ReorderModules.sql" />
+    <Build Include="learning\StoredProcedures\upd_ReorderContentEntries.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Seeds\SeedTenants.sql" />
     <None Include="PermissionMapping.xml" />
     <None Include="Scripts\PreScripts\app_schema.sql" />
     <None Include="Scripts\Migrations\001_initial.sql" />
+    <None Include="Scripts\Migrations\002_ordinals.sql" />
   </ItemGroup>
 </Project>

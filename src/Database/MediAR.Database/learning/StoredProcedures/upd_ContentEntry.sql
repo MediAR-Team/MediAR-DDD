@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[upd_ContentEntry] @Id INT
+﻿CREATE PROCEDURE [learning].[upd_ContentEntry] @Id INT
 	,@TenantId UNIQUEIDENTIFIER
 	,@Data XML
 	,@Config XML
@@ -22,7 +22,7 @@ IF @EntryExists = 0
 BEGIN
 		;
 
-	THROW 6000
+	THROW 60000
 		,'Entry does not exist or type mismatch'
 		,5;
 END;

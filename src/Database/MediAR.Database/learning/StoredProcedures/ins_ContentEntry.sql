@@ -4,6 +4,18 @@
 	,@Data XML
 	,@Config XML
 AS
+DECLARE @NewOrdinal INT;
+
+SELECT @NewOrdinal = MAX(Ordinal) + 1
+FROM [learning].[ContentEntries]
+WHERE ModuleId = @ModuleId
+	AND TenantId = @TenantId;
+
+IF @NewOrdinal IS NULL
+BEGIN
+	SET @NewOrdinal = 1;
+END
+
 INSERT [learning].[ContentEntries] (
 	ModuleId
 	,TypeId

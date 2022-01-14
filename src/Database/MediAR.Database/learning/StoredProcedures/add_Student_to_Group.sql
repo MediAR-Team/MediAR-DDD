@@ -25,7 +25,7 @@ IF EXISTS (
 		,@TenantId
 		);
 ELSE
-	THROW 6000
+	THROW 60000
 		,'No student or group with such id'
 		,5;
 

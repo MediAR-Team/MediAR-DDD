@@ -1,4 +1,5 @@
 ﻿using MediAR.Modules.Learning.Application.Contracts;
+using MediAR.Modules.Learning.Application.Courses.CreateCourse;
 using MediAR.Modules.Learning.Application.Courses.GetCourse;
 using MediAR.Modules.Learning.Application.Courses.GetCourses;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +30,14 @@ namespace MediAR.MainAPI.Modules.Learning.Courses
     public async Task<IActionResult> GetCourses(int page = 1, int pageSize = 20)
     {
       var result = await _mediator.ExecuteQueryAsync(new GetCoursesQuery(page, pageSize));
+
+      return Ok(result);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateCourse(CreateCourseRequest request)
+    {
+      var result = await _mediator.ExecuteCommandAsync(new CreateCourseCommand(request.Name, request.Description, request.BackgroundImageUrl));
 
       return Ok(result);
     }

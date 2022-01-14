@@ -9,13 +9,11 @@ namespace MediAR.Modules.Learning.Application.Modules.CreateModule
     public int CourseId { get; }
     public Guid? TenantId { get; }
 
-    public CreateModuleCommand(string name, int moduleId, Guid? tenantId)
+    public CreateModuleCommand(string name, int courseId, Guid? tenantId = null)
     {
       Name = name;
-      CourseId = moduleId;
+      CourseId = courseId;
       TenantId = tenantId;
     }
-
-    public CreateModuleCommand(string name, int moduleId) : this(name, moduleId, null) { }
   }
 }

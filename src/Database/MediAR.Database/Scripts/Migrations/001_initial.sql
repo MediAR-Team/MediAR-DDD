@@ -644,7 +644,7 @@ IF NOT EXISTS (
 		,@TenantId
 		);
 ELSE
-	THROW 6000
+	THROW 60000
 		,'Student already exists'
 		,5;
 
@@ -675,7 +675,7 @@ BEGIN
 		AND [TenantId] = @TenantId;
 END
 ELSE
-	THROW 6000
+	THROW 60000
 		,'Group not found'
 		,5;
 
@@ -709,7 +709,7 @@ IF NOT EXISTS (
 		,@TenantId
 		);
 ELSE
-	THROW 6000
+	THROW 60000
 		,'Course with same name exists'
 		,5;
 
@@ -746,7 +746,7 @@ IF EXISTS (
 		,@TenantId
 		);
 ELSE
-	THROW 6000
+	THROW 60000
 		,'No student or group with such id'
 		,5;
 
@@ -1056,7 +1056,7 @@ IF @Count > 0
 	FROM [tenants].[Tenants]
 	WHERE [Id] = @TenantId;
 ELSE
-	THROW 6000
+	THROW 60000
 		,'No tenant with id'
 		,5;
 
@@ -1097,11 +1097,11 @@ ELSE
 
 RETURN 0
 GO
-PRINT N'Creating Procedure [dbo].[upd_ContentEntry]...';
+PRINT N'Creating Procedure [learning].[upd_ContentEntry]...';
 
 
 GO
-CREATE PROCEDURE [dbo].[upd_ContentEntry] @Id INT
+CREATE PROCEDURE [learning].[upd_ContentEntry] @Id INT
 	,@TenantId UNIQUEIDENTIFIER
 	,@Data XML
 	,@Config XML
@@ -1125,7 +1125,7 @@ IF @EntryExists = 0
 BEGIN
 		;
 
-	THROW 6000
+	THROW 60000
 		,'Entry does not exist or type mismatch'
 		,5;
 END;

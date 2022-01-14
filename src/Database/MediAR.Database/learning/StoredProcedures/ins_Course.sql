@@ -22,7 +22,7 @@ IF NOT EXISTS (
 		,@TenantId
 		);
 ELSE
-	THROW 6000
+	THROW 60000
 		,'Course with same name exists'
 		,5;
 

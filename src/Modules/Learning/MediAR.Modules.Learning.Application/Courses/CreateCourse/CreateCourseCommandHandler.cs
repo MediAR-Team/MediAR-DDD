@@ -27,8 +27,8 @@ namespace MediAR.Modules.Learning.Application.Courses.CreateCourse
       {
         request.Name,
         request.Description,
-        request.BackgroundImageUrl,
-        TenantId = request.TenantId ?? _executionContextAccessor.UserId
+        BackgroundImage = request.BackgroundImageUrl,
+        TenantId = request.TenantId ?? _executionContextAccessor.TenantId
       };
 
       var result = await connection.ExecuteScalarAsync<CourseDto>("[learning].[ins_Course]", queryParams, commandType: CommandType.StoredProcedure);

@@ -1,8 +1,10 @@
 ﻿using MediAR.Modules.Learning.Application.ContentEntries.EntryTypeActions;
 using MediAR.Modules.Learning.Application.ContentEntries.ExecuteEntryAction;
 using MediAR.Modules.Learning.Application.ContentEntries.GetEntryTypes;
+using MediAR.Modules.Learning.Application.ContentEntries.ReorderContentEntries;
 using MediAR.Modules.Learning.Application.Contracts;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MediAR.MainAPI.Modules.Learning.ContentEntries
@@ -40,6 +42,17 @@ namespace MediAR.MainAPI.Modules.Learning.ContentEntries
       var result = await _learningModule.ExecuteQueryAsync(new EntryTypeActionsQuery(typeName));
 
       return Ok(result);
+    }
+
+    [HttpPost("reorder")]
+    public async Task<IActionResult> Reorder(ReorderRequest request)
+    {
+      var newOrder = request.NewOrder.Select(x => new OrderEntry(x.Id, x.Ordinal));
+      var command = new ReorderContentEntriesCommand(newOrder);
+
+      await _learningModule.ExecuteCommandAsync(command);
+
+      return Ok();
     }
   }
 }

@@ -19,7 +19,7 @@ BEGIN
 		AND [TenantId] = @TenantId;
 END
 ELSE
-	THROW 6000
+	THROW 60000
 		,'Group not found'
 		,5;
 

@@ -11,7 +11,7 @@ IF @Count > 0
 	FROM [tenants].[Tenants]
 	WHERE [Id] = @TenantId;
 ELSE
-	THROW 6000
+	THROW 60000
 		,'No tenant with id'
 		,5;
 

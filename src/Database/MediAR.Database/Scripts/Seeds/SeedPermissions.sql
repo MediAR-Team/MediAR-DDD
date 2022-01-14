@@ -1,10 +1,4 @@
-﻿DECLARE @Data XML;
-
---SELECT @Data = CONVERT(XML, BulkColumn)
----- Substitute with the correct absolute path before executing
---FROM OPENROWSET(BULK 'C:\projects\MediAR-DDD\src\Database\MediAR.Database\PermissionMapping.xml', SINGLE_BLOB) AS x;
-
-SET @Data = '<?xml version="1.0" encoding="utf-8" ?>
+﻿DECLARE @Data XML = '<?xml version="1.0" encoding="utf-8" ?>
 <root>
 	<role name="SuperAdmin" description="Super admin (master tenant)">
 		<permission name="CreateTenant" description=""></permission>
