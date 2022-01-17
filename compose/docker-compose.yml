@@ -1,0 +1,40 @@
+version: '3.7'
+
+networks:
+  mediar:
+    ipam:
+      config:
+        - subnet: 172.24.0.0/24
+services:
+  db:
+    build:
+      context: ../
+      dockerfile: ./compose/database/Dockerfile
+    container_name: db
+    tty: true
+    expose:
+      - 1433
+    networks:
+      mediar:
+        ipv4_address: 172.24.0.6
+    restart: unless-stopped
+    environment:
+      SA_PASSWORD: "SqlServer2202Pass"
+      ACCEPT_EULA: "Y"
+
+  mediarapi:
+    build:
+      context: ../
+      dockerfile: ./compose/api/Dockerfile
+    container_name: mediarapi
+    networks:
+      mediar:
+        ipv4_address: 172.24.0.11
+    restart: unless-stopped
+    environment:
+      - TZ=Europe/Kiev
+      - ASPNETCORE_ENVIRONMENT=Docker
+    depends_on:
+      - "db"
+    ports:
+      - "80:80"

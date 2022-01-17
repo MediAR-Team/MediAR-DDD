@@ -2,6 +2,8 @@
 using MediAR.Modules.Learning.Application.Courses.CreateCourse;
 using MediAR.Modules.Learning.Application.Courses.GetCourse;
 using MediAR.Modules.Learning.Application.Courses.GetCourses;
+using MediAR.Modules.Learning.Application.Courses.GetCoursesForAuthenticatedUser;
+using MediAR.Modules.Learning.Application.Courses.GetCoursesForUser;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -38,6 +40,22 @@ namespace MediAR.MainAPI.Modules.Learning.Courses
     public async Task<IActionResult> CreateCourse(CreateCourseRequest request)
     {
       var result = await _mediator.ExecuteCommandAsync(new CreateCourseCommand(request.Name, request.Description, request.BackgroundImageUrl));
+
+      return Ok(result);
+    }
+
+    [HttpGet("foruser/{identifier}")]
+    public async Task<IActionResult> GetCoursesForUser(string identifier, [FromQuery] UserIdentifierOption identifierOption = UserIdentifierOption.UserName)
+    {
+      var result = await _mediator.ExecuteQueryAsync(new GetCoursesForUserQuery(identifier, identifierOption));
+
+      return Ok(result);
+    }
+
+    [HttpGet("forme")]
+    public async Task<IActionResult> GetCoursesForAuthenticatedUser()
+    {
+      var result = await _mediator.ExecuteQueryAsync(new GetCoursesForAuthenticatedUserQuery());
 
       return Ok(result);
     }
