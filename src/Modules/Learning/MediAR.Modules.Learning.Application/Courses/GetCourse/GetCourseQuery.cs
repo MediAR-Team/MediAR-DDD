@@ -3,7 +3,7 @@ using System;
 
 namespace MediAR.Modules.Learning.Application.Courses.GetCourse
 {
-  public class GetCourseQuery : QueryBase<CourseDto>
+  public class GetCourseQuery : QueryBase<CourseAggregateDto>
   {
     public int CourseId { get; }
     public Guid? TenantId { get; }

@@ -1,7 +1,9 @@
 ﻿using MediAR.Modules.Learning.Application.Contracts;
+using MediAR.Modules.Learning.Application.Groups.AddGroupToCourse;
 using MediAR.Modules.Learning.Application.Groups.AddStudentToGroup;
 using MediAR.Modules.Learning.Application.Groups.CreateGroup;
 using MediAR.Modules.Learning.Application.Groups.DeleteGroup;
+using MediAR.Modules.Learning.Application.Groups.GetCoursesForGroup;
 using MediAR.Modules.Learning.Application.Groups.GetGroupMembers;
 using MediAR.Modules.Learning.Application.Groups.GetGroups;
 using MediAR.Modules.Learning.Application.Groups.GetGroupsForAuthenticatedUser;
@@ -74,6 +76,22 @@ namespace MediAR.MainAPI.Modules.Learning.Groups
     public async Task<IActionResult> GetGroupsForAuthenticatedUser()
     {
       var result = await _mediator.ExecuteQueryAsync(new GetGroupsForAuthenticatedUserQuery());
+
+      return Ok(result);
+    }
+
+    [HttpPost("{groupId}/courses")]
+    public async Task<IActionResult> AddGroupToCourse(int groupId, AddGroupToCourseRequest request)
+    {
+      await _mediator.ExecuteCommandAsync(new AddGroupToCourseCommand(groupId, request.CourseId));
+
+      return Ok();
+    }
+
+    [HttpGet("{groupId}/courses")]
+    public async Task<IActionResult> GetGroupCourses(int groupId)
+    {
+      var result = await _mediator.ExecuteQueryAsync(new GetCoursesForGroupQuery(groupId));
 
       return Ok(result);
     }

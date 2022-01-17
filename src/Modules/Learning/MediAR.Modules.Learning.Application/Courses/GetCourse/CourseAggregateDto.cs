@@ -1,10 +1,9 @@
-﻿using MediAR.Modules.Learning.Application.ContentEntries;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace MediAR.Modules.Learning.Application.Courses.GetCourse
 {
-  public class CourseDto
+  public class CourseAggregateDto
   {
     public int Id { get; set; }
     public Guid TenantId { get; set; }

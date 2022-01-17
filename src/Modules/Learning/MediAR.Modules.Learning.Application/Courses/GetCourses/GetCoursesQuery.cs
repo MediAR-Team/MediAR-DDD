@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace MediAR.Modules.Learning.Application.Courses.GetCourses
 {
-  public class GetCoursesQuery : QueryBase<List<CourseDto>>, IPagedQuery
+  public class GetCoursesQuery : QueryBase<List<CourseAggregateDto>>, IPagedQuery
   {
     public int? Page { get; }
     public int? PageSize { get; }

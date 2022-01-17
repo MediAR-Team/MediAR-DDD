@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MediAR.Modules.Learning.Application.Courses.GetCourses
 {
-  class GetCourseQueryHandler : IQueryHandler<GetCourseQuery, CourseDto>
+  class GetCourseQueryHandler : IQueryHandler<GetCourseQuery, CourseAggregateDto>
   {
     private readonly ISqlConnectionFactory _connectionFactory;
     private readonly IExecutionContextAccessor _executionContextAccessor;
@@ -21,7 +21,7 @@ namespace MediAR.Modules.Learning.Application.Courses.GetCourses
       _executionContextAccessor = executionContextAccessor;
     }
 
-    public async Task<CourseDto> Handle(GetCourseQuery request, CancellationToken cancellationToken)
+    public async Task<CourseAggregateDto> Handle(GetCourseQuery request, CancellationToken cancellationToken)
     {
       var connection = _connectionFactory.GetOpenConnection();
 
@@ -46,7 +46,7 @@ namespace MediAR.Modules.Learning.Application.Courses.GetCourses
         TenantId = request.TenantId ?? _executionContextAccessor.TenantId
       };
 
-      var courses = await connection.QueryAsync<CourseDto, ModuleDto, DbContentEntry, CourseDto>(sql, (c, m, ce) =>
+      var courses = await connection.QueryAsync<CourseAggregateDto, ModuleDto, DbContentEntry, CourseAggregateDto>(sql, (c, m, ce) =>
       {
         if (m != null)
         {

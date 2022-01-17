@@ -129,6 +129,10 @@
     <Build Include="learning\UserDefinedTableTypes\ut_OrdinalUpdate.sql" />
     <Build Include="learning\StoredProcedures\upd_ReorderModules.sql" />
     <Build Include="learning\StoredProcedures\upd_ReorderContentEntries.sql" />
+    <Build Include="learning\Tables\GroupToCourse.sql" />
+    <Build Include="learning\StoredProcedures\add_Group_to_Course.sql" />
+    <Build Include="learning\Views\v_GroupCourses.sql" />
+    <Build Include="learning\Views\v_StudentCourses.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Seeds\SeedTenants.sql" />
