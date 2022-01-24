@@ -36,6 +36,9 @@ namespace MediAR.Modules.Learning.Application.Members.CreateMember
         case "Student":
           await connection.ExecuteScalarAsync("[learning].[ins_Student]", queryParams, commandType: CommandType.StoredProcedure);
           break;
+        case "Instructor":
+          await connection.ExecuteScalarAsync("[learning].[ins_Instructor]", queryParams, commandType: CommandType.StoredProcedure);
+          break;
         default:
           break;
       }

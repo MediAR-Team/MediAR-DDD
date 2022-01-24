@@ -1,11 +1,11 @@
-﻿CREATE TABLE [learning].[Students] (
+﻿CREATE TABLE [learning].[Instructors] (
 	[Id] UNIQUEIDENTIFIER NOT NULL
 	,[UserName] VARCHAR(256) NOT NULL
 	,[Email] VARCHAR(256) NOT NULL
 	,[FirstName] VARCHAR(256) NOT NULL
 	,[LastName] VARCHAR(256) NOT NULL
 	,[TenantId] UNIQUEIDENTIFIER NOT NULL
-	,CONSTRAINT [PK_Students] PRIMARY KEY (
+	,CONSTRAINT [PK_Instructors] PRIMARY KEY (
 		[Id]
 		,[TenantId]
 		)

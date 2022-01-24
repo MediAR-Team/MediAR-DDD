@@ -133,6 +133,8 @@
     <Build Include="learning\StoredProcedures\add_Group_to_Course.sql" />
     <Build Include="learning\Views\v_GroupCourses.sql" />
     <Build Include="learning\Views\v_StudentCourses.sql" />
+    <Build Include="learning\Tables\Instructors.sql" />
+    <Build Include="learning\StoredProcedures\ins_Instructor.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Seeds\SeedTenants.sql" />
@@ -140,5 +142,6 @@
     <None Include="Scripts\PreScripts\app_schema.sql" />
     <None Include="Scripts\Migrations\001_initial.sql" />
     <None Include="Scripts\Migrations\002_ordinals.sql" />
+    <None Include="Scripts\Migrations\003_instructors.sql" />
   </ItemGroup>
 </Project>

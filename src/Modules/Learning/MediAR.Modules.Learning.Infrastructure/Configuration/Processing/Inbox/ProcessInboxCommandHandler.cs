@@ -29,12 +29,12 @@ namespace MediAR.Modules.Learning.Infrastructure.Configuration.Processing.Inbox
                           [Message].[OccuredOn] AS [OccuredOn],
                           [Message].[Data] AS [Data],
                           [Message].[Type] AS [Type]
-                          FROM [membership].[InboxMessages] [Message]
+                          FROM [learning].[InboxMessages] [Message]
                           WHERE [Message].[ProcessedOn] IS NULL";
 
       var messages = await connection.QueryAsync<InboxMessageDto>(sql);
 
-      const string updateSql = @"UPDATE [membership].[InboxMessages] SET [ProcessedOn] = GETDATE() WHERE [Id] = @Id";
+      const string updateSql = @"UPDATE [learning].[InboxMessages] SET [ProcessedOn] = GETDATE() WHERE [Id] = @Id";
 
       foreach (var message in messages)
       {

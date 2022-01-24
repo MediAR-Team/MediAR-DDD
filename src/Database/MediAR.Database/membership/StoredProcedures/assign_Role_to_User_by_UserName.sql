@@ -37,6 +37,7 @@ BEGIN
 			FROM [membership].[UsersToRoles]
 			WHERE [UserId] = @UserId
 				AND [RoleId] = @RoleId
+				AND [TenantId] = @TenantId
 			)
 	BEGIN
 			;
@@ -49,10 +50,12 @@ BEGIN
 	INSERT INTO UsersToRoles (
 		UserId
 		,RoleId
+		,TenantId
 		)
 	VALUES (
 		@UserId
 		,@RoleId
+		,@TenantId
 		);
 
 	RETURN 0

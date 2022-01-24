@@ -15,7 +15,7 @@ SELECT C.TenantId AS TenantId
 FROM [learning].[Courses] C
 JOIN [learning].[GroupToCourse] GTC ON GTC.TenantId = C.TenantId
 	AND GTC.CourseId = C.Id
-JOIN [learning].[Groups] g ON G.TenantId = GTC.GroupId
+JOIN [learning].[Groups] g ON G.TenantId = GTC.TenantId
 	AND G.Id = GTC.GroupId
 JOIN [learning].[StudentToGroup] STG ON STG.TenantId = G.TenantId
 	AND STG.GroupId = G.Id

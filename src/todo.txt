@@ -1,7 +1,8 @@
 done - add ordinal to modules and entries
 done -- connect group to course
 done -- get auth user courses
-add instructor table and insert command + SP
-verify that student in learning module is created
+implement unit of work
+done -- add instructor table and insert command + SP
+done -- verify that student in learning module is created
 add validation to entry actions (preferably with fluentValidator)
 add minio and files folder

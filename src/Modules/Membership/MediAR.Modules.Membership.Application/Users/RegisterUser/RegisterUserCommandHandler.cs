@@ -39,7 +39,7 @@ namespace MediAR.Modules.Membership.Application.Users.RegisterUser
 
       try
       {
-        await connection.QueryAsync("[membership].[ins_User]", queryParams, commandType: CommandType.StoredProcedure);
+        await connection.ExecuteAsync("[membership].[ins_User]", queryParams, commandType: CommandType.StoredProcedure);
       }
       catch (SqlException ex)
       {

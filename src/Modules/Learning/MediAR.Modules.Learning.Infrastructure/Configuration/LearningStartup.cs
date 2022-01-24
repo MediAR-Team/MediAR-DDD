@@ -19,6 +19,7 @@ namespace MediAR.Modules.Learning.Infrastructure.Configuration
       ConfigureCompositionRoot(configuration, executionContextAccessor);
 
       QuartzStartup.Initialize();
+      EventBusStartup.Initialize();
     }
 
     private static void ConfigureCompositionRoot(IConfiguration configuration, IExecutionContextAccessor executionContextAccessor)

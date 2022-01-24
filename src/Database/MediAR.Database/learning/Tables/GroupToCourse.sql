@@ -10,13 +10,13 @@ CREATE TABLE [learning].[GroupToCourse] (
 		,[CourseId]
 		)
 	,CONSTRAINT [FK_GroupToCourse_Group] FOREIGN KEY (
-		[TenantId]
-		,[GroupId]
-		) REFERENCES [learning].[Groups]([TenantId], [Id])
+		[GroupId]
+		,[TenantId]
+		) REFERENCES [learning].[Groups]([Id], [TenantId])
 	,CONSTRAINT [FK_GroupToCourse_Course] FOREIGN KEY (
-		[TenantId]
-		,[CourseId]
-		) REFERENCES [learning].[Courses]([TenantId], [Id])
+		[CourseId]
+		,[TenantId]
+		) REFERENCES [learning].[Courses]([Id], [TenantId])
 	,
 	)
 

@@ -49,7 +49,7 @@ namespace MediAR.Modules.Membership.Application.Users.AssignRoleToUser
     {
       try
       {
-        await connection.QueryAsync("[membership].[assign_Role_to_User_by_UserName]", new { UserName = request.UserIdentifier, request.RoleName, _executionContextAccessor.TenantId }, commandType: CommandType.StoredProcedure);
+        await connection.ExecuteAsync("[membership].[assign_Role_to_User_by_UserName]", new { UserName = request.UserIdentifier, request.RoleName, _executionContextAccessor.TenantId }, commandType: CommandType.StoredProcedure);
         return new AssignRoleToUserCommandResult();
       }
       catch (Exception ex)
@@ -62,7 +62,7 @@ namespace MediAR.Modules.Membership.Application.Users.AssignRoleToUser
     {
       try
       {
-        await connection.QueryAsync("[membership].[assign_Role_to_User_by_Email]", new { Email = request.UserIdentifier, request.RoleName, _executionContextAccessor.TenantId }, commandType: CommandType.StoredProcedure);
+        await connection.ExecuteAsync("[membership].[assign_Role_to_User_by_Email]", new { Email = request.UserIdentifier, request.RoleName, _executionContextAccessor.TenantId }, commandType: CommandType.StoredProcedure);
         return new AssignRoleToUserCommandResult();
       }
       catch (SqlException ex)
