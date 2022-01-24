@@ -18,6 +18,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
+using Serilog.Formatting.Compact;
 using System;
 using System.Text;
 
@@ -26,9 +28,23 @@ namespace MediAR.MainAPI
   public class Startup
   {
     private readonly IConfiguration _configuration;
+    private readonly ILogger _logger;
+    private readonly ILogger _loggerForApi;
 
     public Startup(IConfiguration configuration)
     {
+      _logger = new LoggerConfiguration()
+    .Enrich.FromLogContext()
+    .WriteTo.Console(
+        outputTemplate:
+        "[{Timestamp:HH:mm:ss} {Level:u3}] [{Module}] [{Context}] {Message:lj}{NewLine}{Exception}")
+    .WriteTo.File(new CompactJsonFormatter(), "logs/logs")
+    .CreateLogger();
+
+      _loggerForApi = _logger.ForContext("Module", "API");
+
+      _loggerForApi.Information("Logger configured");
+
       _configuration = configuration;
     }
 
@@ -105,9 +121,9 @@ namespace MediAR.MainAPI
       var tenantManagement = container.Resolve<ITenantManagementModule>();
       var executionContextAccessor = new ExecutionContextAccessor(httpContextAccessor, tenantManagement);
 
-      MembershipStartup.Initialize(_configuration, executionContextAccessor);
-      TenantManagementStartup.Initialize(_configuration, executionContextAccessor);
-      LearningStartup.Initialize(_configuration, executionContextAccessor);
+      MembershipStartup.Initialize(_configuration, executionContextAccessor, _logger);
+      TenantManagementStartup.Initialize(_configuration, executionContextAccessor, _logger);
+      LearningStartup.Initialize(_configuration, executionContextAccessor, _logger);
     }
   }
 }

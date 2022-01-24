@@ -6,3 +6,4 @@ done -- add instructor table and insert command + SP
 done -- verify that student in learning module is created
 add validation to entry actions (preferably with fluentValidator)
 add minio and files folder
+todo -- add logging

@@ -1,4 +1,8 @@
-﻿CREATE PROCEDURE [learning].[ins_ContentEntry] @TenantId UNIQUEIDENTIFIER
+﻿PRINT N'Altering Procedure [learning].[ins_ContentEntry]...';
+
+
+GO
+ALTER PROCEDURE [learning].[ins_ContentEntry] @TenantId UNIQUEIDENTIFIER
 	,@ModuleId INT
 	,@TypeId INT
 	,@Data XML
@@ -30,3 +34,8 @@ SELECT @ModuleId
 	,@Data
 	,@Config
 	,@NewOrdinal;
+GO
+PRINT N'Update complete.';
+
+
+GO

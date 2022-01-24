@@ -20,6 +20,10 @@ namespace MediAR.Modules.Learning.Infrastructure.Configuration.DataAccess
         .As<ISqlConnectionFactory>()
         .InstancePerLifetimeScope();
 
+      builder.RegisterType<SqlFacade>()
+        .As<ISqlFacade>()
+        .InstancePerLifetimeScope();
+
       builder.Register(x =>
       {
         var sqlConfig = new SqlConfiguration();

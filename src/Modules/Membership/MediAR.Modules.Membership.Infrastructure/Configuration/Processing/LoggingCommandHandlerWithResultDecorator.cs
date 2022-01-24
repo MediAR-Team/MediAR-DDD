@@ -1,6 +1,6 @@
 ﻿using MediAR.Modules.Membership.Application.Configuration.Commands;
 using MediAR.Modules.Membership.Application.Contracts;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,17 +22,17 @@ namespace MediAR.Modules.Membership.Infrastructure.Configuration.Processing
     {
       try
       {
-        _logger.LogInformation($"Executing command {request.GetType().Name}");
+        _logger.Information($"Executing command {request.GetType().Name}");
 
         var result = await _decorated.Handle(request, cancellationToken);
 
-        _logger.LogInformation($"Successfulle executed command {request.GetType().Name}");
+        _logger.Information($"Successfulle executed command {request.GetType().Name}");
 
         return result;
       }
       catch (Exception ex)
       {
-        _logger.LogError($"Processing {request.GetType().Name} failed", ex);
+        _logger.Error($"Processing {request.GetType().Name} failed", ex);
         throw;
       }
     }

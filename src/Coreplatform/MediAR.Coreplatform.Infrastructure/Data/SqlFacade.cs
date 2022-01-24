@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MediAR.Coreplatform.Infrastructure.Data
 {
-  internal class SqlFacade : ISqlFacade
+  public class SqlFacade : ISqlFacade
   {
     private readonly SqlConnection _connection;
     private readonly SqlTransaction _transaction;

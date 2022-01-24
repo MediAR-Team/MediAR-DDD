@@ -7,6 +7,7 @@ using MediAR.Modules.Learning.Infrastructure.Configuration.Mediation;
 using MediAR.Modules.Learning.Infrastructure.Configuration.Processing;
 using MediAR.Modules.Learning.Infrastructure.Configuration.Quartz;
 using Microsoft.Extensions.Configuration;
+using Serilog;
 
 namespace MediAR.Modules.Learning.Infrastructure.Configuration
 {
@@ -14,17 +15,22 @@ namespace MediAR.Modules.Learning.Infrastructure.Configuration
   {
     private static IContainer _container;
 
-    public static void Initialize(IConfiguration configuration, IExecutionContextAccessor executionContextAccessor)
+    public static void Initialize(IConfiguration configuration, IExecutionContextAccessor executionContextAccessor, ILogger logger)
     {
-      ConfigureCompositionRoot(configuration, executionContextAccessor);
+      ConfigureCompositionRoot(configuration, executionContextAccessor, logger);
 
       QuartzStartup.Initialize();
       EventBusStartup.Initialize();
     }
 
-    private static void ConfigureCompositionRoot(IConfiguration configuration, IExecutionContextAccessor executionContextAccessor)
+    private static void ConfigureCompositionRoot(IConfiguration configuration, IExecutionContextAccessor executionContextAccessor, ILogger logger)
     {
       var containerBuilder = new ContainerBuilder();
+
+      containerBuilder
+        .RegisterInstance(logger.ForContext("Module", "Learning"))
+        .As<ILogger>()
+        .SingleInstance();
 
       containerBuilder.RegisterModule(new DataAccessModule(configuration));
       containerBuilder.RegisterModule(new EventBusModule(null));

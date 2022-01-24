@@ -1,6 +1,6 @@
 ﻿using Autofac;
+using MediAR.Coreplatform.Infrastructure.Mediation;
 using MediAR.Modules.TenantManagement.Application.Tenants.CreateTenant;
-using MediatR.Extensions.Autofac.DependencyInjection;
 
 namespace MediAR.Modules.TenantManagement.Infrastructure.Configuration.Mediation
 {
@@ -8,7 +8,7 @@ namespace MediAR.Modules.TenantManagement.Infrastructure.Configuration.Mediation
   {
     protected override void Load(ContainerBuilder builder)
     {
-      builder.RegisterMediatR(typeof(MediatorModule).Assembly, typeof(CreateTenantCommand).Assembly);
+      builder.RegisterMediator(ThisAssembly, typeof(CreateTenantCommand).Assembly);
     }
   }
 }

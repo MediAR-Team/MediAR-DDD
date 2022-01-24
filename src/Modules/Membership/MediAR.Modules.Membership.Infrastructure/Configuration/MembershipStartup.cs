@@ -7,6 +7,7 @@ using MediAR.Modules.Membership.Infrastructure.Configuration.Mediation;
 using MediAR.Modules.Membership.Infrastructure.Configuration.Processing;
 using MediAR.Modules.Membership.Infrastructure.Configuration.Quartz;
 using Microsoft.Extensions.Configuration;
+using Serilog;
 
 namespace MediAR.Modules.Membership.Infrastructure.Configuration
 {
@@ -14,16 +15,21 @@ namespace MediAR.Modules.Membership.Infrastructure.Configuration
   {
     private static IContainer _container;
 
-    public static void Initialize(IConfiguration configuration, IExecutionContextAccessor executionContextAccessor)
+    public static void Initialize(IConfiguration configuration, IExecutionContextAccessor executionContextAccessor, ILogger logger)
     {
-      ConfigureCompositionRoot(configuration, executionContextAccessor);
+      ConfigureCompositionRoot(configuration, executionContextAccessor, logger);
 
       QuartzStartup.Initialize();
     }
 
-    private static void ConfigureCompositionRoot(IConfiguration configuration, IExecutionContextAccessor executionContextAccessor)
+    private static void ConfigureCompositionRoot(IConfiguration configuration, IExecutionContextAccessor executionContextAccessor, ILogger logger)
     {
       var containerBuilder = new ContainerBuilder();
+
+      containerBuilder
+        .RegisterInstance(logger.ForContext("Module", "Membership"))
+        .As<ILogger>()
+        .SingleInstance();
 
       containerBuilder.RegisterModule(new DataAccessModule(configuration));
       containerBuilder.RegisterModule(new AuthenticationModule(configuration));

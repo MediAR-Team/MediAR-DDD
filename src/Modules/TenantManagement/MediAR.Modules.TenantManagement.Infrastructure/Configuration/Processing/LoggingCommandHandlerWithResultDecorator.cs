@@ -1,6 +1,6 @@
 ﻿using MediAR.Modules.TenantManagement.Application.Configuration.Commands;
 using MediAR.Modules.TenantManagement.Application.Contracts;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,17 +22,17 @@ namespace MediAR.Modules.TenantManagement.Infrastructure.Configuration.Processin
     {
       try
       {
-        _logger.LogInformation($"Executing command {request.GetType().Name}");
+        _logger.Information($"Executing command {request.GetType().Name}");
 
         var result = await _decorated.Handle(request, cancellationToken);
 
-        _logger.LogInformation($"Successfulle executed command {request.GetType().Name}");
+        _logger.Information($"Successfulle executed command {request.GetType().Name}");
 
         return result;
       }
       catch (Exception ex)
       {
-        _logger.LogError($"Processing {request.GetType().Name} failed", ex);
+        _logger.Error($"Processing {request.GetType().Name} failed", ex);
         throw;
       }
     }
