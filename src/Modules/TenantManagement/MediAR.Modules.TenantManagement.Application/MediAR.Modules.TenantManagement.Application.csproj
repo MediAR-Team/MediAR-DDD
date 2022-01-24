@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Coreplatform\MediAR.Coreplatform.Application\MediAR.Coreplatform.Application.csproj" />
     <ProjectReference Include="..\..\..\Coreplatform\MediAR.Coreplatform.Domain\MediAR.Coreplatform.Domain.csproj" />
+    <ProjectReference Include="..\..\..\Coreplatform\MediAR.Coreplatform.Infrastructure\MediAR.Coreplatform.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

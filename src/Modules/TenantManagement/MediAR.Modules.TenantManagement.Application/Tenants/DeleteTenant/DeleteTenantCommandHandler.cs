@@ -1,6 +1,6 @@
-﻿using Dapper;
-using MediAR.Coreplatform.Application.Data;
+﻿using MediAR.Coreplatform.Application.Data;
 using MediAR.Coreplatform.Domain;
+using MediAR.Coreplatform.Infrastructure.Data;
 using MediAR.Modules.TenantManagement.Application.Configuration.Commands;
 using MediatR;
 using System.Data;
@@ -33,7 +33,11 @@ namespace MediAR.Modules.TenantManagement.Application.Tenants.DeleteTenant
       }
       catch (SqlException ex)
       {
-        throw new BusinessRuleValidationException(ex.Message);
+        if (ex.Number == SqlConstants.UserDefinedExceptionCode)
+        {
+          throw new BusinessRuleValidationException(ex.Message);
+        }
+        throw;
       }
     }
   }

@@ -2,6 +2,7 @@
 using MediAR.Coreplatform.Application;
 using MediAR.Coreplatform.Application.Data;
 using MediAR.Coreplatform.Domain;
+using MediAR.Coreplatform.Infrastructure.Data;
 using MediAR.Modules.Learning.Application.Configuration.Commands;
 using MediatR;
 using System.Data;
@@ -34,18 +35,17 @@ namespace MediAR.Modules.Learning.Application.Groups.AddGroupToCourse
       try
       {
         await _sqlFacade.ExecuteAsync("learning.add_Group_to_Course", queryParams, commandType: CommandType.StoredProcedure);
+        return Unit.Value;
       }
       catch (SqlException ex)
       {
-        if (ex.Number == 60000)
+        if (ex.Number == SqlConstants.UserDefinedExceptionCode)
         {
           throw new BusinessRuleValidationException(ex.Message);
         }
 
         throw;
       }
-
-      return Unit.Value;
     }
   }
 }

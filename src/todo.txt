@@ -7,5 +7,5 @@ done -- verify that student in learning module is created
 add validation to entry actions and commands (preferably with fluentValidator)
 add minio and files folder
 done -- add logging
-adopt UoW everywhere
-before throwing BusinessRuleValidationException, check if the sql exception code is user-defined
+done -- adopt UoW everywhere
+done -- before throwing BusinessRuleValidationException, check if the sql exception code is user-defined

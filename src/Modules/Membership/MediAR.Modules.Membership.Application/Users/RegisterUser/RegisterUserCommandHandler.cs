@@ -2,6 +2,7 @@
 using MediAR.Coreplatform.Application;
 using MediAR.Coreplatform.Application.Data;
 using MediAR.Coreplatform.Domain;
+using MediAR.Coreplatform.Infrastructure.Data;
 using MediAR.Modules.Membership.Application.Configuration.Commands;
 using System.Data;
 using System.Data.SqlClient;
@@ -38,14 +39,17 @@ namespace MediAR.Modules.Membership.Application.Users.RegisterUser
       try
       {
         await _sqlFacade.ExecuteAsync("[membership].[ins_User]", queryParams, commandType: CommandType.StoredProcedure);
+        // TODO: maybe return auth response or something
+        return new RegisterUserCommandResult();
       }
       catch (SqlException ex)
       {
-        throw new BusinessRuleValidationException(ex.Message);
+        if (ex.Number == SqlConstants.UserDefinedExceptionCode)
+        {
+          throw new BusinessRuleValidationException(ex.Message);
+        }
+        throw;
       }
-
-      // TODO: maybe return auth response or something
-      return new RegisterUserCommandResult();
     }
   }
 }

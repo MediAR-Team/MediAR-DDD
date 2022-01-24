@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using MediAR.Coreplatform.Application.Data;
 using MediAR.Coreplatform.Domain;
+using MediAR.Coreplatform.Infrastructure.Data;
 using MediAR.Modules.Learning.Application.ContentEntries;
 using System.Data;
 using System.Data.SqlClient;
@@ -86,7 +87,11 @@ namespace MediAR.Modules.Learning.Infrastructure.Domain.ContentEntries
       }
       catch (SqlException ex)
       {
-        throw new BusinessRuleValidationException(ex.Message);
+        if (ex.Number == SqlConstants.UserDefinedExceptionCode)
+        {
+          throw new BusinessRuleValidationException(ex.Message);
+        }
+        throw;
       }
     }
   }

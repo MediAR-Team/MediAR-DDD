@@ -2,6 +2,7 @@
 using MediAR.Coreplatform.Application;
 using MediAR.Coreplatform.Application.Data;
 using MediAR.Coreplatform.Domain;
+using MediAR.Coreplatform.Infrastructure.Data;
 using MediAR.Modules.Learning.Application.Configuration.Commands;
 using MediatR;
 using System.Data;
@@ -39,13 +40,16 @@ namespace MediAR.Modules.Learning.Application.ContentEntries.ReorderContentEntri
       try
       {
         await _sqlFacade.ExecuteAsync("[learning].[upd_ReorderContentEntries]", queryParams, commandType: CommandType.StoredProcedure);
+        return Unit.Value;
       }
       catch (SqlException ex)
       {
-        throw new BusinessRuleValidationException(ex.Message);
+        if (ex.Number == SqlConstants.UserDefinedExceptionCode)
+        {
+          throw new BusinessRuleValidationException(ex.Message);
+        }
+        throw;
       }
-
-      return Unit.Value;
     }
   }
 }

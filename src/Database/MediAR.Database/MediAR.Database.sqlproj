@@ -144,5 +144,6 @@
     <None Include="Scripts\Migrations\002_ordinals.sql" />
     <None Include="Scripts\Migrations\003_instructors.sql" />
     <None Include="Scripts\Migrations\004_fix_ins_entry.sql" />
+    <None Include="Scripts\Migrations\005_fix_courseAggregate.sql" />
   </ItemGroup>
 </Project>

@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using MediAR.Coreplatform.Application.Data;
 using MediAR.Coreplatform.Domain;
+using MediAR.Coreplatform.Infrastructure.Data;
 using MediAR.Modules.TenantManagement.Application.Configuration.Commands;
 using System.Data;
 using System.Data.SqlClient;
@@ -33,7 +34,11 @@ namespace MediAR.Modules.TenantManagement.Application.Tenants.CreateTenant
       }
       catch (SqlException ex)
       {
-        throw new BusinessRuleValidationException(ex.Message);
+        if (ex.Number == SqlConstants.UserDefinedExceptionCode)
+        {
+          throw new BusinessRuleValidationException(ex.Message);
+        }
+        throw;
       }
     }
   }
