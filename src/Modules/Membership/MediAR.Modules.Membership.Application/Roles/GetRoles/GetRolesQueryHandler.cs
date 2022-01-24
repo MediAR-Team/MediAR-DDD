@@ -13,20 +13,19 @@ namespace MediAR.Modules.Membership.Application.Roles.GetRoles
 {
   class GetRolesQueryHandler : IQueryHandler<GetRolesQuery, List<RoleDto>>
   {
-    private readonly ISqlConnectionFactory _connectionFactory;
+    private readonly ISqlFacade _sqlFacade;
 
-    public GetRolesQueryHandler(ISqlConnectionFactory connectionFactory)
+    public GetRolesQueryHandler(ISqlFacade sqlFacade)
     {
-      _connectionFactory = connectionFactory;
+      _sqlFacade = sqlFacade;
     }
 
     public async Task<List<RoleDto>> Handle(GetRolesQuery request, CancellationToken cancellationToken)
     {
-      var connection = _connectionFactory.GetOpenConnection();
       var queryParams = new { Offset = request.PageSize * (request.Page - 1), Next = request.PageSize };
 
       var lookup = new Dictionary<Guid, RoleDto>();
-      await connection.QueryAsync<RoleDto, PermissionDto, RoleDto>("[membership].[sel_Roles_with_Permissions]", (r, p) =>
+      await _sqlFacade.QueryAsync<RoleDto, PermissionDto, RoleDto>("[membership].[sel_Roles_with_Permissions]", (r, p) =>
       {
         if (!lookup.TryGetValue(r.Id, out RoleDto role))
         {

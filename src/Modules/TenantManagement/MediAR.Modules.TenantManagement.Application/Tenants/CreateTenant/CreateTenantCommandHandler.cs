@@ -11,17 +11,15 @@ namespace MediAR.Modules.TenantManagement.Application.Tenants.CreateTenant
 {
   class CreateTenantCommandHandler : ICommandHandler<CreateTenantCommand, TenantDto>
   {
-    private readonly ISqlConnectionFactory _connectionFactory;
+    private readonly ISqlFacade _sqlFacade;
 
-    public CreateTenantCommandHandler(ISqlConnectionFactory connectionFactory)
+    public CreateTenantCommandHandler(ISqlFacade sqlFacade)
     {
-      _connectionFactory = connectionFactory;
+      _sqlFacade = sqlFacade;
     }
 
     public async Task<TenantDto> Handle(CreateTenantCommand request, CancellationToken cancellationToken)
     {
-      var connection = _connectionFactory.GetOpenConnection();
-
       var requestParams = new
       {
         request.Name,
@@ -30,14 +28,13 @@ namespace MediAR.Modules.TenantManagement.Application.Tenants.CreateTenant
 
       try
       {
-        var result = await connection.QueryFirstOrDefaultAsync<TenantDto>("[tenants].[ins_Tenant]", requestParams, commandType: CommandType.StoredProcedure);
+        var result = await _sqlFacade.QueryFirstOrDefaultAsync<TenantDto>("[tenants].[ins_Tenant]", requestParams, commandType: CommandType.StoredProcedure);
         return result;
       }
       catch (SqlException ex)
       {
         throw new BusinessRuleValidationException(ex.Message);
       }
-
     }
   }
 }

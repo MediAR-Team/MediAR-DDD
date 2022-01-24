@@ -12,18 +12,17 @@ namespace MediAR.Modules.Learning.Infrastructure.Configuration.Processing.Inbox
 {
   class ProcessInboxCommandHandler : ICommandHandler<ProcessInboxCommand>
   {
-    private readonly ISqlConnectionFactory _connectionFactory;
+    private readonly ISqlFacade _sqlFacade;
     private readonly IMediator _mediator;
 
-    public ProcessInboxCommandHandler(ISqlConnectionFactory connectionFactory, IMediator mediator)
+    public ProcessInboxCommandHandler(ISqlFacade sqlFacade, IMediator mediator)
     {
-      _connectionFactory = connectionFactory;
+      _sqlFacade = sqlFacade;
       _mediator = mediator;
     }
 
     public async Task<Unit> Handle(ProcessInboxCommand command, CancellationToken cancellationToken)
     {
-      var connection = _connectionFactory.GetOpenConnection();
       const string sql = @"SELECT
                           [Message].[Id] AS [Id],
                           [Message].[OccuredOn] AS [OccuredOn],
@@ -32,7 +31,7 @@ namespace MediAR.Modules.Learning.Infrastructure.Configuration.Processing.Inbox
                           FROM [learning].[InboxMessages] [Message]
                           WHERE [Message].[ProcessedOn] IS NULL";
 
-      var messages = await connection.QueryAsync<InboxMessageDto>(sql);
+      var messages = await _sqlFacade.QueryAsync<InboxMessageDto>(sql);
 
       const string updateSql = @"UPDATE [learning].[InboxMessages] SET [ProcessedOn] = GETDATE() WHERE [Id] = @Id";
 
@@ -46,7 +45,7 @@ namespace MediAR.Modules.Learning.Infrastructure.Configuration.Processing.Inbox
         try
         {
           await _mediator.Publish((INotification)request, cancellationToken);
-          await connection.ExecuteScalarAsync(updateSql, new { message.Id });
+          await _sqlFacade.ExecuteAsync(updateSql, new { message.Id });
         }
         catch(Exception e)
         {

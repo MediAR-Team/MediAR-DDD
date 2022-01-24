@@ -11,5 +11,6 @@ namespace MediAR.Modules.Learning.Application.ContentEntries
     public string TypeName { get; set; }
     public string Configuration { get; set; }
     public string Data { get; set; }
+    public int Ordinal { get; set; }
   }
 }

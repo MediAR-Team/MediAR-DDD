@@ -10,17 +10,15 @@ namespace MediAR.Modules.Learning.Application.Groups.GetGroupsForStudent
 {
   class GetGroupsForStudentQueryHandler : IQueryHandler<GetGroupsForStudentQuery, List<GroupDto>>
   {
-    private readonly ISqlConnectionFactory _connectionFactory;
+    private readonly ISqlFacade _sqlFacade;
 
-    public GetGroupsForStudentQueryHandler(ISqlConnectionFactory connectionFactory)
+    public GetGroupsForStudentQueryHandler(ISqlFacade sqlFacade)
     {
-      _connectionFactory = connectionFactory;
+      _sqlFacade = sqlFacade;
     }
 
     public async Task<List<GroupDto>> Handle(GetGroupsForStudentQuery request, CancellationToken cancellationToken)
     {
-      var connection = _connectionFactory.GetOpenConnection();
-
       const string sql = @"SELECT
                           [GroupMember].[GroupId] AS [Id],
                           [GroupMember].[GroupName] AS [Name],
@@ -33,7 +31,7 @@ namespace MediAR.Modules.Learning.Application.Groups.GetGroupsForStudent
         Identifier = request.UserIdentifier
       };
 
-      var groups = await connection.QueryAsync<GroupDto>(sql, queryParams);
+      var groups = await _sqlFacade.QueryAsync<GroupDto>(sql, queryParams);
 
       return groups.ToList();
     }

@@ -11,19 +11,17 @@ namespace MediAR.Modules.Learning.Application.Groups.GetCoursesForGroup
 {
   internal class GetCoursesForGroupQueryHandler : IQueryHandler<GetCoursesForGroupQuery, List<CourseDto>>
   {
-    private readonly ISqlConnectionFactory _connectionFactory;
+    private readonly ISqlFacade _sqlFacade;
     private readonly IExecutionContextAccessor _executionContextAccessor;
 
-    public GetCoursesForGroupQueryHandler(ISqlConnectionFactory connectionFactory, IExecutionContextAccessor executionContextAccessor)
+    public GetCoursesForGroupQueryHandler(ISqlFacade sqlFacade, IExecutionContextAccessor executionContextAccessor)
     {
-      _connectionFactory = connectionFactory;
+      _sqlFacade = sqlFacade;
       _executionContextAccessor = executionContextAccessor;
     }
 
     public async Task<List<CourseDto>> Handle(GetCoursesForGroupQuery request, CancellationToken cancellationToken)
     {
-      var connection = _connectionFactory.GetOpenConnection();
-
       const string sql = @"SELECT
                           GC.CourseId AS Id,
                           GC.CourseName AS [Name],
@@ -39,7 +37,7 @@ namespace MediAR.Modules.Learning.Application.Groups.GetCoursesForGroup
         _executionContextAccessor.TenantId
       };
 
-      var result = await connection.QueryAsync<CourseDto>(sql, queryParams);
+      var result = await _sqlFacade.QueryAsync<CourseDto>(sql, queryParams);
 
       return result.ToList();
     }

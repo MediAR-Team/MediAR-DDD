@@ -11,19 +11,17 @@ namespace MediAR.Modules.Membership.Application.Authentication.Authenticate
   {
     private const string InvalidUserNameOrPassswordMessage = "UserName or password invalid";
 
-    private readonly ISqlConnectionFactory _connectionFactory;
+    private readonly ISqlFacade _sqlFacade;
     private readonly ITokenProvider _tokenProvider;
 
-    public AuthenticateCommandHandler(ISqlConnectionFactory connectionFactory, ITokenProvider tokenProvider)
+    public AuthenticateCommandHandler(ISqlFacade sqlFacade, ITokenProvider tokenProvider)
     {
-      _connectionFactory = connectionFactory;
+      _sqlFacade = sqlFacade;
       _tokenProvider = tokenProvider;
     }
 
     public async Task<AuthenticationResult> Handle(AuthenticateCommand request, CancellationToken cancellationToken)
     {
-      var connection = _connectionFactory.GetOpenConnection();
-
       const string sql = @"SELECT
                             [U].[Id],
                             [U].[UserName],
@@ -35,7 +33,7 @@ namespace MediAR.Modules.Membership.Application.Authentication.Authenticate
                           FROM [membership].[v_Users] [U]
                           WHERE UserName = @UserName";
 
-      var user = await connection.QuerySingleOrDefaultAsync<UserDto>(sql, new { UserName = request.UserName });
+      var user = await _sqlFacade.QueryFirstOrDefaultAsync<UserDto>(sql, new { UserName = request.UserName });
 
       if (user == null || !PasswordManager.VerifyHashedPassword(user.PasswordHash, request.Password))
       {

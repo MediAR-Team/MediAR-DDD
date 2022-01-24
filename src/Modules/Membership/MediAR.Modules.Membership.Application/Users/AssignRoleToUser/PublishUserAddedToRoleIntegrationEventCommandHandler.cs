@@ -12,19 +12,17 @@ namespace MediAR.Modules.Membership.Application.Users.AssignRoleToUser
 {
   class PublishUserAddedToRoleIntegrationEventCommandHandler : ICommandHandler<PublishUserAddedToRoleIntegrationEventCommand>
   {
-    private readonly ISqlConnectionFactory _connectionFactory;
+    private readonly ISqlFacade _sqlFacade;
     private readonly IEventBus _eventBus;
 
-    public PublishUserAddedToRoleIntegrationEventCommandHandler(ISqlConnectionFactory connectionFactory, IEventBus eventBus)
+    public PublishUserAddedToRoleIntegrationEventCommandHandler(ISqlFacade sqlFacade, IEventBus eventBus)
     {
-      _connectionFactory = connectionFactory;
+      _sqlFacade = sqlFacade;
       _eventBus = eventBus;
     }
 
     public async Task<Unit> Handle(PublishUserAddedToRoleIntegrationEventCommand request, CancellationToken cancellationToken)
     {
-      var connection = _connectionFactory.GetOpenConnection();
-
       const string sql = @"SELECT
                           [User].[Id],
                           [User].[UserName],
@@ -35,7 +33,7 @@ namespace MediAR.Modules.Membership.Application.Users.AssignRoleToUser
                           FROM [membership].[v_Users] [User]
                           WHERE [UserName] = @Identifier OR [Email] = @Identifier";
 
-      var user = await connection.QuerySingleOrDefaultAsync<UserDto>(sql, new { Identifier = request.UserNameOrEmail });
+      var user = await _sqlFacade.QueryFirstOrDefaultAsync<UserDto>(sql, new { Identifier = request.UserNameOrEmail });
 
       await _eventBus.Publish(new UserAddedToRoleIntegrationEvent(Guid.NewGuid(), DateTime.Now, user.Id, user.Email, user.UserName, user.FirstName, user.LastName, request.RoleName, user.TenantId));
 

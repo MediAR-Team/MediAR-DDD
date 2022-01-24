@@ -1,4 +1,7 @@
-﻿CREATE VIEW [learning].[v_CourseAggregate]
+﻿PRINT N'Altering View [learning].[v_CourseAggregate]...';
+
+GO
+ALTER VIEW [learning].[v_CourseAggregate]
 	AS SELECT C.[Id] AS [CourseId],
 	C.[TenantId] AS [TenantId],
 	C.[Name] AS [CourseName],
@@ -16,3 +19,5 @@
 	LEFT JOIN [learning].[Modules] M ON M.[CourseId] = C.[Id] AND M.[TenantId] = C.[TenantId]
 	LEFT JOIN [learning].[ContentEntries] CE ON CE.[ModuleId] = M.[Id] AND CE.[TenantId] = M.[TenantId]
 	LEFT JOIN [learning].[EntryTypes] ET ON ET.Id = CE.TypeId;
+GO
+PRINT N'Update complete.';

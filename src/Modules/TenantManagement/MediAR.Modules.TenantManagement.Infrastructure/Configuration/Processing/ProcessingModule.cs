@@ -8,8 +8,8 @@ namespace MediAR.Modules.TenantManagement.Infrastructure.Configuration.Processin
   {
     protected override void Load(ContainerBuilder builder)
     {
-      builder.RegisterGenericDecorator(typeof(LoggingCommandHandlerDecorator<>), typeof(IRequestHandler<>));
-      builder.RegisterGenericDecorator(typeof(LoggingCommandHandlerWithResultDecorator<,>), typeof(IRequestHandler<,>));
+      builder.RegisterGenericDecorator(typeof(LoggingCommandHandlerDecorator<>), typeof(ICommandHandler<>));
+      builder.RegisterGenericDecorator(typeof(LoggingCommandHandlerWithResultDecorator<,>), typeof(ICommandHandler<,>));
     }
   }
 }

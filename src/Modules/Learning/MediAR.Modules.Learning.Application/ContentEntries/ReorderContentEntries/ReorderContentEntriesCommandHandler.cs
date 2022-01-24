@@ -13,18 +13,17 @@ namespace MediAR.Modules.Learning.Application.ContentEntries.ReorderContentEntri
 {
   internal class ReorderContentEntriesCommandHandler : ICommandHandler<ReorderContentEntriesCommand>
   {
-    private readonly ISqlConnectionFactory _connectionFactory;
+    private readonly ISqlFacade _sqlFacade;
     private readonly IExecutionContextAccessor _executionContextAccessor;
 
-    public ReorderContentEntriesCommandHandler(ISqlConnectionFactory connectionFactory, IExecutionContextAccessor executionContextAccessor)
+    public ReorderContentEntriesCommandHandler(ISqlFacade sqlFacade, IExecutionContextAccessor executionContextAccessor)
     {
-      _connectionFactory = connectionFactory;
+      _sqlFacade = sqlFacade;
       _executionContextAccessor = executionContextAccessor;
     }
 
     public async Task<Unit> Handle(ReorderContentEntriesCommand request, CancellationToken cancellationToken)
     {
-      var connection = _connectionFactory.GetOpenConnection();
       var orderDt = new DataTable();
       orderDt.Columns.Add("Id");
       orderDt.Columns.Add("Ordinal");
@@ -39,13 +38,12 @@ namespace MediAR.Modules.Learning.Application.ContentEntries.ReorderContentEntri
       queryParams.Add("TenantId", _executionContextAccessor.TenantId);
       try
       {
-        await connection.ExecuteAsync("[learning].[upd_ReorderContentEntries]", queryParams, commandType: CommandType.StoredProcedure);
+        await _sqlFacade.ExecuteAsync("[learning].[upd_ReorderContentEntries]", queryParams, commandType: CommandType.StoredProcedure);
       }
       catch (SqlException ex)
       {
         throw new BusinessRuleValidationException(ex.Message);
       }
-
 
       return Unit.Value;
     }

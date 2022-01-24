@@ -17,6 +17,7 @@ namespace MediAR.Modules.Learning.Application.Courses.GetCourse
   {
     public int Id { get; set; }
     public string Name { get; set; }
+    public int Ordinal { get; set; }
     public List<ContentEntryDto> ContentEntries { get; set; } = new List<ContentEntryDto>();
   }
 
@@ -26,5 +27,6 @@ namespace MediAR.Modules.Learning.Application.Courses.GetCourse
     public string TypeName { get; set; }
     public object Configuration { get; set; }
     public object Data { get; set; }
+    public int Ordinal { get; set; }
   }
 }

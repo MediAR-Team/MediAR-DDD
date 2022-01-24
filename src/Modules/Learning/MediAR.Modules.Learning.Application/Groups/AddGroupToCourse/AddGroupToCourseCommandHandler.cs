@@ -13,19 +13,17 @@ namespace MediAR.Modules.Learning.Application.Groups.AddGroupToCourse
 {
   internal class AddGroupToCourseCommandHandler : ICommandHandler<AddGroupToCourseCommand>
   {
-    private readonly ISqlConnectionFactory _connectionFactory;
+    private readonly ISqlFacade _sqlFacade;
     private readonly IExecutionContextAccessor _executionContextAccessor;
 
-    public AddGroupToCourseCommandHandler(ISqlConnectionFactory connectionFactory, IExecutionContextAccessor executionContextAccessor)
+    public AddGroupToCourseCommandHandler(ISqlFacade sqlFacade, IExecutionContextAccessor executionContextAccessor)
     {
-      _connectionFactory = connectionFactory;
+      _sqlFacade = sqlFacade;
       _executionContextAccessor = executionContextAccessor;
     }
 
     public async Task<Unit> Handle(AddGroupToCourseCommand request, CancellationToken cancellationToken)
     {
-      var connection = _connectionFactory.GetOpenConnection();
-
       var queryParams = new
       {
         request.CourseId,
@@ -35,7 +33,7 @@ namespace MediAR.Modules.Learning.Application.Groups.AddGroupToCourse
 
       try
       {
-        await connection.ExecuteAsync("learning.add_Group_to_Course", queryParams, commandType: CommandType.StoredProcedure);
+        await _sqlFacade.ExecuteAsync("learning.add_Group_to_Course", queryParams, commandType: CommandType.StoredProcedure);
       }
       catch (SqlException ex)
       {

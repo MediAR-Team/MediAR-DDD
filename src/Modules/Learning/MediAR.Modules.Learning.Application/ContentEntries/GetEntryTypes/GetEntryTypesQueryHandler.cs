@@ -12,21 +12,19 @@ namespace MediAR.Modules.Learning.Application.ContentEntries.GetEntryTypes
 {
   class GetEntryTypesQueryHandler : IQueryHandler<GetEntryTypesQuery, List<EntryTypeDto>>
   {
-    private readonly ISqlConnectionFactory _connectionFactory;
+    private readonly ISqlFacade _sqlFacade;
 
-    public GetEntryTypesQueryHandler(ISqlConnectionFactory connectionFactory)
+    public GetEntryTypesQueryHandler(ISqlFacade sqlFacade)
     {
-      _connectionFactory = connectionFactory;
+      _sqlFacade = sqlFacade;
     }
 
     public async Task<List<EntryTypeDto>> Handle(GetEntryTypesQuery request, CancellationToken cancellationToken)
     {
-      var connection = _connectionFactory.GetOpenConnection();
-
       const string sql = @"SELECT [Type].[Name]
                             FROM [learning].[v_EntryTypes] [Type]";
 
-      var result = await connection.QueryAsync<EntryTypeDto>(sql);
+      var result = await _sqlFacade.QueryAsync<EntryTypeDto>(sql);
 
       return result.ToList();
     }

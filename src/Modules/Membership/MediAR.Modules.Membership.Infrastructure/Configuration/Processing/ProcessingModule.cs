@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using MediAR.Modules.Membership.Application.Configuration.Commands;
 using MediAR.Modules.Membership.Application.Contracts;
 using MediAR.Modules.Membership.Infrastructure.Configuration.Processing.InternalCommands;
 using MediatR;
@@ -9,8 +10,8 @@ namespace MediAR.Modules.Membership.Infrastructure.Configuration.Processing
   {
     protected override void Load(ContainerBuilder builder)
     {
-      builder.RegisterGenericDecorator(typeof(LoggingCommandHandlerDecorator<>), typeof(IRequestHandler<>));
-      builder.RegisterGenericDecorator(typeof(LoggingCommandHandlerWithResultDecorator<,>), typeof(IRequestHandler<,>));
+      builder.RegisterGenericDecorator(typeof(LoggingCommandHandlerDecorator<>), typeof(ICommandHandler<>));
+      builder.RegisterGenericDecorator(typeof(LoggingCommandHandlerWithResultDecorator<,>), typeof(ICommandHandler<,>));
 
       builder.RegisterType<InternalCommandScheduler>()
         .As<IInternalCommandScheduler>()

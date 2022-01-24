@@ -1,5 +1,4 @@
-﻿using Dapper;
-using MediAR.Coreplatform.Application;
+﻿using MediAR.Coreplatform.Application;
 using MediAR.Coreplatform.Application.Data;
 using MediAR.Modules.Membership.Application.Configuration.Commands;
 using MediAR.Modules.Membership.Application.Contracts;
@@ -13,30 +12,28 @@ namespace MediAR.Modules.Membership.Application.Users.AssignRoleToUser
 {
   class AssignRoleToUserCommandHandler : ICommandHandler<AssignRoleToUserCommand, AssignRoleToUserCommandResult>
   {
-    private readonly ISqlConnectionFactory _connectionFactory;
+    private readonly ISqlFacade _sqlFacade;
     private readonly IInternalCommandScheduler _commandScheduler;
     private readonly IExecutionContextAccessor _executionContextAccessor;
 
-    public AssignRoleToUserCommandHandler(ISqlConnectionFactory connectionFactory, IInternalCommandScheduler commandScheduler, IExecutionContextAccessor executionContextAccessor)
+    public AssignRoleToUserCommandHandler(ISqlFacade sqlFacade, IInternalCommandScheduler commandScheduler, IExecutionContextAccessor executionContextAccessor)
     {
-      _connectionFactory = connectionFactory;
+      _sqlFacade = sqlFacade;
       _commandScheduler = commandScheduler;
       _executionContextAccessor = executionContextAccessor;
     }
 
     public async Task<AssignRoleToUserCommandResult> Handle(AssignRoleToUserCommand request, CancellationToken cancellationToken)
     {
-      var connection = _connectionFactory.GetOpenConnection();
-
       AssignRoleToUserCommandResult result = new();
 
       switch (request.IdentifierOption)
       {
         case UserIdentifierOption.UserName:
-          result = await AssignRoleToUserByUserName(request, connection);
+          result = await AssignRoleToUserByUserName(request);
           break;
         case UserIdentifierOption.Email:
-          result = await AssignRoleToUserByEmail(request, connection);
+          result = await AssignRoleToUserByEmail(request);
           break;
       }
 
@@ -45,11 +42,11 @@ namespace MediAR.Modules.Membership.Application.Users.AssignRoleToUser
       return result;
     }
 
-    private async Task<AssignRoleToUserCommandResult> AssignRoleToUserByUserName(AssignRoleToUserCommand request, IDbConnection connection)
+    private async Task<AssignRoleToUserCommandResult> AssignRoleToUserByUserName(AssignRoleToUserCommand request)
     {
       try
       {
-        await connection.ExecuteAsync("[membership].[assign_Role_to_User_by_UserName]", new { UserName = request.UserIdentifier, request.RoleName, _executionContextAccessor.TenantId }, commandType: CommandType.StoredProcedure);
+        await _sqlFacade.ExecuteAsync("[membership].[assign_Role_to_User_by_UserName]", new { UserName = request.UserIdentifier, request.RoleName, _executionContextAccessor.TenantId }, commandType: CommandType.StoredProcedure);
         return new AssignRoleToUserCommandResult();
       }
       catch (Exception ex)
@@ -58,11 +55,11 @@ namespace MediAR.Modules.Membership.Application.Users.AssignRoleToUser
       }
     }
 
-    private async Task<AssignRoleToUserCommandResult> AssignRoleToUserByEmail(AssignRoleToUserCommand request, IDbConnection connection)
+    private async Task<AssignRoleToUserCommandResult> AssignRoleToUserByEmail(AssignRoleToUserCommand request)
     {
       try
       {
-        await connection.ExecuteAsync("[membership].[assign_Role_to_User_by_Email]", new { Email = request.UserIdentifier, request.RoleName, _executionContextAccessor.TenantId }, commandType: CommandType.StoredProcedure);
+        await _sqlFacade.ExecuteAsync("[membership].[assign_Role_to_User_by_Email]", new { Email = request.UserIdentifier, request.RoleName, _executionContextAccessor.TenantId }, commandType: CommandType.StoredProcedure);
         return new AssignRoleToUserCommandResult();
       }
       catch (SqlException ex)

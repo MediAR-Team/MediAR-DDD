@@ -11,19 +11,17 @@ namespace MediAR.Modules.Learning.Application.Groups.GetGroupsForAuthenticatedUs
 {
   class GetGroupsForAuthenticatedUserQueryHandler : IQueryHandler<GetGroupsForAuthenticatedUserQuery, List<GroupDto>>
   {
-    private readonly ISqlConnectionFactory _connectionFactory;
+    private readonly ISqlFacade _sqlFacade;
     private readonly IExecutionContextAccessor _executionContextAccessor;
 
-    public GetGroupsForAuthenticatedUserQueryHandler(ISqlConnectionFactory connectionFactory, IExecutionContextAccessor executionContextAccessor)
+    public GetGroupsForAuthenticatedUserQueryHandler(ISqlFacade sqlFacade, IExecutionContextAccessor executionContextAccessor)
     {
-      _connectionFactory = connectionFactory;
+      _sqlFacade = sqlFacade;
       _executionContextAccessor = executionContextAccessor;
     }
 
     public async Task<List<GroupDto>> Handle(GetGroupsForAuthenticatedUserQuery request, CancellationToken cancellationToken)
     {
-      var connection = _connectionFactory.GetOpenConnection();
-
       const string sql = @"SELECT
                           [GroupMember].[GroupId] AS [Id],
                           [GroupMember].[GroupName] AS [Name],
@@ -36,7 +34,7 @@ namespace MediAR.Modules.Learning.Application.Groups.GetGroupsForAuthenticatedUs
         _executionContextAccessor.UserId
       };
 
-      var groups = await connection.QueryAsync<GroupDto>(sql, queryParams);
+      var groups = await _sqlFacade.QueryAsync<GroupDto>(sql, queryParams);
 
       return groups.ToList();
     }

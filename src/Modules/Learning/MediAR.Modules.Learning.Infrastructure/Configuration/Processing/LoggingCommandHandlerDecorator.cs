@@ -1,4 +1,5 @@
-﻿using MediAR.Modules.Learning.Application.Configuration.Commands;
+﻿using MediAR.Coreplatform.Infrastructure.CommandProcessing;
+using MediAR.Modules.Learning.Application.Configuration.Commands;
 using MediAR.Modules.Learning.Application.Contracts;
 using MediatR;
 using Serilog;
@@ -23,6 +24,11 @@ namespace MediAR.Modules.Learning.Infrastructure.Configuration.Processing
     {
       try
       {
+        if (request is IUnloggedCommand)
+        {
+          return await _decorated.Handle(request, cancellationToken);
+        }
+
         _logger.Information($"Executing command {request.GetType().Name}");
 
         var result = await _decorated.Handle(request, cancellationToken);

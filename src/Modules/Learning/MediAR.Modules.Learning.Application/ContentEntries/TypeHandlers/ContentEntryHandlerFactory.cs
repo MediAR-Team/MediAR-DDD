@@ -8,26 +8,24 @@ namespace MediAR.Modules.Learning.Application.ContentEntries.TypeHandlers
 {
   public class ContentEntryHandlerFactory : IContentEntryHandlerFactory
   {
-    private readonly ISqlConnectionFactory _connectionFactory;
+    private readonly ISqlFacade _sqlFacade;
     private readonly IContentEntryHandler[] _handlers;
 
-    public ContentEntryHandlerFactory(ISqlConnectionFactory connectionFactory, IContentEntryHandler[] handlers)
+    public ContentEntryHandlerFactory(ISqlFacade sqlFacade, IContentEntryHandler[] handlers)
     {
-      _connectionFactory = connectionFactory;
+      _sqlFacade = sqlFacade;
       _handlers = handlers;
     }
 
     public async Task<IContentEntryHandler> GetHandlerAsync(int typeId)
     {
-      var connection = _connectionFactory.GetOpenConnection();
-
       const string sql = @"SELECT
                           [Type].[Name],
                           [Type].[HandlerClass]
                           FROM [learning].[v_EntryTypes] [Type]
                           WHERE [Id] = @Id";
 
-      var entryTypeInfo = await connection.QueryFirstOrDefaultAsync<EntryType>(sql, new { Id = typeId });
+      var entryTypeInfo = await _sqlFacade.QueryFirstOrDefaultAsync<EntryType>(sql, new { Id = typeId });
 
       if (entryTypeInfo is null)
       {
@@ -41,15 +39,13 @@ namespace MediAR.Modules.Learning.Application.ContentEntries.TypeHandlers
 
     public async Task<IContentEntryHandler> GetHandlerAsync(string typeName)
     {
-      var connection = _connectionFactory.GetOpenConnection();
-
       const string sql = @"SELECT
                           [Type].[Name],
                           [Type].[HandlerClass]
                           FROM [learning].[v_EntryTypes] [Type]
                           WHERE [Name] = @Name";
 
-      var entryTypeInfo = await connection.QueryFirstOrDefaultAsync<EntryType>(sql, new { Name = typeName });
+      var entryTypeInfo = await _sqlFacade.QueryFirstOrDefaultAsync<EntryType>(sql, new { Name = typeName });
 
       if (entryTypeInfo is null)
       {

@@ -11,19 +11,17 @@ namespace MediAR.Modules.Membership.Application.Authorization.GetAuthenticatedUs
 {
   class GetAuthenticatedUserPermissionsQueryHandler : IQueryHandler<GetAuthenticatedUserPermissionsQuery, List<PermissionDto>>
   {
-    private readonly ISqlConnectionFactory _connectionFactory;
+    private readonly ISqlFacade _sqlFacade;
     private readonly IExecutionContextAccessor _executionContextAccessor;
 
-    public GetAuthenticatedUserPermissionsQueryHandler(ISqlConnectionFactory connectionFactory, IExecutionContextAccessor executionContextAccessor)
+    public GetAuthenticatedUserPermissionsQueryHandler(ISqlFacade sqlFacade, IExecutionContextAccessor executionContextAccessor)
     {
-      _connectionFactory = connectionFactory;
+      _sqlFacade = sqlFacade;
       _executionContextAccessor = executionContextAccessor;
     }
 
     public async Task<List<PermissionDto>> Handle(GetAuthenticatedUserPermissionsQuery request, CancellationToken cancellationToken)
     {
-      var connection = _connectionFactory.GetOpenConnection();
-
       var userId = _executionContextAccessor.UserId;
 
       const string sql = @"SELECT
@@ -32,7 +30,7 @@ namespace MediAR.Modules.Membership.Application.Authorization.GetAuthenticatedUs
                           FROM [membership].[v_UserPermissions] [Permission]
                           WHERE UserId = @UserId";
 
-      var permissions = await connection.QueryAsync<PermissionDto>(sql, new { UserId = userId });
+      var permissions = await _sqlFacade.QueryAsync<PermissionDto>(sql, new { UserId = userId });
 
       return permissions.ToList();
     }

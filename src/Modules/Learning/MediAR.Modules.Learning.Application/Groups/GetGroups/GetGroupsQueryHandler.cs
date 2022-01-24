@@ -12,19 +12,17 @@ namespace MediAR.Modules.Learning.Application.Groups.GetGroups
 {
   class GetGroupsQueryHandler : IQueryHandler<GetGroupsQuery, List<GroupDto>>
   {
-    private readonly ISqlConnectionFactory _connectionFactory;
+    private readonly ISqlFacade _sqlFacade;
     private readonly IExecutionContextAccessor _executionContextAccessor;
 
-    public GetGroupsQueryHandler(ISqlConnectionFactory connectionFactory, IExecutionContextAccessor executionContextAccessor)
+    public GetGroupsQueryHandler(ISqlFacade sqlFacade, IExecutionContextAccessor executionContextAccessor)
     {
-      _connectionFactory = connectionFactory;
+      _sqlFacade = sqlFacade;
       _executionContextAccessor = executionContextAccessor;
     }
 
     public async Task<List<GroupDto>> Handle(GetGroupsQuery request, CancellationToken cancellationToken)
     {
-      var connection = _connectionFactory.GetOpenConnection();
-
       var requestParams = new DynamicParameters();
       var pageData = PagedQueryHelper.GetPageData(request);
       requestParams.Add(PagedQueryHelper.Next, pageData.Next);
@@ -43,7 +41,7 @@ namespace MediAR.Modules.Learning.Application.Groups.GetGroups
 
       sql = PagedQueryHelper.AppendPageStatement(sql);
 
-      var result = await connection.QueryAsync<GroupDto>(sql, requestParams);
+      var result = await _sqlFacade.QueryAsync<GroupDto>(sql, requestParams);
 
       return result.ToList();
     }

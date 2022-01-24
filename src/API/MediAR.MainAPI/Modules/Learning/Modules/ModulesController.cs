@@ -3,8 +3,6 @@ using MediAR.Modules.Learning.Application.Modules.CreateModule;
 using MediAR.Modules.Learning.Application.Modules.DeleteModule;
 using MediAR.Modules.Learning.Application.Modules.ReorderModules;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -24,9 +22,9 @@ namespace MediAR.MainAPI.Modules.Learning.Modules
     [HttpPost]
     public async Task<IActionResult> CreateModule(CreateModuleRequest request)
     {
-      var result = await _mediator.ExecuteCommandAsync(new CreateModuleCommand(request.Name, request.CourseId));
+      await _mediator.ExecuteCommandAsync(new CreateModuleCommand(request.Name, request.CourseId));
 
-      return Ok(result);
+      return Ok();
     }
 
     [HttpDelete("{id}")]

@@ -1,9 +1,11 @@
 done - add ordinal to modules and entries
 done -- connect group to course
 done -- get auth user courses
-implement unit of work
+done -- implement unit of work
 done -- add instructor table and insert command + SP
 done -- verify that student in learning module is created
-add validation to entry actions (preferably with fluentValidator)
+add validation to entry actions and commands (preferably with fluentValidator)
 add minio and files folder
-todo -- add logging
+done -- add logging
+adopt UoW everywhere
+before throwing BusinessRuleValidationException, check if the sql exception code is user-defined

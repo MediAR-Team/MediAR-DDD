@@ -39,9 +39,9 @@ namespace MediAR.MainAPI.Modules.Learning.Courses
     [HttpPost]
     public async Task<IActionResult> CreateCourse(CreateCourseRequest request)
     {
-      var result = await _mediator.ExecuteCommandAsync(new CreateCourseCommand(request.Name, request.Description, request.BackgroundImageUrl));
+      await _mediator.ExecuteCommandAsync(new CreateCourseCommand(request.Name, request.Description, request.BackgroundImageUrl));
 
-      return Ok(result);
+      return Ok();
     }
 
     [HttpGet("foruser/{identifier}")]

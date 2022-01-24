@@ -14,16 +14,15 @@ namespace MediAR.Modules.Learning.Infrastructure.Configuration.Processing.Intern
 {
   class ProcessInternalComandsCommandHandler : ICommandHandler<ProcessInternalComandsCommand>
   {
-    private readonly ISqlConnectionFactory _connectionFactory;
+    private readonly ISqlFacade _sqlFacade;
 
-    public ProcessInternalComandsCommandHandler(ISqlConnectionFactory connectionFactory)
+    public ProcessInternalComandsCommandHandler(ISqlFacade sqlFacade)
     {
-      _connectionFactory = connectionFactory;
+      _sqlFacade = sqlFacade;
     }
 
     public async Task<Unit> Handle(ProcessInternalComandsCommand request, CancellationToken cancellationToken)
     {
-      var connection = _connectionFactory.GetOpenConnection();
       const string sql = @"SELECT
                           [Command].[Id] AS [Id],
                           [Command].[CreatedOn] AS [CreatedOn],
@@ -32,7 +31,7 @@ namespace MediAR.Modules.Learning.Infrastructure.Configuration.Processing.Intern
                           FROM [learning].[InternalCommands] [Command]
                           WHERE ProcessedOn IS NULL";
 
-      var commands = await connection.QueryAsync<InternalCommandDto>(sql);
+      var commands = await _sqlFacade.QueryAsync<InternalCommandDto>(sql);
 
       const string completeSql = @"UPDATE [learning].[InternalCommands] SET [ProcessedOn] = GETDATE() WHERE [Id] = @Id";
 
@@ -41,12 +40,12 @@ namespace MediAR.Modules.Learning.Infrastructure.Configuration.Processing.Intern
         try
         {
           await ProcessCommand(command);
+          await _sqlFacade.ExecuteAsync(completeSql, new { command.Id });
         }
         catch (Exception ex)
         {
           // TODO: add logging in the future
         }
-        await connection.ExecuteScalarAsync(completeSql, new { command.Id });
       }
 
       return Unit.Value;

@@ -1,8 +1,8 @@
-﻿using Dapper;
-using MediAR.Coreplatform.Application;
+﻿using MediAR.Coreplatform.Application;
 using MediAR.Coreplatform.Application.Data;
 using MediAR.Coreplatform.Domain;
 using MediAR.Modules.Learning.Application.Configuration.Commands;
+using MediatR;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading;
@@ -10,21 +10,19 @@ using System.Threading.Tasks;
 
 namespace MediAR.Modules.Learning.Application.Modules.CreateModule
 {
-  class CreateModuleCommandHandler : ICommandHandler<CreateModuleCommand, ModuleDto>
+  class CreateModuleCommandHandler : ICommandHandler<CreateModuleCommand>
   {
-    private readonly ISqlConnectionFactory _connectionFactory;
+    private readonly ISqlFacade _sqlFacade;
     private readonly IExecutionContextAccessor _executionContextAccessor;
 
-    public CreateModuleCommandHandler(ISqlConnectionFactory connectionFactory, IExecutionContextAccessor executionContextAccessor)
+    public CreateModuleCommandHandler(ISqlFacade sqlFacade, IExecutionContextAccessor executionContextAccessor)
     {
-      _connectionFactory = connectionFactory;
+      _sqlFacade = sqlFacade;
       _executionContextAccessor = executionContextAccessor;
     }
 
-    public async Task<ModuleDto> Handle(CreateModuleCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(CreateModuleCommand request, CancellationToken cancellationToken)
     {
-      var connection = _connectionFactory.GetOpenConnection();
-
       var queryParams = new
       {
         request.Name,
@@ -34,8 +32,8 @@ namespace MediAR.Modules.Learning.Application.Modules.CreateModule
 
       try
       {
-        var result = await connection.ExecuteScalarAsync<ModuleDto>("[learning].[ins_Module]", queryParams, commandType: CommandType.StoredProcedure);
-        return result;
+        await _sqlFacade.ExecuteAsync("[learning].[ins_Module]", queryParams, commandType: CommandType.StoredProcedure);
+        return Unit.Value;
       }
       catch (SqlException ex)
       {

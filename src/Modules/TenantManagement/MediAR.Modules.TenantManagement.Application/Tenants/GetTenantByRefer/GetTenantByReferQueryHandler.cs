@@ -8,16 +8,15 @@ namespace MediAR.Modules.TenantManagement.Application.Tenants.GetTenantByRefer
 {
   class GetTenantByReferQueryHandler : IQueryHandler<GetTenantByReferQuery, TenantDto>
   {
-    private readonly ISqlConnectionFactory _connectionFactory;
+    private readonly ISqlFacade _sqlFacade;
 
-    public GetTenantByReferQueryHandler(ISqlConnectionFactory connectionFactory)
+    public GetTenantByReferQueryHandler(ISqlFacade sqlFacade)
     {
-      _connectionFactory = connectionFactory;
+      _sqlFacade = sqlFacade;
     }
 
     public async Task<TenantDto> Handle(GetTenantByReferQuery request, CancellationToken cancellationToken)
     {
-      var connection = _connectionFactory.GetOpenConnection();
       var queryParams = new
       {
         request.ReferUrl
@@ -30,7 +29,7 @@ namespace MediAR.Modules.TenantManagement.Application.Tenants.GetTenantByRefer
                   FROM [tenants].[v_Tenants] [Tenant]
                   WHERE [Tenant].[ReferUrl] = @ReferUrl";
 
-      var result = await connection.QuerySingleAsync<TenantDto>(sql, queryParams);
+      var result = await _sqlFacade.QueryFirstOrDefaultAsync<TenantDto>(sql, queryParams);
 
       return result;
     }

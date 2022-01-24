@@ -12,19 +12,17 @@ namespace MediAR.Modules.Learning.Application.Courses.GetCoursesForAuthenticated
 {
   internal class GetCoursesForAuthenticatedUserQueryHandler : IQueryHandler<GetCoursesForAuthenticatedUserQuery, List<CourseDto>>
   {
-    private readonly ISqlConnectionFactory _connectionFactory;
+    private readonly ISqlFacade _sqlFacade;
     private readonly IExecutionContextAccessor _executionContextAccessor;
 
-    public GetCoursesForAuthenticatedUserQueryHandler(ISqlConnectionFactory connectionFactory, IExecutionContextAccessor executionContextAccessor)
+    public GetCoursesForAuthenticatedUserQueryHandler(ISqlFacade sqlFacade, IExecutionContextAccessor executionContextAccessor)
     {
-      _connectionFactory = connectionFactory;
+      _sqlFacade = sqlFacade;
       _executionContextAccessor = executionContextAccessor;
     }
 
     public async Task<List<CourseDto>> Handle(GetCoursesForAuthenticatedUserQuery request, CancellationToken cancellationToken)
     {
-      var connection = _connectionFactory.GetOpenConnection();
-
       var sql = @"SELECT
                   SC.CourseId AS Id,
                   SC.CourseName AS [Name],
@@ -34,7 +32,7 @@ namespace MediAR.Modules.Learning.Application.Courses.GetCoursesForAuthenticated
                   WHERE TenantId = @TenantId
                   AND UserId = @UserId";
 
-      var result = await connection.QueryAsync<CourseDto>(sql, new { _executionContextAccessor.UserId, _executionContextAccessor.TenantId });
+      var result = await _sqlFacade.QueryAsync<CourseDto>(sql, new { _executionContextAccessor.UserId, _executionContextAccessor.TenantId });
 
       return result.ToList();
 

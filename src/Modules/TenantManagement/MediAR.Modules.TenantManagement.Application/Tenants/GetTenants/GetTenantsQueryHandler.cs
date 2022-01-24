@@ -11,16 +11,15 @@ namespace MediAR.Modules.TenantManagement.Application.Tenants.GetTenants
 {
   class GetTenantsQueryHandler : IQueryHandler<GetTenantsQuery, List<TenantDto>>
   {
-    private readonly ISqlConnectionFactory _connectionFactory;
+    private readonly ISqlFacade _sqlFacade;
 
-    public GetTenantsQueryHandler(ISqlConnectionFactory connectionFactory)
+    public GetTenantsQueryHandler(ISqlFacade sqlFacade)
     {
-      _connectionFactory = connectionFactory;
+      _sqlFacade = sqlFacade;
     }
 
     public async Task<List<TenantDto>> Handle(GetTenantsQuery request, CancellationToken cancellationToken)
     {
-      var connection = _connectionFactory.GetOpenConnection();
       var pageData = PagedQueryHelper.GetPageData(request);
       var queryParams = new DynamicParameters();
       queryParams.Add(PagedQueryHelper.Next, pageData.Next);
@@ -35,7 +34,7 @@ namespace MediAR.Modules.TenantManagement.Application.Tenants.GetTenants
 
       sql = PagedQueryHelper.AppendPageStatement(sql);
 
-      var result = await connection.QueryAsync<TenantDto>(sql, queryParams);
+      var result = await _sqlFacade.QueryAsync<TenantDto>(sql, queryParams);
 
       return result.ToList();
     }

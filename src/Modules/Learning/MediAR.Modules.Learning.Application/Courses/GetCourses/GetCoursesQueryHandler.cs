@@ -14,19 +14,17 @@ namespace MediAR.Modules.Learning.Application.Courses.GetCourses
 {
   class GetCoursesQueryHandler : IQueryHandler<GetCoursesQuery, List<CourseAggregateDto>>
   {
-    private readonly ISqlConnectionFactory _connectionFactory;
+    private readonly ISqlFacade _sqlFacade;
     private readonly IExecutionContextAccessor _executionContextAccessor;
 
-    public GetCoursesQueryHandler(ISqlConnectionFactory connectionFactory, IExecutionContextAccessor executionContextAccessor)
+    public GetCoursesQueryHandler(ISqlFacade sqlFacade, IExecutionContextAccessor executionContextAccessor)
     {
-      _connectionFactory = connectionFactory;
+      _sqlFacade = sqlFacade;
       _executionContextAccessor = executionContextAccessor;
     }
 
     public async Task<List<CourseAggregateDto>> Handle(GetCoursesQuery request, CancellationToken cancellationToken)
     {
-      var connection = _connectionFactory.GetOpenConnection();
-
       var pageData = PagedQueryHelper.GetPageData(request);
       var queryParams = new DynamicParameters();
       queryParams.Add(PagedQueryHelper.Next, pageData.Next);
@@ -41,17 +39,19 @@ namespace MediAR.Modules.Learning.Application.Courses.GetCourses
                           [CMC].[CourseBackgroundImageUrl] AS [BackgroundImageUrl],
                           [CMC].[ModuleId] AS [Id],
                           [CMC].[ModuleName] AS [Name],
+                          [CMC].[ModuleOrdinal] AS [Ordinal],
                           [CMC].[EntryId] AS [Id],
                           [CMC].[EntryTypeName] AS [TypeName],
                           [CMC].[EntryConfiguration] AS [Configuration],
-                          [CMC].[EntryData] AS [Data]
+                          [CMC].[EntryData] AS [Data],
+                          [CMC].[EntryOrdinal] AS [Ordinal]
                           FROM [learning].[v_CourseAggregate] AS [CMC]
                           WHERE [CMC].[TenantId] = @TenantId
-                          ORDER BY [CMC].[CourseId]";
+                          ORDER BY [CMC].[ModuleOrdinal], [CMC].[EntryOrdinal]";
 
       sql = PagedQueryHelper.AppendPageStatement(sql);
 
-      var courses = await connection.QueryAsync<CourseAggregateDto, ModuleDto, DbContentEntry, CourseAggregateDto>(sql, (c, m, ce) =>
+      var courses = await _sqlFacade.QueryAsync<CourseAggregateDto, ModuleDto, DbContentEntry, CourseAggregateDto>(sql, (c, m, ce) =>
       {
         if (m != null)
         {
@@ -65,7 +65,8 @@ namespace MediAR.Modules.Learning.Application.Courses.GetCourses
             Id = ce.Id,
             TypeName = ce.TypeName,
             Data = data,
-            Configuration = config
+            Configuration = config,
+            Ordinal = ce.Ordinal
           };
 
           m.ContentEntries.Add(ceDto);

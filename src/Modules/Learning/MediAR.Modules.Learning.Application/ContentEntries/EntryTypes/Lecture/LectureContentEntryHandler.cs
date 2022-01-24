@@ -8,13 +8,11 @@ namespace MediAR.Modules.Learning.Application.ContentEntries.EntryTypes.Lecture
 {
   class LectureContentEntryHandler : IContentEntryHandler
   {
-    private readonly ISqlConnectionFactory _connectionFactory;
     private readonly IExecutionContextAccessor _executionContextAccessor;
     private readonly IContentEntriesRepository _contentEntriesRepository;
 
-    public LectureContentEntryHandler(ISqlConnectionFactory connectionFactory, IExecutionContextAccessor executionContextAccessor, IContentEntriesRepository contentEntriesRepository)
+    public LectureContentEntryHandler(IExecutionContextAccessor executionContextAccessor, IContentEntriesRepository contentEntriesRepository)
     {
-      _connectionFactory = connectionFactory;
       _executionContextAccessor = executionContextAccessor;
       _contentEntriesRepository = contentEntriesRepository;
     }

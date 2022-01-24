@@ -28,7 +28,7 @@ namespace MediAR.Coreplatform.Infrastructure.Mediation
 
     public bool IsAdapterForIndividualComponents => _child.IsAdapterForIndividualComponents;
 
-    public IEnumerable<IComponentRegistration> RegistrationsFor(Service service, Func<Service, IEnumerable<ServiceRegistration>> registrationAccessor)
+    public IEnumerable<IComponentRegistration> RegistrationsFor(Service service, Func<Service, IEnumerable<IComponentRegistration>> registrationAccessor)
     {
       var registrations = _child.RegistrationsFor(service, registrationAccessor);
 

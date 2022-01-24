@@ -12,19 +12,17 @@ namespace MediAR.Modules.Membership.Application.Users.CreateUser
 {
   class CreateUserCommandHandler : ICommandHandler<CreateUserCommand, CreateUserCommandResult>
   {
-    private readonly ISqlConnectionFactory _connectionFactory;
+    private readonly ISqlFacade _sqlFacade;
     private readonly IExecutionContextAccessor _executionContextAccessor;
 
-    public CreateUserCommandHandler(ISqlConnectionFactory connectionFactory, IExecutionContextAccessor executionContextAccessor)
+    public CreateUserCommandHandler(ISqlFacade sqlFacade, IExecutionContextAccessor executionContextAccessor)
     {
-      _connectionFactory = connectionFactory;
+      _sqlFacade = sqlFacade;
       _executionContextAccessor = executionContextAccessor;
     }
 
     public async Task<CreateUserCommandResult> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
-      var connection = _connectionFactory.GetOpenConnection();
-
       var passwordHash = PasswordManager.HashPassword(request.Password);
 
       var queryParams = new
@@ -39,7 +37,7 @@ namespace MediAR.Modules.Membership.Application.Users.CreateUser
 
       try
       {
-        await connection.QueryAsync("[membership].[ins_User]", queryParams, commandType: CommandType.StoredProcedure);
+        await _sqlFacade.ExecuteAsync("[membership].[ins_User]", queryParams, commandType: CommandType.StoredProcedure);
       }
       catch (SqlException ex)
       {

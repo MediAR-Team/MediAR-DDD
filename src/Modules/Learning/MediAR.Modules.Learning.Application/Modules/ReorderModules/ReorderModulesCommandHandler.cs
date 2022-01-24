@@ -13,18 +13,17 @@ namespace MediAR.Modules.Learning.Application.Modules.ReorderModules
 {
   internal class ReorderModulesCommandHandler : ICommandHandler<ReorderModulesCommand>
   {
-    private readonly ISqlConnectionFactory _connectionFactory;
+    private readonly ISqlFacade _sqlFacade;
     private readonly IExecutionContextAccessor _executionContextAccessor;
 
-    public ReorderModulesCommandHandler(ISqlConnectionFactory connectionFactory, IExecutionContextAccessor executionContextAccessor)
+    public ReorderModulesCommandHandler(ISqlFacade sqlFacade, IExecutionContextAccessor executionContextAccessor)
     {
-      _connectionFactory = connectionFactory;
+      _sqlFacade = sqlFacade;
       _executionContextAccessor = executionContextAccessor;
     }
 
     public async Task<Unit> Handle(ReorderModulesCommand request, CancellationToken cancellationToken)
     {
-      var connection = _connectionFactory.GetOpenConnection();
       var orderDt = new DataTable();
       orderDt.Columns.Add("Id");
       orderDt.Columns.Add("Ordinal");
@@ -40,7 +39,7 @@ namespace MediAR.Modules.Learning.Application.Modules.ReorderModules
 
       try
       {
-        await connection.ExecuteAsync("[learning].[upd_ReorderModules]", queryParams, commandType: CommandType.StoredProcedure);
+        await _sqlFacade.ExecuteAsync("[learning].[upd_ReorderModules]", queryParams, commandType: CommandType.StoredProcedure);
       }
       catch (SqlException ex)
       {

@@ -17,19 +17,17 @@ namespace MediAR.Modules.Learning.Application.Groups.DeleteGroup
 {
   class DeleteGroupCommandHandler : ICommandHandler<DeleteGroupCommand>
   {
-    private readonly ISqlConnectionFactory _connectionFactory;
+    private readonly ISqlFacade _sqlFacade;
     private readonly IExecutionContextAccessor _executionContextAccessor;
 
-    public DeleteGroupCommandHandler(ISqlConnectionFactory connectionFactory, IExecutionContextAccessor executionContextAccessor)
+    public DeleteGroupCommandHandler(ISqlFacade sqlFacade, IExecutionContextAccessor executionContextAccessor)
     {
-      _connectionFactory = connectionFactory;
+      _sqlFacade = sqlFacade;
       _executionContextAccessor = executionContextAccessor;
     }
 
     public async Task<Unit> Handle(DeleteGroupCommand request, CancellationToken cancellationToken)
     {
-      var connection = _connectionFactory.GetOpenConnection();
-
       var queryParams = new
       {
         request.GroupId,
@@ -38,7 +36,7 @@ namespace MediAR.Modules.Learning.Application.Groups.DeleteGroup
 
       try
       {
-        await connection.ExecuteAsync("[learning].[del_Group]", queryParams, commandType: CommandType.StoredProcedure);
+        await _sqlFacade.ExecuteAsync("[learning].[del_Group]", queryParams, commandType: CommandType.StoredProcedure);
         return Unit.Value;
       }
       catch (SqlException ex)

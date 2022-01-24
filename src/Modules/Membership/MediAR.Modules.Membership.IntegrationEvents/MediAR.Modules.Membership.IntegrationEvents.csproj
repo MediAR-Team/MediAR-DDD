@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\..\Coreplatform\MediAR.Coreplatform.Infrastructure\MediAR.Coreplatform.Infrastructure.csproj" />
   </ItemGroup>
 

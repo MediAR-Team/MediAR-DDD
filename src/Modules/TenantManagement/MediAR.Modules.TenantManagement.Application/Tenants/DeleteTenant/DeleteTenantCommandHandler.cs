@@ -12,17 +12,15 @@ namespace MediAR.Modules.TenantManagement.Application.Tenants.DeleteTenant
 {
   class DeleteTenantCommandHandler : ICommandHandler<DeleteTenantCommand>
   {
-    private readonly ISqlConnectionFactory _connectionFactory;
+    private readonly ISqlFacade _sqlFacade;
 
-    public DeleteTenantCommandHandler(ISqlConnectionFactory connectionFactory)
+    public DeleteTenantCommandHandler(ISqlFacade sqlFacade)
     {
-      _connectionFactory = connectionFactory;
+      _sqlFacade = sqlFacade;
     }
 
     public async Task<Unit> Handle(DeleteTenantCommand request, CancellationToken cancellationToken)
     {
-      var connection = _connectionFactory.GetOpenConnection();
-
       var queryParams = new
       {
         request.TenantId
@@ -30,7 +28,7 @@ namespace MediAR.Modules.TenantManagement.Application.Tenants.DeleteTenant
 
       try
       {
-        await connection.ExecuteAsync("[tenants].[del_Tenant]", queryParams, commandType: CommandType.StoredProcedure);
+        await _sqlFacade.ExecuteAsync("[tenants].[del_Tenant]", queryParams, commandType: CommandType.StoredProcedure);
         return Unit.Value;
       }
       catch (SqlException ex)

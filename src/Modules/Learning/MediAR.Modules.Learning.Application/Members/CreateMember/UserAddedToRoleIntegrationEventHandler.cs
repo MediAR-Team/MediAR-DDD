@@ -10,17 +10,15 @@ namespace MediAR.Modules.Learning.Application.Members.CreateMember
 {
   class UserAddedToRoleIntegrationEventHandler : INotificationHandler<UserAddedToRoleIntegrationEvent>
   {
-    private readonly ISqlConnectionFactory _connectionFactory;
+    private readonly ISqlFacade _sqlFacade;
 
-    public UserAddedToRoleIntegrationEventHandler(ISqlConnectionFactory connectionFactory)
+    public UserAddedToRoleIntegrationEventHandler(ISqlFacade sqlFacade)
     {
-      _connectionFactory = connectionFactory;
+      _sqlFacade = sqlFacade;
     }
 
     public async Task Handle(UserAddedToRoleIntegrationEvent notification, CancellationToken cancellationToken)
     {
-      var connection = _connectionFactory.GetOpenConnection();
-
       var queryParams = new
       {
         notification.UserId,
@@ -34,10 +32,10 @@ namespace MediAR.Modules.Learning.Application.Members.CreateMember
       switch(notification.RoleName)
       {
         case "Student":
-          await connection.ExecuteScalarAsync("[learning].[ins_Student]", queryParams, commandType: CommandType.StoredProcedure);
+          await _sqlFacade.ExecuteAsync("[learning].[ins_Student]", queryParams, commandType: CommandType.StoredProcedure);
           break;
         case "Instructor":
-          await connection.ExecuteScalarAsync("[learning].[ins_Instructor]", queryParams, commandType: CommandType.StoredProcedure);
+          await _sqlFacade.ExecuteAsync("[learning].[ins_Instructor]", queryParams, commandType: CommandType.StoredProcedure);
           break;
         default:
           break;

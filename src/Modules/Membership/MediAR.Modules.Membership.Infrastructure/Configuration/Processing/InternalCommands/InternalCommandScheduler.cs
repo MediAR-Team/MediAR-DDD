@@ -9,20 +9,18 @@ namespace MediAR.Modules.Membership.Infrastructure.Configuration.Processing.Inte
 {
     class InternalCommandScheduler : IInternalCommandScheduler
     {
-        private readonly ISqlConnectionFactory _connectionFactory;
+        private readonly ISqlFacade _sqlFacade;
 
-        public InternalCommandScheduler(ISqlConnectionFactory connectionFactory)
+        public InternalCommandScheduler(ISqlFacade sqlFacade)
         {
-            _connectionFactory = connectionFactory;
+            _sqlFacade = sqlFacade;
         }
 
         public async Task EnqueueAsync(ICommand command)
         {
-            var connection = _connectionFactory.GetOpenConnection();
-
             const string sql = @"INSERT INTO [membership].[InternalCommands] ([Id], [CreatedOn], [Type], [Data]) VALUES (@Id, GETDATE(), @Type, @Data)";
 
-            await connection.ExecuteScalarAsync(sql, new
+            await _sqlFacade.ExecuteAsync(sql, new
             {
                 command.Id,
                 Type = command.GetType().FullName,

@@ -8,17 +8,15 @@ namespace MediAR.Modules.Membership.Application.Users.GetUser
 {
   class GetUserQueryHandler : IQueryHandler<GetUserQuery, UserDto>
   {
-    private readonly ISqlConnectionFactory _connectionFactory;
+    private readonly ISqlFacade _sqlFacade;
 
-    public GetUserQueryHandler(ISqlConnectionFactory connectionFactory)
+    public GetUserQueryHandler(ISqlFacade sqlFacade)
     {
-      _connectionFactory = connectionFactory;
+      _sqlFacade = sqlFacade;
     }
 
     public async Task<UserDto> Handle(GetUserQuery request, CancellationToken cancellationToken)
     {
-      var connection = _connectionFactory.GetOpenConnection();
-
       var baseSql = @"SELECT
                           [User].[UserName],
                           [User].[Email],
@@ -29,7 +27,7 @@ namespace MediAR.Modules.Membership.Application.Users.GetUser
 
       var sql = AppendFilter(baseSql, request);
 
-      var user = await connection.QueryFirstOrDefaultAsync<UserDto>(sql, new { request.Identifier });
+      var user = await _sqlFacade.QueryFirstOrDefaultAsync<UserDto>(sql, new { request.Identifier });
 
       return user;
     }

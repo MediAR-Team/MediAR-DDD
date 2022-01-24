@@ -1,12 +1,9 @@
-﻿using Dapper;
-using MediAR.Coreplatform.Application;
+﻿using MediAR.Coreplatform.Application;
 using MediAR.Coreplatform.Application.Data;
 using MediAR.Modules.Learning.Application.Configuration.Queries;
 using MediAR.Modules.Learning.Application.Groups.GetCoursesForGroup;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,19 +11,17 @@ namespace MediAR.Modules.Learning.Application.Courses.GetCoursesForUser
 {
   internal class GetCoursesForUserQueryHandler : IQueryHandler<GetCoursesForUserQuery, List<CourseDto>>
   {
-    private readonly ISqlConnectionFactory _connectionFactory;
+    private readonly ISqlFacade _sqlFacade;
     private readonly IExecutionContextAccessor _executionContextAccessor;
 
-    public GetCoursesForUserQueryHandler(ISqlConnectionFactory connectionFactory, IExecutionContextAccessor executionContextAccessor)
+    public GetCoursesForUserQueryHandler(ISqlFacade sqlFacade, IExecutionContextAccessor executionContextAccessor)
     {
-      _connectionFactory = connectionFactory;
+      _sqlFacade = sqlFacade;
       _executionContextAccessor = executionContextAccessor;
     }
 
     public async Task<List<CourseDto>> Handle(GetCoursesForUserQuery request, CancellationToken cancellationToken)
     {
-      var connection = _connectionFactory.GetOpenConnection();
-
       var sql = @"SELECT
                   SC.CourseId AS Id,
                   SC.CourseName AS [Name],
@@ -45,7 +40,7 @@ namespace MediAR.Modules.Learning.Application.Courses.GetCoursesForUser
 
       sql += userFilter;
 
-      var result = await connection.QueryAsync<CourseDto>(sql, new { request.UserIdentifier, _executionContextAccessor.TenantId });
+      var result = await _sqlFacade.QueryAsync<CourseDto>(sql, new { request.UserIdentifier, _executionContextAccessor.TenantId });
 
       return result.ToList();
     }

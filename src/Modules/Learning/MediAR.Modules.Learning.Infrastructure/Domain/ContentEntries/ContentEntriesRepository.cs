@@ -12,11 +12,11 @@ namespace MediAR.Modules.Learning.Infrastructure.Domain.ContentEntries
 {
   class ContentEntriesRepository : IContentEntriesRepository
   {
-    private readonly ISqlConnectionFactory _connectionFactory;
+    private readonly ISqlFacade _sqlFacade;
 
-    public ContentEntriesRepository(ISqlConnectionFactory connectionFactory)
+    public ContentEntriesRepository(ISqlFacade sqlFacade)
     {
-      _connectionFactory = connectionFactory;
+      _sqlFacade = sqlFacade;
     }
 
     public async Task SaveEntryAsync<TData, TConfig>(IContentEntry<TData, TConfig> entry)
@@ -48,9 +48,7 @@ namespace MediAR.Modules.Learning.Infrastructure.Domain.ContentEntries
         Config = config
       };
 
-      var connection = _connectionFactory.GetOpenConnection();
-
-      await connection.ExecuteAsync("[learning].[ins_ContentEntry]", queryParams, commandType: CommandType.StoredProcedure);
+      await _sqlFacade.ExecuteAsync("[learning].[ins_ContentEntry]", queryParams, commandType: CommandType.StoredProcedure);
     }
 
     public async Task UpdateEntryAsync<TData, TConfig>(IContentEntry<TData, TConfig> entry)
@@ -82,11 +80,9 @@ namespace MediAR.Modules.Learning.Infrastructure.Domain.ContentEntries
         entry.TypeId
       };
 
-      var connection = _connectionFactory.GetOpenConnection();
-
       try
       {
-        await connection.ExecuteAsync("[learning].[upd_ContentEntry]", queryParams, commandType: CommandType.StoredProcedure);
+        await _sqlFacade.ExecuteAsync("[learning].[upd_ContentEntry]", queryParams, commandType: CommandType.StoredProcedure);
       }
       catch (SqlException ex)
       {

@@ -9,19 +9,17 @@ namespace MediAR.Modules.Membership.Application.Users.GetAuthenticatedUser
 {
   class GetAuthenticatedUserQueryHandler : IQueryHandler<GetAuthenticatedUserQuery, UserDto>
   {
-    private readonly ISqlConnectionFactory _connectionFactory;
+    private readonly ISqlFacade _sqlFacade;
     private readonly IExecutionContextAccessor _executionContextAccessor;
 
-    public GetAuthenticatedUserQueryHandler(ISqlConnectionFactory connectionFactory, IExecutionContextAccessor executionContextAccessor)
+    public GetAuthenticatedUserQueryHandler(ISqlFacade sqlFacade, IExecutionContextAccessor executionContextAccessor)
     {
-      _connectionFactory = connectionFactory;
+      _sqlFacade = sqlFacade;
       _executionContextAccessor = executionContextAccessor;
     }
 
     public async Task<UserDto> Handle(GetAuthenticatedUserQuery request, CancellationToken cancellationToken)
     {
-      var connection = _connectionFactory.GetOpenConnection();
-
       var userId = _executionContextAccessor.UserId;
 
       const string sql = @"SELECT
@@ -31,9 +29,10 @@ namespace MediAR.Modules.Membership.Application.Users.GetAuthenticatedUser
                           [User].[LastName],
                           [User].[TenantId]
                           FROM [membership].[v_Users] [User]
-                          WHERE Id = @UserId";
+                          WHERE Id = @UserId
+                            AND TenantId = @TenantId";
 
-      var user = await connection.QueryFirstOrDefaultAsync<UserDto>(sql, new { UserId = userId });
+      var user = await _sqlFacade.QueryFirstOrDefaultAsync<UserDto>(sql, new { UserId = userId, _executionContextAccessor.TenantId });
 
       return user;
     }

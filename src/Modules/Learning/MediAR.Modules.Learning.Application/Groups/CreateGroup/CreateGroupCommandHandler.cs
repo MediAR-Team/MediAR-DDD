@@ -12,19 +12,17 @@ namespace MediAR.Modules.Learning.Application.Groups.CreateGroup
 {
   class CreateGroupCommandHandler : ICommandHandler<CreateGroupCommand, GroupDto>
   {
-    private readonly ISqlConnectionFactory _connectionFactory;
+    private readonly ISqlFacade _sqlFacade;
     private readonly IExecutionContextAccessor _executionContextAccessor;
 
-    public CreateGroupCommandHandler(ISqlConnectionFactory connectionFactory, IExecutionContextAccessor executionContextAccessor)
+    public CreateGroupCommandHandler(ISqlFacade sqlFacade, IExecutionContextAccessor executionContextAccessor)
     {
-      _connectionFactory = connectionFactory;
+      _sqlFacade = sqlFacade;
       _executionContextAccessor = executionContextAccessor;
     }
 
     public async Task<GroupDto> Handle(CreateGroupCommand request, CancellationToken cancellationToken)
     {
-      var connection = _connectionFactory.GetOpenConnection();
-
       var queryParams = new
       {
         request.Name,
@@ -33,7 +31,7 @@ namespace MediAR.Modules.Learning.Application.Groups.CreateGroup
 
       try
       {
-        var result = await connection.QueryFirstOrDefaultAsync<GroupDto>("[learning].[ins_Group]", queryParams, commandType: CommandType.StoredProcedure);
+        var result = await _sqlFacade.QueryFirstOrDefaultAsync<GroupDto>("[learning].[ins_Group]", queryParams, commandType: CommandType.StoredProcedure);
         return result;
       }
       catch (SqlException ex)

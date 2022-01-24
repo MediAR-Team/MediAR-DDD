@@ -3,7 +3,7 @@ using System;
 
 namespace MediAR.Modules.Learning.Application.Courses.CreateCourse
 {
-  public class CreateCourseCommand : CommandBase<CourseDto>
+  public class CreateCourseCommand : CommandBase
   {
     public string Name { get; }
     public string Description { get; }

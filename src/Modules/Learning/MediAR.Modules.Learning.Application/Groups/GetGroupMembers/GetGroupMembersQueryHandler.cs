@@ -11,19 +11,17 @@ namespace MediAR.Modules.Learning.Application.Groups.GetGroupMembers
 {
   class GetGroupMembersQueryHandler : IQueryHandler<GetGroupMembersQuery, List<GroupMemberDto>>
   {
-    private readonly ISqlConnectionFactory _connectionFactory;
+    private readonly ISqlFacade _sqlFacade;
     private readonly IExecutionContextAccessor _executionContextAccessor;
 
-    public GetGroupMembersQueryHandler(ISqlConnectionFactory connectionFactory, IExecutionContextAccessor executionContextAccessor)
+    public GetGroupMembersQueryHandler(ISqlFacade sqlFacade, IExecutionContextAccessor executionContextAccessor)
     {
-      _connectionFactory = connectionFactory;
+      _sqlFacade = sqlFacade;
       _executionContextAccessor = executionContextAccessor;
     }
 
     public async Task<List<GroupMemberDto>> Handle(GetGroupMembersQuery request, CancellationToken cancellationToken)
     {
-      var connection = _connectionFactory.GetOpenConnection();
-
       const string sql = @"SELECT
                 [Member].[UserName] AS [UserName],
                 [Member].[Email] AS [Email],
@@ -39,7 +37,7 @@ namespace MediAR.Modules.Learning.Application.Groups.GetGroupMembers
         request.GroupId
       };
 
-      var result = await connection.QueryAsync<GroupMemberDto>(sql, queryParams);
+      var result = await _sqlFacade.QueryAsync<GroupMemberDto>(sql, queryParams);
 
       return result.ToList();
     }

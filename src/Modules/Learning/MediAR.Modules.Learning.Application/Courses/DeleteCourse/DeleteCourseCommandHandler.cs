@@ -13,19 +13,17 @@ namespace MediAR.Modules.Learning.Application.Courses.DeleteCourse
 {
   class DeleteCourseCommandHandler : ICommandHandler<DeleteCourseCommand>
   {
-    private readonly ISqlConnectionFactory _connectionFactory;
+    private readonly ISqlFacade _sqlFacade;
     private readonly IExecutionContextAccessor _executionContextAccessor;
 
-    public DeleteCourseCommandHandler(ISqlConnectionFactory connectionFactory, IExecutionContextAccessor executionContextAccessor)
+    public DeleteCourseCommandHandler(ISqlFacade sqlFacade, IExecutionContextAccessor executionContextAccessor)
     {
-      _connectionFactory = connectionFactory;
+      _sqlFacade = sqlFacade;
       _executionContextAccessor = executionContextAccessor;
     }
 
     public async Task<Unit> Handle(DeleteCourseCommand request, CancellationToken cancellationToken)
     {
-      var connection = _connectionFactory.GetOpenConnection();
-
       var queryParams = new
       {
         request.CourseId,
@@ -34,7 +32,7 @@ namespace MediAR.Modules.Learning.Application.Courses.DeleteCourse
 
       try
       {
-        await connection.ExecuteScalarAsync("[learning].[del_Course]", queryParams, commandType: CommandType.StoredProcedure);
+        await _sqlFacade.ExecuteAsync("[learning].[del_Course]", queryParams, commandType: CommandType.StoredProcedure);
       }
       catch (SqlException ex)
       {

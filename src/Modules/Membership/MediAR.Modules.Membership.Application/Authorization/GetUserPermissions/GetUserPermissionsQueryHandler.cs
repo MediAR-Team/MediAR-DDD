@@ -10,24 +10,22 @@ namespace MediAR.Modules.Membership.Application.Authorization.GetUserPermissions
 {
   class GetUserPermissionsQueryHandler : IQueryHandler<GetUserPermissionsQuery, List<PermissionDto>>
   {
-    private readonly ISqlConnectionFactory _connectionFactory;
+    private readonly ISqlFacade _sqlFacade;
 
-    public GetUserPermissionsQueryHandler(ISqlConnectionFactory connectionFactory)
+    public GetUserPermissionsQueryHandler(ISqlFacade sqlFacade)
     {
-      _connectionFactory = connectionFactory;
+      _sqlFacade = sqlFacade;
     }
 
     public async Task<List<PermissionDto>> Handle(GetUserPermissionsQuery request, CancellationToken cancellationToken)
     {
-      var connection = _connectionFactory.GetOpenConnection();
-
       const string sql = @"SELECT
                           [Permission].[PermissionId] AS [Id],
                           [Permission].[PermissionName] AS [Name]
                           FROM [membership].[v_UserPermissions] [Permission]
                           WHERE UserId = @UserId";
 
-      var permissions = await connection.QueryAsync<PermissionDto>(sql, new { UserId = request.UserId });
+      var permissions = await _sqlFacade.QueryAsync<PermissionDto>(sql, new { UserId = request.UserId });
 
       return permissions.ToList();
     }
