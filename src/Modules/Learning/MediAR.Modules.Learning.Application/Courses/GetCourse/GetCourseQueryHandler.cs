@@ -39,7 +39,7 @@ namespace MediAR.Modules.Learning.Application.Courses.GetCourses
                           [CMC].[EntryOrdinal] AS [Ordinal]
                           FROM [learning].[v_CourseAggregate] AS [CMC]
                           WHERE [CMC].[TenantId] = @TenantId AND [CMC].[CourseId] = @CourseId
-                          ORDER BY [CMC].[ModuleOrdinal], [CMC].[EntryOrdinal]";
+                          ORDER BY [CMC].[CourseId], [CMC].[ModuleOrdinal], [CMC].[EntryOrdinal]";
 
       var queryParams = new
       {

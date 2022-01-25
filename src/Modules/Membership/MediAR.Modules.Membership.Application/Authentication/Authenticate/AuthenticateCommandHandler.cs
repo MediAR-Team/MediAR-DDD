@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using MediAR.Coreplatform.Application;
 using MediAR.Coreplatform.Application.Data;
 using MediAR.Modules.Membership.Application.Authentication.TokenProviding;
 using MediAR.Modules.Membership.Application.Configuration.Commands;
@@ -13,11 +14,13 @@ namespace MediAR.Modules.Membership.Application.Authentication.Authenticate
 
     private readonly ISqlFacade _sqlFacade;
     private readonly ITokenProvider _tokenProvider;
+    private readonly IExecutionContextAccessor _executionContextAccessor;
 
-    public AuthenticateCommandHandler(ISqlFacade sqlFacade, ITokenProvider tokenProvider)
+    public AuthenticateCommandHandler(ISqlFacade sqlFacade, ITokenProvider tokenProvider, IExecutionContextAccessor executionContextAccessor)
     {
       _sqlFacade = sqlFacade;
       _tokenProvider = tokenProvider;
+      _executionContextAccessor = executionContextAccessor;
     }
 
     public async Task<AuthenticationResult> Handle(AuthenticateCommand request, CancellationToken cancellationToken)
@@ -31,9 +34,10 @@ namespace MediAR.Modules.Membership.Application.Authentication.Authenticate
                             [U].[LastName],
                             [U].[TenantId]
                           FROM [membership].[v_Users] [U]
-                          WHERE UserName = @UserName";
+                          WHERE UserName = @UserName
+                          AND TenantId = @TenantId";
 
-      var user = await _sqlFacade.QueryFirstOrDefaultAsync<UserDto>(sql, new { UserName = request.UserName });
+      var user = await _sqlFacade.QueryFirstOrDefaultAsync<UserDto>(sql, new { request.UserName, _executionContextAccessor.TenantId });
 
       if (user == null || !PasswordManager.VerifyHashedPassword(user.PasswordHash, request.Password))
       {

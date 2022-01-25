@@ -3,6 +3,8 @@ using MediAR.Modules.TenantManagement.Application.Contracts;
 using MediAR.Modules.TenantManagement.Application.Tenants.GetTenantByRefer;
 using Microsoft.AspNetCore.Http;
 using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace MediAR.MainAPI.Configuration.ExecutionContext
 {
@@ -21,9 +23,9 @@ namespace MediAR.MainAPI.Configuration.ExecutionContext
     {
       get
       {
-        if (_httpContextAccessor.HttpContext?.User?.FindFirst("sub") is not null)
+        if (_httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier) is not null)
         {
-          return Guid.Parse(_httpContextAccessor.HttpContext.User.FindFirst("sub").Value);
+          return Guid.Parse(_httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
         }
 
         throw new ApplicationException("User context is not available");

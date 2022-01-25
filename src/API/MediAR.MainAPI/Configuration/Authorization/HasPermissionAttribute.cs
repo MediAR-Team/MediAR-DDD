@@ -8,11 +8,21 @@ namespace MediAR.MainAPI.Configuration.Authorization
   {
     internal const string HasPermissionPolicyName = "HasPermission";
 
-    public HasPermissionAttribute(string name): base(HasPermissionPolicyName)
+    public HasPermissionAttribute(string name) : base()
     {
       Name = name;
     }
 
-    public string Name { get; }
+    public string Name
+    {
+      get
+      {
+        return Policy.Substring(HasPermissionPolicyName.Length);
+      }
+      set
+      {
+        Policy = HasPermissionPolicyName + value;
+      }
+    }
   }
 }

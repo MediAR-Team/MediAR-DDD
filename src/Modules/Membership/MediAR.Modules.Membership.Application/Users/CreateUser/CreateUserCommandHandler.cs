@@ -1,5 +1,4 @@
-﻿using Dapper;
-using MediAR.Coreplatform.Application;
+﻿using MediAR.Coreplatform.Application;
 using MediAR.Coreplatform.Application.Data;
 using MediAR.Coreplatform.Domain;
 using MediAR.Coreplatform.Infrastructure.Data;

@@ -12,6 +12,7 @@ using MediAR.Modules.Membership.Application.Authentication.TokenProviding;
 using MediAR.Modules.Membership.Infrastructure.Configuration;
 using MediAR.Modules.TenantManagement.Application.Contracts;
 using MediAR.Modules.TenantManagement.Infrastructure.Configuration;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -82,17 +83,8 @@ namespace MediAR.MainAPI
           };
         });
 
-      services.AddAuthorization(options =>
-      {
-        options.AddPolicy(HasPermissionAttribute.HasPermissionPolicyName, policyBuilder =>
-        {
-          policyBuilder.Requirements.Add(new HasPermissionAuthorizationRequirement());
-
-          policyBuilder.AddAuthenticationSchemes("Bearer");
-          // TODO: add jwtBearer authentication
-        });
-      });
-
+      services.AddScoped<IAuthorizationHandler, HasPermissionAuthorizationHandler>();
+      services.AddScoped<IAuthorizationPolicyProvider, HasPermissionPolicyProvider>();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)

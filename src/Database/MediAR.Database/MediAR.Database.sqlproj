@@ -91,7 +91,7 @@
     <Build Include="membership\StoredProcedures\ins_User.sql" />
     <Build Include="membership\StoredProcedures\assign_Role_to_User_by_UserName.sql" />
     <Build Include="membership\StoredProcedures\assign_Role_to_User_by_Email.sql" />
-    <Build Include="Scripts\Seeds\SeedPermissions.sql" />
+    <Build Include="Scripts\Seeds\001_SeedPermissions.sql" />
     <Build Include="membership\StoredProcedures\sel_Roles_with_Permissions.sql" />
     <Build Include="tenants\StoredProcedures\ins_Tenant.sql" />
     <Build Include="tenants\StoredProcedures\del_Tenant.sql" />
@@ -124,7 +124,7 @@
     <Build Include="learning\StoredProcedures\ins_Module.sql" />
     <Build Include="learning\StoredProcedures\del_Module.sql" />
     <Build Include="learning\StoredProcedures\ins_ContentEntry.sql" />
-    <None Include="Scripts\Seeds\SeedEntryTypes.sql" />
+    <None Include="Scripts\Seeds\002_SeedEntryTypes.sql" />
     <Build Include="learning\StoredProcedures\upd_ContentEntry.sql" />
     <Build Include="learning\UserDefinedTableTypes\ut_OrdinalUpdate.sql" />
     <Build Include="learning\StoredProcedures\upd_ReorderModules.sql" />
@@ -137,13 +137,13 @@
     <Build Include="learning\StoredProcedures\ins_Instructor.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Scripts\Seeds\SeedTenants.sql" />
-    <None Include="PermissionMapping.xml" />
+    <None Include="Scripts\Seeds\003_SeedTenants.sql" />
     <None Include="Scripts\PreScripts\app_schema.sql" />
     <None Include="Scripts\Migrations\001_initial.sql" />
     <None Include="Scripts\Migrations\002_ordinals.sql" />
     <None Include="Scripts\Migrations\003_instructors.sql" />
     <None Include="Scripts\Migrations\004_fix_ins_entry.sql" />
     <None Include="Scripts\Migrations\005_fix_courseAggregate.sql" />
+    <None Include="Scripts\Seeds\004_SeedAdmins.sql" />
   </ItemGroup>
 </Project>

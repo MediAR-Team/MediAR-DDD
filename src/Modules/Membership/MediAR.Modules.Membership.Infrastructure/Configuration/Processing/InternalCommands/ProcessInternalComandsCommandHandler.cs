@@ -1,12 +1,9 @@
-﻿using Dapper;
-using MediAR.Coreplatform.Application.Data;
+﻿using MediAR.Coreplatform.Application.Data;
 using MediAR.Modules.Membership.Application.Configuration.Commands;
 using MediAR.Modules.Membership.Application.Users.CreateUser;
 using MediatR;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 

@@ -1,4 +1,5 @@
-﻿using MediAR.Modules.Learning.Application.ContentEntries.EntryTypeActions;
+﻿using MediAR.MainAPI.Configuration.Authorization;
+using MediAR.Modules.Learning.Application.ContentEntries.EntryTypeActions;
 using MediAR.Modules.Learning.Application.ContentEntries.ExecuteEntryAction;
 using MediAR.Modules.Learning.Application.ContentEntries.GetEntryTypes;
 using MediAR.Modules.Learning.Application.ContentEntries.ReorderContentEntries;

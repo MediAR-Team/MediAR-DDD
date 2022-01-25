@@ -4,10 +4,6 @@
 		<permission name="CreateTenant" description=""></permission>
 		<permission name="UpdateTenant" description=""></permission>
 		<permission name="DeleteTenant" description=""></permission>
-		<permission name="CreatePublicCourse" description=""></permission>
-		<permission name="CreatePrivateCourse" description=""></permission>
-		<permission name="UpdateAnyCourse" description=""></permission>
-		<permission name="DeleteAnyCourse" description=""></permission>
 	</role>
 	<role name="Admin" description="Admin (per tenant)">
 		<permission name="CreatePublicCourse" description=""></permission>
