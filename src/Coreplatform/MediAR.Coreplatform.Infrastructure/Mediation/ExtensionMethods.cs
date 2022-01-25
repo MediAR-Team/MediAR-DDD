@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using FluentValidation;
 using MediatR;
 using MediatR.Pipeline;
 using System.Reflection;
@@ -18,6 +19,7 @@ namespace MediAR.Coreplatform.Infrastructure.Mediation
           typeof(IRequestHandler<>),
           typeof(IRequestHandler<,>),
           typeof(INotificationHandler<>),
+          typeof(IValidator<>)
       };
 
       builder.RegisterSource(new ScopedContravariantRegistrationSource(mediatorOpenTypes));

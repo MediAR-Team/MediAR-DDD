@@ -1,4 +1,5 @@
-﻿using MediAR.Coreplatform.Domain;
+﻿using FluentValidation;
+using MediAR.Coreplatform.Domain;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Text.Json;
@@ -27,7 +28,7 @@ namespace MediAR.MainAPI.Configuration.ErrorHandling
         var message = ex.Message;
         var stackTrace = ex.StackTrace;
 
-        if (ex is BusinessRuleValidationException)
+        if (ex is BusinessRuleValidationException || ex is ValidationException)
         {
           statusCode = 400;
         }

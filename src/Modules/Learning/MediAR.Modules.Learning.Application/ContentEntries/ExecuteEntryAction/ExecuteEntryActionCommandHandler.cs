@@ -1,4 +1,5 @@
-﻿using MediAR.Modules.Learning.Application.Configuration.Commands;
+﻿using FluentValidation;
+using MediAR.Modules.Learning.Application.Configuration.Commands;
 using MediAR.Modules.Learning.Application.ContentEntries.TypeHandlers;
 using Newtonsoft.Json;
 using System;
@@ -11,19 +12,23 @@ namespace MediAR.Modules.Learning.Application.ContentEntries.ExecuteEntryAction
   class ExecuteEntryActionCommandHandler : ICommandHandler<ExecuteEntryActionCommand, object>
   {
     private readonly IContentEntryHandlerFactory _entryHandlerFactory;
+    private readonly IValidatorFactory _validatorFactory;
 
-    public ExecuteEntryActionCommandHandler(IContentEntryHandlerFactory entryHandlerFactory)
+    public ExecuteEntryActionCommandHandler(IContentEntryHandlerFactory entryHandlerFactory, IValidatorFactory validatorFactory)
     {
       _entryHandlerFactory = entryHandlerFactory;
+      _validatorFactory = validatorFactory;
     }
 
     public async Task<dynamic> Handle(ExecuteEntryActionCommand request, CancellationToken cancellationToken)
     {
       var handler = await _entryHandlerFactory.GetHandlerAsync(request.EntryType);
 
-      var methods = handler.GetType().GetMethods().Where(x => x.GetCustomAttributes(typeof(ContentEntryActionAttribute), false).Length == 1);
+      var ceActionAttributeType = typeof(ContentEntryActionAttribute);
 
-      var method = methods.FirstOrDefault(x => ((ContentEntryActionAttribute)x.GetCustomAttributes(typeof(ContentEntryActionAttribute), false).First()).ActionName == request.ActionName);
+      var methods = handler.GetType().GetMethods().Where(x => x.GetCustomAttributes(ceActionAttributeType, false).Length == 1);
+
+      var method = methods.FirstOrDefault(x => ((ContentEntryActionAttribute)x.GetCustomAttributes(ceActionAttributeType, false).First()).ActionName == request.ActionName);
 
       if (method == null)
       {
@@ -34,9 +39,26 @@ namespace MediAR.Modules.Learning.Application.ContentEntries.ExecuteEntryAction
 
       object argument = JsonConvert.DeserializeObject(request.Payload.ToString(), paramType);
 
+      ValidateArgument(argument, paramType);
+
       var result = await (Task<dynamic>)method.Invoke(handler, new[] { argument });
 
       return result;
+    }
+
+    private void ValidateArgument(object argument, Type paramType)
+    {
+      var validator = _validatorFactory.GetValidator(paramType);
+
+      if (validator != null)
+      {
+        var validationErrors = validator.Validate(argument);
+
+        if (validationErrors?.Errors?.Count != 0)
+        {
+          throw new ValidationException(validationErrors.Errors);
+        }
+      }
     }
   }
 }

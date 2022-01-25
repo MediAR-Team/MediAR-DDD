@@ -1,8 +1,8 @@
 ﻿using Autofac;
+using MediAR.Coreplatform.Infrastructure.Validation;
 using MediAR.Modules.Learning.Application.Configuration.Commands;
 using MediAR.Modules.Learning.Application.Contracts;
 using MediAR.Modules.Learning.Infrastructure.Configuration.Processing.InternalCommands;
-using MediatR;
 
 namespace MediAR.Modules.Learning.Infrastructure.Configuration.Processing
 {
@@ -15,6 +15,13 @@ namespace MediAR.Modules.Learning.Infrastructure.Configuration.Processing
 
       builder.RegisterGenericDecorator(typeof(UnitOfWorkCommandHandlerDecorator<>), typeof(ICommandHandler<>));
       builder.RegisterGenericDecorator(typeof(UnitOfWorkCommandHandlerDecorator<,>), typeof(ICommandHandler<,>));
+
+      builder.RegisterGenericDecorator(typeof(ValidationCommandHandlerDecorator<>), typeof(ICommandHandler<>));
+      builder.RegisterGenericDecorator(typeof(ValidationCommandHandlerDecorator<,>), typeof(ICommandHandler<,>));
+
+      builder.RegisterType<ValidatorFactory>()
+        .AsImplementedInterfaces()
+        .InstancePerLifetimeScope();
 
       builder.RegisterType<InternalCommandScheduler>()
         .As<IInternalCommandScheduler>()
