@@ -15,6 +15,9 @@ namespace MediAR.Modules.Membership.Infrastructure.Configuration.Processing
       builder.RegisterGenericDecorator(typeof(ValidationCommandHandlerDecorator<>), typeof(ICommandHandler<>));
       builder.RegisterGenericDecorator(typeof(ValidationCommandHandlerDecorator<,>), typeof(ICommandHandler<,>));
 
+      builder.RegisterGenericDecorator(typeof(UnitOfWorkCommandHandlerDecorator<>), typeof(ICommandHandler<>));
+      builder.RegisterGenericDecorator(typeof(UnitOfWorkCommandHandlerDecorator<,>), typeof(ICommandHandler<,>));
+
       builder.RegisterType<InternalCommandScheduler>()
         .As<IInternalCommandScheduler>()
         .InstancePerLifetimeScope();

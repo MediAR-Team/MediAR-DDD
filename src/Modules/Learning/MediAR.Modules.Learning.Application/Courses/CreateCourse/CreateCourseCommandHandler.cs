@@ -1,5 +1,4 @@
-﻿using Dapper;
-using MediAR.Coreplatform.Application;
+﻿using MediAR.Coreplatform.Application;
 using MediAR.Coreplatform.Application.Data;
 using MediAR.Modules.Learning.Application.Configuration.Commands;
 using MediatR;
@@ -27,7 +26,8 @@ namespace MediAR.Modules.Learning.Application.Courses.CreateCourse
         request.Name,
         request.Description,
         BackgroundImage = request.BackgroundImageUrl,
-        TenantId = request.TenantId ?? _executionContextAccessor.TenantId
+        TenantId = request.TenantId ?? _executionContextAccessor.TenantId,
+        _executionContextAccessor.UserId
       };
 
       await _sqlFacade.ExecuteAsync("[learning].[ins_Course]", queryParams, commandType: CommandType.StoredProcedure);

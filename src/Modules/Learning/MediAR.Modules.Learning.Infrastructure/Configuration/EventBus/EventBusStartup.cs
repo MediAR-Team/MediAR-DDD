@@ -17,6 +17,7 @@ namespace MediAR.Modules.Learning.Infrastructure.Configuration.EventBus
       var eventBus = scope.Resolve<IEventBus>();
 
       SubscribeToIntegrationEvent<UserAddedToRoleIntegrationEvent>(eventBus);
+      SubscribeToIntegrationEvent<UserCreatedWithRoleIntegrationEvent>(eventBus);
     }
 
     private static void SubscribeToIntegrationEvent<T>(IEventBus eventBus) where T : IntegrationEvent

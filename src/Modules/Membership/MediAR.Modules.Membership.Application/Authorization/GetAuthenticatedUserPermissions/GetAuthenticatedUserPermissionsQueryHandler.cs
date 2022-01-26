@@ -22,15 +22,14 @@ namespace MediAR.Modules.Membership.Application.Authorization.GetAuthenticatedUs
 
     public async Task<List<PermissionDto>> Handle(GetAuthenticatedUserPermissionsQuery request, CancellationToken cancellationToken)
     {
-      var userId = _executionContextAccessor.UserId;
-
       const string sql = @"SELECT
                           [Permission].[PermissionId] AS [Id],
                           [Permission].[PermissionName] AS [Name]
                           FROM [membership].[v_UserPermissions] [Permission]
-                          WHERE UserId = @UserId";
+                          WHERE UserId = @UserId
+                          AND TenantId = @TenantId";
 
-      var permissions = await _sqlFacade.QueryAsync<PermissionDto>(sql, new { UserId = userId });
+      var permissions = await _sqlFacade.QueryAsync<PermissionDto>(sql, new { _executionContextAccessor.UserId, _executionContextAccessor.TenantId });
 
       return permissions.ToList();
     }

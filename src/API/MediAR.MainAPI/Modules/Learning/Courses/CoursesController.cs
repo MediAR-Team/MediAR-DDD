@@ -1,4 +1,5 @@
-﻿using MediAR.Modules.Learning.Application.Contracts;
+﻿using MediAR.MainAPI.Configuration.Authorization;
+using MediAR.Modules.Learning.Application.Contracts;
 using MediAR.Modules.Learning.Application.Courses.CreateCourse;
 using MediAR.Modules.Learning.Application.Courses.GetCourse;
 using MediAR.Modules.Learning.Application.Courses.GetCourses;
@@ -29,6 +30,7 @@ namespace MediAR.MainAPI.Modules.Learning.Courses
     }
 
     [HttpGet]
+    [HasPermission(LearningPermissions.GetAllCourses)]
     public async Task<IActionResult> GetCourses(int page = 1, int pageSize = 20)
     {
       var result = await _mediator.ExecuteQueryAsync(new GetCoursesQuery(page, pageSize));
@@ -37,6 +39,7 @@ namespace MediAR.MainAPI.Modules.Learning.Courses
     }
 
     [HttpPost]
+    [HasPermission(LearningPermissions.CreateCourse)]
     public async Task<IActionResult> CreateCourse(CreateCourseRequest request)
     {
       await _mediator.ExecuteCommandAsync(new CreateCourseCommand(request.Name, request.Description, request.BackgroundImageUrl));
@@ -44,15 +47,7 @@ namespace MediAR.MainAPI.Modules.Learning.Courses
       return Ok();
     }
 
-    [HttpGet("foruser/{identifier}")]
-    public async Task<IActionResult> GetCoursesForUser(string identifier, [FromQuery] UserIdentifierOption identifierOption = UserIdentifierOption.UserName)
-    {
-      var result = await _mediator.ExecuteQueryAsync(new GetCoursesForUserQuery(identifier, identifierOption));
-
-      return Ok(result);
-    }
-
-    [HttpGet("forme")]
+    [HttpGet("foruser/me")]
     public async Task<IActionResult> GetCoursesForAuthenticatedUser()
     {
       var result = await _mediator.ExecuteQueryAsync(new GetCoursesForAuthenticatedUserQuery());

@@ -23,6 +23,7 @@ IF NOT EXISTS (
 		FROM learning.Courses
 		WHERE TenantId = @TenantId
 			AND Id = @CourseId
+			AND OwnerStudentId IS NULL
 		)
 BEGIN
 		;

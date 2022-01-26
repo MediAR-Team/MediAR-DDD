@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using MediAR.Coreplatform.Domain;
 using Microsoft.AspNetCore.Http;
+using Serilog;
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace MediAR.MainAPI.Configuration.ErrorHandling
       _next = next;
     }
 
-    public async Task Invoke(HttpContext context)
+    public async Task Invoke(HttpContext context, ILogger logger)
     {
       try
       {
@@ -31,6 +32,11 @@ namespace MediAR.MainAPI.Configuration.ErrorHandling
         if (ex is BusinessRuleValidationException || ex is ValidationException)
         {
           statusCode = 400;
+        }
+
+        if (statusCode == 500)
+        {
+          logger.Error(message);
         }
 
         context.Response.StatusCode = statusCode;

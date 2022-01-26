@@ -1,9 +1,6 @@
 ﻿using MediAR.Modules.Membership.Application.Contracts;
 using MediAR.Modules.Membership.Application.Roles.GetRoles;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MediAR.MainAPI.Modules.Membership.Roles

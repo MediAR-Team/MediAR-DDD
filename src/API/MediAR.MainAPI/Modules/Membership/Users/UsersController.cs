@@ -1,4 +1,5 @@
-﻿using MediAR.Modules.Membership.Application.Contracts;
+﻿using MediAR.MainAPI.Configuration.Authorization;
+using MediAR.Modules.Membership.Application.Contracts;
 using MediAR.Modules.Membership.Application.Users;
 using MediAR.Modules.Membership.Application.Users.AssignRoleToUser;
 using MediAR.Modules.Membership.Application.Users.CreateUser;
@@ -31,10 +32,11 @@ namespace MediAR.MainAPI.Modules.Membership.Users
     }
 
     [HttpPost]
+    [HasPermission(MembersipPermissions.CreateUser)]
     public async Task<IActionResult> CreateNewUser(CreateNewUserRequest request)
     {
       var result = await _membershipModule.ExecuteCommandAsync(new CreateUserCommand(
-        request.UserName, request.Email, request.Password, request.FirstName, request.LastName));
+        request.UserName, request.Email, request.Password, request.FirstName, request.LastName, request.Role));
 
       return Ok(result);
     }
@@ -56,6 +58,7 @@ namespace MediAR.MainAPI.Modules.Membership.Users
     }
 
     [HttpPost("assignRole")]
+    [HasPermission(MembersipPermissions.UpdateUserRole)]
     public async Task<IActionResult> AssignRole(AssignRoleToUserRequest request)
     {
       var result = await _membershipModule.ExecuteCommandAsync(new AssignRoleToUserCommand(request.IdentifierOption, request.UserIdentifier, request.RoleName));

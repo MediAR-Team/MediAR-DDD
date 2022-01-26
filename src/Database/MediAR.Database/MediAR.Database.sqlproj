@@ -145,5 +145,6 @@
     <None Include="Scripts\Migrations\004_fix_ins_entry.sql" />
     <None Include="Scripts\Migrations\005_fix_courseAggregate.sql" />
     <None Include="Scripts\Seeds\004_SeedAdmins.sql" />
+    <None Include="Scripts\Migrations\006_private_courses.sql" />
   </ItemGroup>
 </Project>

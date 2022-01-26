@@ -6,6 +6,7 @@ SELECT u.Id AS [UserId]
 	,u.Email AS [Email]
 	,p.Id AS [PermissionId]
 	,p.[Name] AS [PermissionName]
+	,u.TenantId AS [TenantId]
 FROM [membership].[Users] u
 JOIN [membership].[UsersToRoles] utr ON utr.UserId = u.Id
 JOIN [membership].[RolesToPermissions] rtp ON rtp.RoleId = utr.RoleId

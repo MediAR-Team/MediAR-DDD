@@ -1,25 +1,29 @@
 ﻿DECLARE @Data XML = '<?xml version="1.0" encoding="utf-8" ?>
 <root>
-	<role name="SuperAdmin" description="Super admin (master tenant)">
-		<permission name="CreateTenant" description=""></permission>
-		<permission name="UpdateTenant" description=""></permission>
-		<permission name="DeleteTenant" description=""></permission>
-	</role>
 	<role name="Admin" description="Admin (per tenant)">
-		<permission name="CreatePublicCourse" description=""></permission>
-		<permission name="CreatePrivateCourse" description=""></permission>
-		<permission name="UpdateAnyCourse" description=""></permission>
-		<permission name="DeleteAnyCourse" description=""></permission>
+		<permission name="CreateUser" description=""></permission>
+		<permission name="UpdateUserRole" description=""></permission>
+
+		<permission name="GetAllCourses" description=""></permission>
+		<permission name="CreateCourse" description=""></permission>
+		<permission name="UpdateCourse" description=""></permission>
+		<permission name="DeleteCourse" description=""></permission>
+		<permission name="AddStudentToGoup" description=""></permission>
+		<permission name="DelStudentFromGroup" description=""></permission>
+		<permission name="AddGroupToCourse" description=""></permission>
+		<permission name="CreateGroup" description=""></permission>
+		<permission name="DeleteGroup" description=""></permission>
 	</role>
 	<role name="Instructor" description="Instructor (per tenant)">
-		<permission name="CreatePublicCourse" description=""></permission>
-		<permission name="CreatePrivateCourse" description=""></permission>
+		<permission name="GetAllCourses" description=""></permission>
+		<permission name="CreateCourse" description=""></permission>
 		<permission name="UpdateOwnCourse" description=""></permission>
 		<permission name="DeleteOwnCourse" description=""></permission>
+		<permission name="AddGroupToOwnCourse" description=""></permission>
 	</role>
 	<role name="Student" description="Student (per tenant)">
-		<permission name="CreatePrivateCourse" description=""></permission>
-		<permission name="ReadAddedCourse" description=""></permission>
+		<permission name="CreateCourse" description=""></permission>
+		<permission name="UpdateOwnCourse" description=""></permission>
 	</role>
 </root>';
 

@@ -60,4 +60,3 @@ INSERT membership.UsersToRoles (UserId, TenantId, RoleId)
 SELECT ti.Id, ti.TenantId, r.Id
 FROM @TInserted ti
 JOIN membership.Roles R ON R.[Name] = 'Admin';
-

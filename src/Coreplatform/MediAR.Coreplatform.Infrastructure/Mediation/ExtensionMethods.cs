@@ -29,8 +29,8 @@ namespace MediAR.Coreplatform.Infrastructure.Mediation
         builder
             .RegisterAssemblyTypes(assemblies)
             .AsClosedTypesOf(mediatorOpenType)
-            .AsImplementedInterfaces()
-            .FindConstructorsWith(new AllConstructorFinder());
+            .AsImplementedInterfaces();
+            //.FindConstructorsWith(new AllConstructorFinder());
       }
 
       builder.RegisterGeneric(typeof(RequestPostProcessorBehavior<,>)).As(typeof(IPipelineBehavior<,>));

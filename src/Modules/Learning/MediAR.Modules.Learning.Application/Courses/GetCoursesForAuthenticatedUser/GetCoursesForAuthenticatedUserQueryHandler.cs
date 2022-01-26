@@ -1,5 +1,4 @@
-﻿using Dapper;
-using MediAR.Coreplatform.Application;
+﻿using MediAR.Coreplatform.Application;
 using MediAR.Coreplatform.Application.Data;
 using MediAR.Modules.Learning.Application.Configuration.Queries;
 using MediAR.Modules.Learning.Application.Groups.GetCoursesForGroup;
@@ -30,7 +29,7 @@ namespace MediAR.Modules.Learning.Application.Courses.GetCoursesForAuthenticated
                   SC.BackgroundImageUrl AS BackgroundImageUrl
                   FROM [learning].[v_StudentCourses] SC
                   WHERE TenantId = @TenantId
-                  AND UserId = @UserId";
+                  AND StudentId = @UserId";
 
       var result = await _sqlFacade.QueryAsync<CourseDto>(sql, new { _executionContextAccessor.UserId, _executionContextAccessor.TenantId });
 

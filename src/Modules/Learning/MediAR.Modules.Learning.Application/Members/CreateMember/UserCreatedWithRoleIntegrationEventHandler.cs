@@ -1,4 +1,5 @@
-﻿using MediAR.Coreplatform.Application.Data;
+﻿using Dapper;
+using MediAR.Coreplatform.Application.Data;
 using MediAR.Modules.Membership.IntegrationEvents;
 using MediatR;
 using System.Data;
@@ -7,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace MediAR.Modules.Learning.Application.Members.CreateMember
 {
-  class UserAddedToRoleIntegrationEventHandler : INotificationHandler<UserAddedToRoleIntegrationEvent>
+  class UserCreatedWithRoleIntegrationEventHandler : INotificationHandler<UserCreatedWithRoleIntegrationEvent>
   {
     private readonly ISqlFacade _sqlFacade;
 
-    public UserAddedToRoleIntegrationEventHandler(ISqlFacade sqlFacade)
+    public UserCreatedWithRoleIntegrationEventHandler(ISqlFacade sqlFacade)
     {
       _sqlFacade = sqlFacade;
     }
 
-    public async Task Handle(UserAddedToRoleIntegrationEvent notification, CancellationToken cancellationToken)
+    public async Task Handle(UserCreatedWithRoleIntegrationEvent notification, CancellationToken cancellationToken)
     {
       var queryParams = new
       {

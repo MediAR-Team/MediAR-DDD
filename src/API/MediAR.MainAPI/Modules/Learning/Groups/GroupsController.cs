@@ -1,4 +1,5 @@
-﻿using MediAR.Modules.Learning.Application.Contracts;
+﻿using MediAR.MainAPI.Configuration.Authorization;
+using MediAR.Modules.Learning.Application.Contracts;
 using MediAR.Modules.Learning.Application.Groups.AddGroupToCourse;
 using MediAR.Modules.Learning.Application.Groups.AddStudentToGroup;
 using MediAR.Modules.Learning.Application.Groups.CreateGroup;
@@ -33,6 +34,7 @@ namespace MediAR.MainAPI.Modules.Learning.Groups
     }
 
     [HttpPost]
+    [HasPermission(LearningPermissions.CreateGroup)]
     public async Task<IActionResult> CreateGroup(CreateGroupRequest request)
     {
       var result = await _mediator.ExecuteCommandAsync(new CreateGroupCommand(request.Name));
@@ -41,6 +43,7 @@ namespace MediAR.MainAPI.Modules.Learning.Groups
     }
 
     [HttpDelete("groupId")]
+    [HasPermission(LearningPermissions.DeleteGroup)]
     public async Task<IActionResult> DeleteGroup(int groupId)
     {
       await _mediator.ExecuteCommandAsync(new DeleteGroupCommand(groupId));
@@ -57,19 +60,12 @@ namespace MediAR.MainAPI.Modules.Learning.Groups
     }
 
     [HttpPost("{groupId}/members")]
+    [HasPermission(LearningPermissions.AddStudentToGoup)]
     public async Task<IActionResult> AddMemberToGroup(int groupId, AddMemberToGroupRequest request)
     {
       await _mediator.ExecuteCommandAsync(new AddStudentToGroupCommand(groupId, request.StudentId));
 
       return Ok();
-    }
-
-    [HttpGet("foruser/{userIdentifier}")]
-    public async Task<IActionResult> GetGroupsForUser(string userIdentifier)
-    {
-      var result = await _mediator.ExecuteQueryAsync(new GetGroupsForStudentQuery(userIdentifier));
-
-      return Ok(result);
     }
 
     [HttpGet("foruser/me")]
@@ -81,6 +77,7 @@ namespace MediAR.MainAPI.Modules.Learning.Groups
     }
 
     [HttpPost("{groupId}/courses")]
+    [HasPermission(LearningPermissions.AddGroupToCourse)]
     public async Task<IActionResult> AddGroupToCourse(int groupId, AddGroupToCourseRequest request)
     {
       await _mediator.ExecuteCommandAsync(new AddGroupToCourseCommand(groupId, request.CourseId));

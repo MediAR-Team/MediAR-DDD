@@ -54,6 +54,10 @@ namespace MediAR.MainAPI
       builder.RegisterModule(new MembershipAutofacModule());
       builder.RegisterModule(new TenantManagementAutofacModule());
       builder.RegisterModule(new LearningAutofacModule());
+
+      builder.RegisterInstance(_loggerForApi)
+        .As<ILogger>()
+        .SingleInstance();
     }
 
     public void ConfigureServices(IServiceCollection services)
