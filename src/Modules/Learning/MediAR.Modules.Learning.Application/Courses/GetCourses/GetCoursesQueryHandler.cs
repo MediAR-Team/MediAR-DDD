@@ -42,16 +42,15 @@ namespace MediAR.Modules.Learning.Application.Courses.GetCourses
                           [CMC].[ModuleOrdinal] AS [Ordinal],
                           [CMC].[EntryId] AS [Id],
                           [CMC].[EntryTypeName] AS [TypeName],
-                          [CMC].[EntryConfiguration] AS [Configuration],
-                          [CMC].[EntryData] AS [Data],
-                          [CMC].[EntryOrdinal] AS [Ordinal]
+                          [CMC].[EntryOrdinal] AS [Ordinal],
+                          [CMC].[EntryTitle] AS [Title]
                           FROM [learning].[v_CourseAggregate] AS [CMC]
                           WHERE [CMC].[TenantId] = @TenantId
                           ORDER BY [CMC].[CourseId], [CMC].[ModuleOrdinal], [CMC].[EntryOrdinal]";
 
       sql = PagedQueryHelper.AppendPageStatement(sql);
 
-      var courses = await _sqlFacade.QueryAsync<CourseAggregateDto, ModuleDto, DbContentEntry, CourseAggregateDto>(sql, (c, m, ce) =>
+      var courses = await _sqlFacade.QueryAsync<CourseAggregateDto, ModuleDto, ContentEntryDto, CourseAggregateDto>(sql, (c, m, ce) =>
       {
         if (m != null)
         {
@@ -59,17 +58,7 @@ namespace MediAR.Modules.Learning.Application.Courses.GetCourses
         }
         if (ce != null)
         {
-          var (data, config) = EntryMapper.MapEntry(ce);
-          var ceDto = new ContentEntryDto
-          {
-            Id = ce.Id,
-            TypeName = ce.TypeName,
-            Data = data,
-            Configuration = config,
-            Ordinal = ce.Ordinal
-          };
-
-          m.ContentEntries.Add(ceDto);
+          m.ContentEntries.Add(ce);
         }
         return c;
       }, queryParams, splitOn: "Id, Id");

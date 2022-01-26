@@ -6,6 +6,7 @@
 	,[Data] XML NOT NULL
 	,[ModuleId] INT NOT NULL
 	,[Ordinal] INT NOT NULL
+	,[Title] VARCHAR(256) NOT NULL
 	,CONSTRAINT [PK_ContentEntries] PRIMARY KEY (
 		[Id]
 		,[TenantId]

@@ -20,7 +20,7 @@ namespace MediAR.Modules.Learning.Application.ContentEntries.EntryTypes.Lecture
     [ContentEntryAction("create")]
     public async Task<dynamic> CreateAsync(CreateCommand command)
     {
-      var lecture = new LectureContentEntry(null, _executionContextAccessor.TenantId, command.ModuleId, new LectureData(command.TextData), new LectureConfiguration());
+      var lecture = new LectureContentEntry(null, _executionContextAccessor.TenantId, command.ModuleId, command.Title, new LectureData(command.TextData), new LectureConfiguration());
 
       await _contentEntriesRepository.SaveEntryAsync(lecture);
 
@@ -30,7 +30,7 @@ namespace MediAR.Modules.Learning.Application.ContentEntries.EntryTypes.Lecture
     [ContentEntryAction("update")]
     public async Task<dynamic> UpdateAsync(UpdateCommand command)
     {
-      var lecture = new LectureContentEntry(command.EntryId, _executionContextAccessor.TenantId, default(int), new LectureData(command.TextData), new LectureConfiguration());
+      var lecture = new LectureContentEntry(command.EntryId, _executionContextAccessor.TenantId, default(int), command.Title, new LectureData(command.TextData), new LectureConfiguration());
 
       await _contentEntriesRepository.UpdateEntryAsync(lecture);
 

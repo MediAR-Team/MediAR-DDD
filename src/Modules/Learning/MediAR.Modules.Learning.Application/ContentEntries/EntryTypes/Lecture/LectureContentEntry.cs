@@ -15,17 +15,20 @@ namespace MediAR.Modules.Learning.Application.ContentEntries.EntryTypes.Lecture
 
     public int ModuleId { get; set; }
 
+    public string Title { get; set; }
+
     public LectureData Data { get; set; }
 
     public LectureConfiguration Configuration { get; set; }
 
-    public LectureContentEntry(int? id, Guid tenantId, int moduleId, LectureData data, LectureConfiguration configuration)
+    public LectureContentEntry(int? id, Guid tenantId, int moduleId, string title, LectureData data, LectureConfiguration configuration)
     {
       Id = id;
       TenantId = tenantId;
       ModuleId = moduleId;
       Data = data;
       Configuration = configuration;
+      Title = title;
     }
 
     public LectureContentEntry(){}

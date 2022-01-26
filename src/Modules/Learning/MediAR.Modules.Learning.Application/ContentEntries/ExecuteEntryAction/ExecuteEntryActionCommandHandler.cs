@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using MediAR.Coreplatform.Domain;
 using MediAR.Modules.Learning.Application.Configuration.Commands;
 using MediAR.Modules.Learning.Application.ContentEntries.TypeHandlers;
 using Newtonsoft.Json;
@@ -32,7 +33,7 @@ namespace MediAR.Modules.Learning.Application.ContentEntries.ExecuteEntryAction
 
       if (method == null)
       {
-        throw new ApplicationException("Action name invalid");
+        throw new BusinessRuleValidationException("Action name invalid");
       }
 
       var paramType = method.GetParameters().FirstOrDefault().ParameterType;

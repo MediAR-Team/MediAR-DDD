@@ -3,6 +3,7 @@
 	,@Data XML
 	,@Config XML
 	,@TypeId INT
+	,@Title VARCHAR(256)
 AS
 DECLARE @EntryExists BIT = 0
 	,@CorrespondingType BIT = 0;
@@ -30,5 +31,6 @@ END;
 UPDATE learning.ContentEntries
 SET [Data] = @Data
 	,[Configuration] = @Config
+	,[Title] = ISNULL(@Title, [Title])
 WHERE Id = @Id
 	AND TenantId = @TenantId;

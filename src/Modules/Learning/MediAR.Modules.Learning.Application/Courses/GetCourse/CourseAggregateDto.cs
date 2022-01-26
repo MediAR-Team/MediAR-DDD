@@ -24,9 +24,8 @@ namespace MediAR.Modules.Learning.Application.Courses.GetCourse
   public class ContentEntryDto
   {
     public int Id { get; set; }
+    public string Title { get; set; }
     public string TypeName { get; set; }
-    public object Configuration { get; set; }
-    public object Data { get; set; }
     public int Ordinal { get; set; }
   }
 }

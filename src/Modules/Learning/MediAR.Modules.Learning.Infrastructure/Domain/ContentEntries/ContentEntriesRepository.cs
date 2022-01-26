@@ -46,7 +46,8 @@ namespace MediAR.Modules.Learning.Infrastructure.Domain.ContentEntries
         entry.ModuleId,
         entry.TypeId,
         Data = data,
-        Config = config
+        Config = config,
+        entry.Title
       };
 
       await _sqlFacade.ExecuteAsync("[learning].[ins_ContentEntry]", queryParams, commandType: CommandType.StoredProcedure);
@@ -78,7 +79,8 @@ namespace MediAR.Modules.Learning.Infrastructure.Domain.ContentEntries
         entry.TenantId,
         Data = data,
         Config = config,
-        entry.TypeId
+        entry.TypeId,
+        entry.Title
       };
 
       try

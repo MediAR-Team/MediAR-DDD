@@ -3,6 +3,7 @@
 	,@TypeId INT
 	,@Data XML
 	,@Config XML
+	,@Title VARCHAR(256)
 AS
 DECLARE @NewOrdinal INT;
 
@@ -23,10 +24,12 @@ INSERT [learning].[ContentEntries] (
 	,[Data]
 	,[Configuration]
 	,[Ordinal]
+	,[Title]
 	)
 SELECT @ModuleId
 	,@TypeId
 	,@TenantId
 	,@Data
 	,@Config
-	,@NewOrdinal;
+	,@NewOrdinal
+	,@Title;
