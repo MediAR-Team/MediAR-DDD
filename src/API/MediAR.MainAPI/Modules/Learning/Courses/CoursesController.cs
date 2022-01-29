@@ -42,7 +42,7 @@ namespace MediAR.MainAPI.Modules.Learning.Courses
     [HasPermission(LearningPermissions.CreateCourse)]
     public async Task<IActionResult> CreateCourse(CreateCourseRequest request)
     {
-      await _mediator.ExecuteCommandAsync(new CreateCourseCommand(request.Name, request.Description, request.BackgroundImageUrl));
+      await _mediator.ExecuteCommandAsync(new CreateCourseCommand(request.Name, request.Description, request.FileType, request.BackgroundImage));
 
       return Ok();
     }

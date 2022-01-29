@@ -1,9 +1,12 @@
 ﻿using Dapper;
 using MediAR.Coreplatform.Application;
 using MediAR.Coreplatform.Application.Data;
+using MediAR.Coreplatform.Application.Exceptions;
+using MediAR.Coreplatform.Application.FielStorage;
 using MediAR.Modules.Learning.Application.Configuration.Queries;
 using MediAR.Modules.Learning.Application.ContentEntries;
 using MediAR.Modules.Learning.Application.Courses.GetCourse;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,11 +17,13 @@ namespace MediAR.Modules.Learning.Application.Courses.GetCourses
   {
     private readonly ISqlFacade _sqlFacade;
     private readonly IExecutionContextAccessor _executionContextAccessor;
+    private readonly IFileStorage _fileStorage;
 
-    public GetCourseQueryHandler(ISqlFacade sqlFacade, IExecutionContextAccessor executionContextAccessor)
+    public GetCourseQueryHandler(ISqlFacade sqlFacade, IExecutionContextAccessor executionContextAccessor, IFileStorage fileStorage)
     {
       _sqlFacade = sqlFacade;
       _executionContextAccessor = executionContextAccessor;
+      _fileStorage = fileStorage;
     }
 
     public async Task<CourseAggregateDto> Handle(GetCourseQuery request, CancellationToken cancellationToken)
@@ -78,6 +83,18 @@ namespace MediAR.Modules.Learning.Application.Courses.GetCourses
         }
         return groupedCourse;
       }).FirstOrDefault();
+
+      if (result == null)
+      {
+        throw new NotFoundException($"Course with id {request.CourseId} not found");
+      }
+
+      try
+      {
+        var imageUrl = await _fileStorage.GetUrlAsync(_executionContextAccessor.TenantId.ToString(), result.BackgroundImageUrl, TimeSpan.FromMinutes(30));
+        result.BackgroundImageUrl = imageUrl;
+      }
+      catch { }
 
       return result;
     }

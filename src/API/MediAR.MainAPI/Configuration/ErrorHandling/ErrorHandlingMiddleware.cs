@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using MediAR.Coreplatform.Application.Exceptions;
 using MediAR.Coreplatform.Domain;
 using Microsoft.AspNetCore.Http;
 using Serilog;
@@ -32,6 +33,9 @@ namespace MediAR.MainAPI.Configuration.ErrorHandling
         if (ex is BusinessRuleValidationException || ex is ValidationException)
         {
           statusCode = 400;
+        } else if (ex is NotFoundException)
+        {
+          statusCode = 404;
         }
 
         if (statusCode == 500)
