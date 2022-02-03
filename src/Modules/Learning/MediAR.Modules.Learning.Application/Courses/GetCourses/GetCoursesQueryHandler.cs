@@ -1,10 +1,12 @@
 ﻿using Dapper;
 using MediAR.Coreplatform.Application;
 using MediAR.Coreplatform.Application.Data;
+using MediAR.Coreplatform.Application.FielStorage;
 using MediAR.Coreplatform.Application.Queries;
 using MediAR.Modules.Learning.Application.Configuration.Queries;
 using MediAR.Modules.Learning.Application.ContentEntries;
 using MediAR.Modules.Learning.Application.Courses.GetCourse;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -16,11 +18,13 @@ namespace MediAR.Modules.Learning.Application.Courses.GetCourses
   {
     private readonly ISqlFacade _sqlFacade;
     private readonly IExecutionContextAccessor _executionContextAccessor;
+    private readonly IFileStorage _fileStorage;
 
-    public GetCoursesQueryHandler(ISqlFacade sqlFacade, IExecutionContextAccessor executionContextAccessor)
+    public GetCoursesQueryHandler(ISqlFacade sqlFacade, IExecutionContextAccessor executionContextAccessor, IFileStorage fileStorage)
     {
       _sqlFacade = sqlFacade;
       _executionContextAccessor = executionContextAccessor;
+      _fileStorage = fileStorage;
     }
 
     public async Task<List<CourseAggregateDto>> Handle(GetCoursesQuery request, CancellationToken cancellationToken)
@@ -66,6 +70,7 @@ namespace MediAR.Modules.Learning.Application.Courses.GetCourses
       var result = courses.GroupBy(x => x.Id).Select(courseGroup =>
       {
         var groupedCourse = courseGroup.First();
+
         if (groupedCourse.Modules.Count != 0)
         {
 
@@ -82,6 +87,16 @@ namespace MediAR.Modules.Learning.Application.Courses.GetCourses
         }
         return groupedCourse;
       });
+
+      foreach (var c in result)
+      {
+        try
+        {
+          var imageUrl = await _fileStorage.GetUrlAsync(_executionContextAccessor.TenantId.ToString(), c.BackgroundImageUrl, TimeSpan.FromMinutes(30));
+          c.BackgroundImageUrl = imageUrl;
+        }
+        catch { }
+      }
 
       return result.ToList();
     }

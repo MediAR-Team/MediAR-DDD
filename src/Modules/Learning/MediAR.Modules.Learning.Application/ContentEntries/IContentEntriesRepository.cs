@@ -7,5 +7,6 @@ namespace MediAR.Modules.Learning.Application.ContentEntries
   {
     Task SaveEntryAsync<TData, TConfig>(IContentEntry<TData, TConfig> entry) where TData : IXmlSerializable where TConfig : IXmlSerializable;
     Task UpdateEntryAsync<TData, TConfig>(IContentEntry<TData, TConfig> entry) where TData : IXmlSerializable where TConfig : IXmlSerializable;
+    Task<DbContentEntry> GetContentEntry(int id);
   }
 }

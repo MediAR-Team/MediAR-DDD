@@ -1,5 +1,6 @@
 ﻿using MediAR.Coreplatform.Application;
-using MediAR.Coreplatform.Application.Data;
+using MediAR.Coreplatform.Application.Exceptions;
+using MediAR.Coreplatform.Domain;
 using MediAR.Modules.Learning.Application.ContentEntries.EntryTypes.Lecture.Commands;
 using MediAR.Modules.Learning.Application.ContentEntries.TypeHandlers;
 using System.Threading.Tasks;
@@ -35,6 +36,26 @@ namespace MediAR.Modules.Learning.Application.ContentEntries.EntryTypes.Lecture
       await _contentEntriesRepository.UpdateEntryAsync(lecture);
 
       return lecture;
+    }
+
+    [ContentEntryAction("getview")]
+    public async Task<dynamic> GetView(GetView command)
+    {
+      var entry = await _contentEntriesRepository.GetContentEntry(command.EntryId);
+
+      if (entry == null)
+      {
+        throw new NotFoundException($"Entry with id {command.EntryId} not found");
+      }
+
+      if (entry.TypeName != "Lecture")
+      {
+        throw new BusinessRuleValidationException("Type mismatch");
+      }
+
+      var (data, config) = EntryMapper.MapEntry(entry);
+
+      return data;
     }
   }
 }

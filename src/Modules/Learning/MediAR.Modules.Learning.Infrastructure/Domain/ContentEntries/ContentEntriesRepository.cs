@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using MediAR.Coreplatform.Application;
 using MediAR.Coreplatform.Application.Data;
 using MediAR.Coreplatform.Domain;
 using MediAR.Coreplatform.Infrastructure.Data;
@@ -14,10 +15,38 @@ namespace MediAR.Modules.Learning.Infrastructure.Domain.ContentEntries
   class ContentEntriesRepository : IContentEntriesRepository
   {
     private readonly ISqlFacade _sqlFacade;
+    private readonly IExecutionContextAccessor _executionContextAccessor;
 
-    public ContentEntriesRepository(ISqlFacade sqlFacade)
+    public ContentEntriesRepository(ISqlFacade sqlFacade, IExecutionContextAccessor executionContextAccessor)
     {
       _sqlFacade = sqlFacade;
+      _executionContextAccessor = executionContextAccessor;
+    }
+
+    public async Task<DbContentEntry> GetContentEntry(int id)
+    {
+      const string query = @"SELECT
+                              CE.Id,
+                              CE.ModuleId,
+                              CE.Ordinal,
+                              CE.TenantId,
+                              CE.Title,
+                              CE.TypeId,
+                              CE.[TypeName],
+                              CE.[Configuration],
+                              CE.[Data]
+                              FROM [learning].[v_ContentEntries] CE
+                              WHERE TenantId = @TenantId
+                              AND Id = @Id
+                              ";
+      var queryParams = new
+      {
+        _executionContextAccessor.TenantId,
+        Id = id
+      };
+
+      var result = await _sqlFacade.QueryFirstOrDefaultAsync<DbContentEntry>(query, queryParams);
+      return result;
     }
 
     public async Task SaveEntryAsync<TData, TConfig>(IContentEntry<TData, TConfig> entry)

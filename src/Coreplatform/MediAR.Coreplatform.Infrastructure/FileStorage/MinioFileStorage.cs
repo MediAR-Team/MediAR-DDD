@@ -1,5 +1,6 @@
 ﻿using MediAR.Coreplatform.Application.FielStorage;
 using Minio;
+using Serilog;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -9,14 +10,18 @@ namespace MediAR.Coreplatform.Infrastructure.FileStorage
   internal class MinioFileStorage : IFileStorage
   {
     private readonly MinioClient _client;
+    //private readonly ILogger _logger;
 
-    public MinioFileStorage(FileStorageConfig config)
+    public MinioFileStorage(FileStorageConfig config, ILogger logger)
     {
       _client = new MinioClient(config.ServerUrl,
                 config.AccessKey,
                 config.SecretKey
                 );
-  }
+
+      logger.Information("Minio config: {@config}", config);
+      //_logger = logger;
+    }
 
     public async Task<string> GetUrlAsync(string bucket, string fileName, TimeSpan validTime)
     {
@@ -32,7 +37,7 @@ namespace MediAR.Coreplatform.Infrastructure.FileStorage
 
     public async Task UploadAsync(byte[] file, string bucket, string fileName)
     {
-      if (!(await _client.BucketExistsAsync(bucket))) {
+      if (!await _client.BucketExistsAsync(bucket)) {
         await _client.MakeBucketAsync(bucket);
       }
 

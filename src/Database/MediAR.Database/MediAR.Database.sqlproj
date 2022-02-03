@@ -135,6 +135,7 @@
     <Build Include="learning\Views\v_StudentCourses.sql" />
     <Build Include="learning\Tables\Instructors.sql" />
     <Build Include="learning\StoredProcedures\ins_Instructor.sql" />
+    <Build Include="learning\Views\v_ContentEntries.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Seeds\003_SeedTenants.sql" />
