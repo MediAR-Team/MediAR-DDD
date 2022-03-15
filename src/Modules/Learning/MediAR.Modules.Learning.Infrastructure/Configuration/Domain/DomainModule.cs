@@ -1,15 +1,20 @@
 ﻿using Autofac;
 using MediAR.Modules.Learning.Application.ContentEntries.TypeHandlers;
 using MediAR.Modules.Learning.Infrastructure.Domain.ContentEntries;
+using MediAR.Modules.Learning.Infrastructure.Domain.StudentSubmissions;
 using System.Linq;
 
-namespace MediAR.Modules.Learning.Infrastructure.Configuration.ContentEntries
+namespace MediAR.Modules.Learning.Infrastructure.Configuration.Domain
 {
-  class ContentEntriesModule : Module
+  class DomainModule : Module
   {
     protected override void Load(ContainerBuilder builder)
     {
       builder.RegisterType<ContentEntriesRepository>()
+        .AsImplementedInterfaces()
+        .InstancePerLifetimeScope();
+
+      builder.RegisterType<StudentSubmissionsRepository>()
         .AsImplementedInterfaces()
         .InstancePerLifetimeScope();
 

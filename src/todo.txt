@@ -17,10 +17,11 @@ done -- add public and private courses (public for the groups which are connecte
 done -- add entry name and don't return entry config/data when getting course, it should be exposed through actions
 done -- add minio and course background and files folder.
 done -- !!FIX LINK OF IMAGE!! -- fixed link by adding "minio-alias" to hosts file
+done -- add some documentation and workarounds
+in progress -- add task with submision and mark
 add permission checks in commands (is it your course that you are editing it or you are admin?)
-add task with submision and mark
 make tenant and origin relation O2M and connection string more granular (db server + db name); Dynamically connect to the needed database
-add some documentation and workarounds
+make user to role relationship o2m instead of m2m
 
 DEPRECATED -- seed db with admin user (under master tenant)
 DEPRECATED -- what is master tenant?? (make use of it somehow)

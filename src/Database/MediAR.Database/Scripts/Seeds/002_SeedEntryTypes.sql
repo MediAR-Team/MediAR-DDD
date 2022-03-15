@@ -7,7 +7,8 @@ INSERT #EntryTypes
 VALUES (
 	'Lecture'
 	,'MediAR.Modules.Learning.Application.ContentEntries.EntryTypes.Lecture.LectureContentEntryHandler'
-	);
+	),
+	('SubmissionTask', 'MediAR.Modules.Learning.Application.ContentEntries.EntryTypes.SubmissionTask.SubmissionTaskEntryHandler');
 
 MERGE INTO [learning].[EntryTypes] dest
 USING #EntryTypes src

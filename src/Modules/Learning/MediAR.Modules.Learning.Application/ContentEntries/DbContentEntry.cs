@@ -7,7 +7,7 @@ namespace MediAR.Modules.Learning.Application.ContentEntries
     public int Id { get; set; }
     public Guid? TenantId { get; set; }
     public int? ModuleId { get; set; }
-    public int? TypeId { get; set; }
+    public int TypeId { get; set; }
     public string Title { get; set; }
     public string TypeName { get; set; }
     public string Configuration { get; set; }

@@ -2,12 +2,12 @@
 
 namespace MediAR.Modules.Learning.Application.ContentEntries.EntryTypes.Lecture.Commands
 {
-  public class GetView
+  public class GetViewCommand
   {
     public int EntryId { get; set; }
   }
 
-  public class GetViewValidator : AbstractValidator<GetView>
+  public class GetViewValidator : AbstractValidator<GetViewCommand>
   {
     public GetViewValidator()
     {

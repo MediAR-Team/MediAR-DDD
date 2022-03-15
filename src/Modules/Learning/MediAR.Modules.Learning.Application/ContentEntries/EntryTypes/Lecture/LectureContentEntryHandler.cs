@@ -12,6 +12,8 @@ namespace MediAR.Modules.Learning.Application.ContentEntries.EntryTypes.Lecture
     private readonly IExecutionContextAccessor _executionContextAccessor;
     private readonly IContentEntriesRepository _contentEntriesRepository;
 
+    public int TypeId => 2;
+
     public LectureContentEntryHandler(IExecutionContextAccessor executionContextAccessor, IContentEntriesRepository contentEntriesRepository)
     {
       _executionContextAccessor = executionContextAccessor;
@@ -39,7 +41,7 @@ namespace MediAR.Modules.Learning.Application.ContentEntries.EntryTypes.Lecture
     }
 
     [ContentEntryAction("getview")]
-    public async Task<dynamic> GetView(GetView command)
+    public async Task<dynamic> GetView(GetViewCommand command)
     {
       var entry = await _contentEntriesRepository.GetContentEntry(command.EntryId);
 
@@ -48,7 +50,7 @@ namespace MediAR.Modules.Learning.Application.ContentEntries.EntryTypes.Lecture
         throw new NotFoundException($"Entry with id {command.EntryId} not found");
       }
 
-      if (entry.TypeName != "Lecture")
+      if (entry.TypeId != TypeId)
       {
         throw new BusinessRuleValidationException("Type mismatch");
       }

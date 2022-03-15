@@ -1,8 +1,8 @@
 ﻿using Autofac;
 using MediAR.Coreplatform.Application;
 using MediAR.Coreplatform.Infrastructure.FileStorage;
-using MediAR.Modules.Learning.Infrastructure.Configuration.ContentEntries;
 using MediAR.Modules.Learning.Infrastructure.Configuration.DataAccess;
+using MediAR.Modules.Learning.Infrastructure.Configuration.Domain;
 using MediAR.Modules.Learning.Infrastructure.Configuration.EventBus;
 using MediAR.Modules.Learning.Infrastructure.Configuration.Mediation;
 using MediAR.Modules.Learning.Infrastructure.Configuration.Processing;
@@ -37,7 +37,7 @@ namespace MediAR.Modules.Learning.Infrastructure.Configuration
       containerBuilder.RegisterModule(new EventBusModule(null));
       containerBuilder.RegisterModule(new ProcessingModule());
       containerBuilder.RegisterModule(new MediatorModule());
-      containerBuilder.RegisterModule(new ContentEntriesModule());
+      containerBuilder.RegisterModule(new DomainModule());
       containerBuilder.RegisterModule(new FileStorageModule(configuration));
 
       containerBuilder.RegisterInstance(executionContextAccessor);

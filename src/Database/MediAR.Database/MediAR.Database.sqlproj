@@ -129,6 +129,7 @@
     <Build Include="learning\UserDefinedTableTypes\ut_OrdinalUpdate.sql" />
     <Build Include="learning\StoredProcedures\upd_ReorderModules.sql" />
     <Build Include="learning\StoredProcedures\upd_ReorderContentEntries.sql" />
+    <Build Include="learning\StoredProcedures\ups_StudentSubmission.sql" />
     <Build Include="learning\Tables\GroupToCourse.sql" />
     <Build Include="learning\StoredProcedures\add_Group_to_Course.sql" />
     <Build Include="learning\Views\v_GroupCourses.sql" />
@@ -136,6 +137,9 @@
     <Build Include="learning\Tables\Instructors.sql" />
     <Build Include="learning\StoredProcedures\ins_Instructor.sql" />
     <Build Include="learning\Views\v_ContentEntries.sql" />
+    <Build Include="learning\Tables\StudentSubmissions.sql" />
+    <Build Include="learning\Tables\SubmissionMark.sql" />
+    <Build Include="learning\Views\v_StudentSubmissions.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Seeds\003_SeedTenants.sql" />
@@ -149,6 +153,7 @@
     <None Include="Scripts\Migrations\006_private_courses.sql" />
     <None Include="Scripts\Migrations\007_register_improvements.sql" />
     <None Include="Scripts\Migrations\008_entryTitle.sql" />
+    <None Include="Scripts\Migrations\009_entries_view.sql" />
   </ItemGroup>
   <Import Condition="'$(NetCoreBuild)' == 'true'" Project="$(NETCoreTargetsPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
