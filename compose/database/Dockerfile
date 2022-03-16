@@ -1,9 +1,17 @@
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build-env
+WORKDIR /app
+
+COPY ./src/Database/DatabaseMigrator/ ./
+RUN dotnet restore
+
+RUN dotnet publish -c Release -o out
+
 FROM mcr.microsoft.com/mssql/server:2019-CU14-ubuntu-20.04
 
 # Switch to root user for access to apt-get install
 USER root
 
-COPY ./src/Database/DatabaseMigrator/bin/Release/net5.0/publish/ Migrator/
+COPY --from=build-env /app/out Migrator/
 COPY ./src/Database/MediAR.Database/Scripts/ Scripts/
 COPY ./compose/database/create-db.sql .
 COPY ./compose/database/upgrade-db.sh .
