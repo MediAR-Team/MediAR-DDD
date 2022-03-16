@@ -10,10 +10,12 @@ namespace MediAR.Coreplatform.Infrastructure.FileStorage
   internal class MinioFileStorage : IFileStorage
   {
     private readonly MinioClient _client;
+    private readonly FileStorageConfig _config;
     //private readonly ILogger _logger;
 
     public MinioFileStorage(FileStorageConfig config, ILogger logger)
     {
+      _config = config;
       _client = new MinioClient(config.ServerUrl,
                 config.AccessKey,
                 config.SecretKey
@@ -25,7 +27,9 @@ namespace MediAR.Coreplatform.Infrastructure.FileStorage
 
     public async Task<string> GetUrlAsync(string bucket, string fileName, TimeSpan validTime)
     {
-      return await _client.PresignedGetObjectAsync(bucket, fileName, (int)validTime.TotalSeconds);
+      var url = await _client.PresignedGetObjectAsync(bucket, fileName, (int)validTime.TotalSeconds);
+
+      return url.Replace(_config.ServerUrl, _config.PublicUrl);
     }
 
     public async Task UploadAsync(string base64File, string bucket, string fileName)

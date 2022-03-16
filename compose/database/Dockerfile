@@ -26,6 +26,7 @@ RUN wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-p
     apt-get install -y dotnet-runtime-5.0
 
 RUN chmod +x ./entrypoint.sh
+RUN chmod +x ./upgrade-db.sh
 
 # Switch back to mssql user and run the entrypoint script
 USER mssql
