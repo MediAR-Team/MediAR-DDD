@@ -49,12 +49,12 @@ namespace MediAR.Modules.Learning.Application.ContentEntries.EntryTypes.Submissi
         throw new NotFoundException("Entry not found");
       }
 
-      var submissionFiles = new List<string>();
+      var submissionFiles = new List<(string, string)>();
       foreach (var f in command.Files)
       {
         var fileName = Guid.NewGuid().ToString() + Path.GetExtension(f.DisplayName);
         await _fileStorage.UploadAsync(f.B64File, _executionContextAccessor.TenantId.ToString(), fileName);
-        submissionFiles.Add(fileName);
+        submissionFiles.Add((fileName, f.DisplayName));
       }
 
       var submissionData = new SubmissionTaskSubmissionData(submissionFiles, command.Comment);

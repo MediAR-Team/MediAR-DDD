@@ -38,17 +38,17 @@ namespace MediAR.Modules.Learning.Application.StudentSubmissions.SubmissionTypes
 
   public class SubmissionTaskSubmissionData : IXmlSerializable
   {
-    public IEnumerable<string> FileNames { get; set; }
+    public IEnumerable<(string Name, string DisplayName)> FileNames { get; set; }
     public string Comment { get; set; }
 
-    public SubmissionTaskSubmissionData(IEnumerable<string> fileNames, string comment)
+    public SubmissionTaskSubmissionData(IEnumerable<(string, string)> fileNames, string comment)
     {
       FileNames = fileNames;
       Comment = comment;
     }
 
     public SubmissionTaskSubmissionData(){
-      FileNames = new List<string>();
+      FileNames = new List<(string, string)>();
     }
 
     public XmlSchema GetSchema()
@@ -61,12 +61,12 @@ namespace MediAR.Modules.Learning.Application.StudentSubmissions.SubmissionTypes
       reader.MoveToContent();
       Comment = reader.GetAttribute("comment") ?? string.Empty;
       reader.ReadToFollowing("file");
-      var fileN = new List<string>();
+      var fileN = new List<(string Name, string DisplayName)>();
       do
       {
         if (!string.IsNullOrEmpty(reader.GetAttribute("name")))
         {
-          fileN.Add(reader.GetAttribute("name"));
+          fileN.Add((reader.GetAttribute("name"), reader.GetAttribute("displayname")));
         }
       } while (reader.ReadToNextSibling("file"));
 
@@ -82,7 +82,8 @@ namespace MediAR.Modules.Learning.Application.StudentSubmissions.SubmissionTypes
       foreach (var f in FileNames)
       {
         writer.WriteStartElement("file");
-        writer.WriteAttributeString("name", f);
+        writer.WriteAttributeString("name", f.Name);
+        writer.WriteAttributeString("displayname", f.DisplayName);
         writer.WriteEndElement();
       }
 

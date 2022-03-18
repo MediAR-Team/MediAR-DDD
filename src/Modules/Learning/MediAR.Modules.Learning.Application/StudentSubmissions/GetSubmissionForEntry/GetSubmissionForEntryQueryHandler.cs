@@ -1,6 +1,7 @@
 ﻿using MediAR.Coreplatform.Application;
 using MediAR.Coreplatform.Application.Data;
 using MediAR.Modules.Learning.Application.Configuration.Queries;
+using MediAR.Modules.Learning.Application.StudentSubmissions.Mapping;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,16 +14,19 @@ namespace MediAR.Modules.Learning.Application.StudentSubmissions.GetSubmissionFo
   internal class GetSubmissionForEntryQueryHandler : IQueryHandler<GetSubmissionForEntryQuery, StudentSubmissionDto>
   {
     private readonly IStudentSubmissionsRepository _repository;
+    private readonly SubmissionDataMapperFactory _mapperFactory;
 
-    public GetSubmissionForEntryQueryHandler(IStudentSubmissionsRepository repository)
+    public GetSubmissionForEntryQueryHandler(IStudentSubmissionsRepository repository, SubmissionDataMapperFactory mapperFactory)
     {
       _repository = repository;
+      _mapperFactory = mapperFactory;
     }
 
     public async Task<StudentSubmissionDto> Handle(GetSubmissionForEntryQuery request, CancellationToken cancellationToken)
     {
       var submission = await _repository.GetForEntryAsync(request.EntryId);
-      var data = SubmissionDataMapper.MapData(submission.TypeId, submission.Data);
+      var mapper = _mapperFactory.GetMapper(submission.TypeId);
+      var data = await mapper.MapDataAsync(submission.Data);
       return new StudentSubmissionDto
       {
         EntryId = request.EntryId,

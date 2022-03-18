@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using MediAR.Modules.Learning.Application.ContentEntries.TypeHandlers;
+using MediAR.Modules.Learning.Application.StudentSubmissions.Mapping;
 using MediAR.Modules.Learning.Infrastructure.Domain.ContentEntries;
 using MediAR.Modules.Learning.Infrastructure.Domain.StudentSubmissions;
 using System.Linq;
@@ -25,6 +26,15 @@ namespace MediAR.Modules.Learning.Infrastructure.Configuration.Domain
       builder.RegisterAssemblyTypes(typeof(IContentEntryHandler).Assembly)
         .Where(x => x.IsClass && !x.IsAbstract && x.IsAssignableTo<IContentEntryHandler>())
         .As<IContentEntryHandler>()
+        .InstancePerLifetimeScope();
+
+      builder.RegisterAssemblyTypes(typeof(IContentEntryHandler).Assembly)
+        .Where(x => x.IsClass && !x.IsAbstract && x.IsAssignableTo<ISubmissionDataMapper>())
+        .AsSelf()
+        .InstancePerLifetimeScope();
+
+      builder.RegisterType<SubmissionDataMapperFactory>()
+        .AsSelf()
         .InstancePerLifetimeScope();
     }
   }
