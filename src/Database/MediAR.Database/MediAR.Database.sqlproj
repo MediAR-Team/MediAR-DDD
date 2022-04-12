@@ -138,6 +138,7 @@
     <Build Include="learning\Tables\StudentSubmissions.sql" />
     <Build Include="learning\Tables\SubmissionMark.sql" />
     <Build Include="learning\Views\v_StudentSubmissions.sql" />
+    <Build Include="learning\StoredProcedures\ins_SubmissionMark.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Seeds\003_SeedTenants.sql" />

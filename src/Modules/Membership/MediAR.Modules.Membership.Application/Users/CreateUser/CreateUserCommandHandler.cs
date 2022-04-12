@@ -38,7 +38,7 @@ namespace MediAR.Modules.Membership.Application.Users.CreateUser
       queryParams.Add("FirstName", request.FirstName);
       queryParams.Add("LastName", request.LastName);
       queryParams.Add("TenantId", _executionContextAccessor.TenantId);
-      queryParams.Add("InitialRole", "Student");
+      queryParams.Add("InitialRole", request.InitialRole);
       queryParams.Add("UserId", dbType: DbType.Guid, direction: ParameterDirection.Output);
 
       try
@@ -46,7 +46,7 @@ namespace MediAR.Modules.Membership.Application.Users.CreateUser
         await _sqlFacade.ExecuteAsync("[membership].[ins_User]", queryParams, commandType: CommandType.StoredProcedure);
 
         var userId = queryParams.Get<Guid>("UserId");
-        await _commandScheduler.EnqueueAsync(new PublishUserWithRoleCreatedIntegrationEvent(userId, _executionContextAccessor.TenantId, request.UserName, request.Email, request.FirstName, request.LastName, "Student"));
+        await _commandScheduler.EnqueueAsync(new PublishUserWithRoleCreatedIntegrationEvent(userId, _executionContextAccessor.TenantId, request.UserName, request.Email, request.FirstName, request.LastName, request.InitialRole));
 
         return new CreateUserCommandResult();
       }
