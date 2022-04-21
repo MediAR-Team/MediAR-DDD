@@ -59,7 +59,7 @@ services:
     ports:
       - 80:80
     volumes_from:
-      teamcity_teamcity-agent_1:rw
+      - teamcity_teamcity-agent_1:rw
     volumes:
       - ./nginx-proxy/default.conf:/etc/nginx/nginx.conf
     depends_on:
@@ -97,7 +97,7 @@ services:
     image: nginx:1.19.2-alpine
     hostname: nginx_minio
     volumes_from:
-      teamcity_teamcity-agent_1:rw
+      - teamcity_teamcity-agent_1:rw
     volumes:
       - ./minio/nginx.conf:/etc/nginx/nginx.conf:ro
     ports:
