@@ -53,15 +53,13 @@ services:
       - "nginx_minio"
 
   nginx_proxy:
-    image: nginx:latest
+    build:
+      context: ./nginx-proxy
+      dockerfile: Dockerfile
     container_name: mediar_nginx_proxy
     restart: unless-stopped
     ports:
       - 80:80
-    volumes_from:
-      - container:"teamcity_teamcity-agent_1"
-    volumes:
-      - ./nginx-proxy/default.conf:/etc/nginx/nginx.conf
     depends_on:
       - mediarapi
 
@@ -94,12 +92,10 @@ services:
       - data4-2:/data2
 
   nginx_minio:
-    image: nginx:1.19.2-alpine
+    build:
+      context: ./minio
+      dockerfile: Dockerfile
     hostname: nginx_minio
-    volumes_from:
-      - container:"teamcity_teamcity-agent_1"
-    volumes:
-      - ./minio/nginx.conf:/etc/nginx/nginx.conf:ro
     ports:
       - "9000:9000"
       - "9001:9001"
