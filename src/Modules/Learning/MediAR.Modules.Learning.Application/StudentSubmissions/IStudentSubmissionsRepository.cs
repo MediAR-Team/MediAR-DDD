@@ -11,5 +11,6 @@ namespace MediAR.Modules.Learning.Application.StudentSubmissions
   {
     Task SaveAsync<TData>(IStudentSubmission<TData> submission) where TData : class, IXmlSerializable;
     Task<DbStudentSubmission> GetForEntryAsync(int contentEntryId);
+    Task<IEnumerable<DbStudentSubmission>> GetAllForEntryAsync(int contentEntryId);
   }
 }

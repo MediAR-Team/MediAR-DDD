@@ -20,10 +20,13 @@
 		<permission name="UpdateOwnCourse" description=""></permission>
 		<permission name="DeleteOwnCourse" description=""></permission>
 		<permission name="AddGroupToOwnCourse" description=""></permission>
+		<permission name="GetAllSubmissionsForEntry" description=""></permission>
 	</role>
 	<role name="Student" description="Student (per tenant)">
 		<permission name="CreateCourse" description=""></permission>
 		<permission name="UpdateOwnCourse" description=""></permission>
+		<permission name="GetOwnSubmissionForEntry" description=""></permission>
+		<permission name="CreateSubmissions" description=""></permission>
 	</role>
 </root>';
 

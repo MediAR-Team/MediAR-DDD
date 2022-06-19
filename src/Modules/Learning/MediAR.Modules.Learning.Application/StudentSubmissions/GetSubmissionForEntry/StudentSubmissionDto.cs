@@ -4,6 +4,7 @@ namespace MediAR.Modules.Learning.Application.StudentSubmissions.GetSubmissionFo
 {
   public class StudentSubmissionDto
   {
+    public int Id { get; set; }
     public int EntryId { get; set; }
 
     public DateTime CreatedAt { get; set; }

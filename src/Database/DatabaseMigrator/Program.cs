@@ -13,9 +13,9 @@ namespace DatabaseMigrator
 
     static void Main(string[] args)
     {
-      if (args.Length != 2)
+      if (args.Length != 1 && args.Length != 2)
       {
-        Console.WriteLine("Invalid arguments. Execution: dotnet DatabaseMigrator.dll [connectionString] [pathToScripts].");
+        Console.WriteLine("Invalid arguments. Execution: dotnet DatabaseMigrator.dll [connectionString] {scriptsPath}.");
 
         Console.WriteLine("Migration stopped");
 
@@ -24,7 +24,7 @@ namespace DatabaseMigrator
 
       var connectionString = args[0];
 
-      var scripsPath = args[1];
+      var scripsPath = args.Length == 2 ? args[1] : "../../MediAR.Database/Scripts";
 
       if (!Directory.Exists(scripsPath))
       {

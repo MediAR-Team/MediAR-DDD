@@ -26,6 +26,30 @@ namespace MediAR.Modules.Learning.Infrastructure.Domain.StudentSubmissions
       _executionContextAccessor = executionContextAccessor;
     }
 
+    public async Task<IEnumerable<DbStudentSubmission>> GetAllForEntryAsync(int contentEntryId)
+    {
+      const string sql = @"SELECT
+                          ss.Id AS Id,
+                          ss.EntryId AS EntryId,
+                          ss.StudentId AS StudentId,
+                          ss.TenantId AS TenantId,
+                          ss.[Data] AS [Data],
+                          ss.CreatedAt AS CreatedAt,
+                          ss.ChangedAt AS ChangedAt,
+                          ss.TypeId AS TypeId
+                          FROM learning.v_StudentSubmissions ss
+                          WHERE TenantId = @TenantId
+                          AND EntryId = @EntryId";
+
+      var queryParams = new
+      {
+        _executionContextAccessor.TenantId,
+        EntryId = contentEntryId
+      };
+
+      return await _sqlFacade.QueryAsync<DbStudentSubmission>(sql, queryParams);
+    }
+
     public async Task<DbStudentSubmission> GetForEntryAsync(int contentEntryId)
     {
       const string sql = @"SELECT
@@ -52,7 +76,7 @@ namespace MediAR.Modules.Learning.Infrastructure.Domain.StudentSubmissions
       return await _sqlFacade.QueryFirstOrDefaultAsync<DbStudentSubmission>(sql, queryParams);
     }
 
-    public async Task SaveAsync<TData>(IStudentSubmission<TData> submission) where TData: class, IXmlSerializable
+    public async Task SaveAsync<TData>(IStudentSubmission<TData> submission) where TData : class, IXmlSerializable
     {
       var dataSerializer = new XmlSerializer(typeof(TData));
       var data = string.Empty;

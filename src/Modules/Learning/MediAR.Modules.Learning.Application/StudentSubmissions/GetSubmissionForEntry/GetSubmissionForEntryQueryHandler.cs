@@ -15,11 +15,13 @@ namespace MediAR.Modules.Learning.Application.StudentSubmissions.GetSubmissionFo
   {
     private readonly IStudentSubmissionsRepository _repository;
     private readonly SubmissionDataMapperFactory _mapperFactory;
+    private readonly IExecutionContextAccessor _executionContextAccessor;
 
-    public GetSubmissionForEntryQueryHandler(IStudentSubmissionsRepository repository, SubmissionDataMapperFactory mapperFactory)
+    public GetSubmissionForEntryQueryHandler(IStudentSubmissionsRepository repository, SubmissionDataMapperFactory mapperFactory, IExecutionContextAccessor executionContextAccessor)
     {
       _repository = repository;
       _mapperFactory = mapperFactory;
+      _executionContextAccessor = executionContextAccessor;
     }
 
     public async Task<StudentSubmissionDto> Handle(GetSubmissionForEntryQuery request, CancellationToken cancellationToken)
@@ -29,6 +31,7 @@ namespace MediAR.Modules.Learning.Application.StudentSubmissions.GetSubmissionFo
       var data = await mapper.MapDataAsync(submission.Data);
       return new StudentSubmissionDto
       {
+        Id = submission.Id,
         EntryId = request.EntryId,
         CreatedAt = submission.CreatedAt,
         ChangedAt = submission.ChangedAt,

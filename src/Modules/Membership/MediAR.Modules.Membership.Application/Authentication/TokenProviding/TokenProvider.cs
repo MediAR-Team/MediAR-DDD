@@ -25,7 +25,8 @@ namespace MediAR.Modules.Membership.Application.Authentication.TokenProviding
         {
           new(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
           new("tenantId", user.TenantId.ToString()),
-          new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+          new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+          new("roleName", user.RoleName)
         };
 
       // TODO: write role information to token

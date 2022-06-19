@@ -32,7 +32,8 @@ namespace MediAR.Modules.Membership.Application.Authentication.Authenticate
                             [U].[Email],
                             [U].[FirstName],
                             [U].[LastName],
-                            [U].[TenantId]
+                            [U].[TenantId],
+                            [U].RoleName
                           FROM [membership].[v_Users] [U]
                           WHERE UserName = @UserName
                           AND TenantId = @TenantId";

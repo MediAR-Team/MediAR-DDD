@@ -1,10 +1,13 @@
 ﻿using MediAR.Coreplatform.Application;
+using MediAR.Coreplatform.Application.Data;
+using MediAR.Modules.Membership.Application.Contracts;
 using MediAR.Modules.TenantManagement.Application.Contracts;
 using MediAR.Modules.TenantManagement.Application.Tenants.GetTenantByRefer;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace MediAR.MainAPI.Configuration.ExecutionContext
 {
@@ -49,6 +52,19 @@ namespace MediAR.MainAPI.Configuration.ExecutionContext
         }
 
         throw new ApplicationException("Tenant context is not available");
+      }
+    }
+
+    public bool IsInstructor
+    {
+      get
+      {
+        if (_httpContextAccessor.HttpContext?.User?.FindFirst("roleName") is not null)
+        {
+          return _httpContextAccessor.HttpContext.User.FindFirst("roleName").Value.Equals("Instructor", StringComparison.OrdinalIgnoreCase);
+        }
+
+        throw new ApplicationException("User context is unavailable");
       }
     }
   }

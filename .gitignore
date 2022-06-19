@@ -388,3 +388,5 @@ FodyWeavers.xsd
 *.sln.iml
 
 .obsidian/
+
+dest/

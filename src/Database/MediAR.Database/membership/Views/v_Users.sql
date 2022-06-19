@@ -8,4 +8,7 @@ SELECT u.Id AS Id
 	,u.FirstName AS [FirstName]
 	,u.LastName AS [LastName]
 	,u.TenantId [TenantId]
+	,r.Name AS RoleName
 FROM [membership].Users u
+JOIN [membership].UsersToRoles utr ON utr.TenantId = u.TenantId AND utr.UserId = u.Id
+JOIN membership.Roles r ON r.Id = utr.RoleId

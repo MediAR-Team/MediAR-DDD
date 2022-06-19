@@ -4,7 +4,6 @@ using MediAR.Coreplatform.Domain;
 using MediAR.Coreplatform.Infrastructure.Data;
 using MediAR.Modules.Learning.Application.Configuration.Commands;
 using MediatR;
-using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading;
@@ -47,8 +46,6 @@ namespace MediAR.Modules.Learning.Application.SubmissionMarks.CreateSubmissionMa
         }
         throw;
       }
-
-      throw new NotImplementedException();
     }
   }
 }

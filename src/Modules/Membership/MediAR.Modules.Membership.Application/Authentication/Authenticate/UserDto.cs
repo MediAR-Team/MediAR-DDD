@@ -11,5 +11,6 @@ namespace MediAR.Modules.Membership.Application.Authentication.Authenticate
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public Guid TenantId { get; set; }
+    public string RoleName { get; set; }
   }
 }
