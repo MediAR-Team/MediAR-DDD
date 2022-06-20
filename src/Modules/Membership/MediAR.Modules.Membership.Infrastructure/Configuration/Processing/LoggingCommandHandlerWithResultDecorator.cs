@@ -1,4 +1,5 @@
-﻿using MediAR.Modules.Membership.Application.Configuration.Commands;
+﻿using MediAR.Coreplatform.Domain;
+using MediAR.Modules.Membership.Application.Configuration.Commands;
 using MediAR.Modules.Membership.Application.Contracts;
 using Serilog;
 using System;
@@ -29,6 +30,9 @@ namespace MediAR.Modules.Membership.Infrastructure.Configuration.Processing
         _logger.Information($"Successfulle executed command {request.GetType().Name}");
 
         return result;
+      }
+      catch (BusinessRuleValidationException) {
+        throw;
       }
       catch (Exception ex)
       {

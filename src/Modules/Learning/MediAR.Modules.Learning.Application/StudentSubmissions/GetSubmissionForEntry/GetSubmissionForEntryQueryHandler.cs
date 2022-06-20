@@ -35,7 +35,13 @@ namespace MediAR.Modules.Learning.Application.StudentSubmissions.GetSubmissionFo
         EntryId = request.EntryId,
         CreatedAt = submission.CreatedAt,
         ChangedAt = submission.ChangedAt,
-        Data = data
+        Data = data,
+        Mark = submission.SubmissionMarkCreatedAt.HasValue ? new StudentSubmissionDto.MarkDto {
+          MarkValue = submission.SubmissionMarkMarkValue,
+          Comment = submission.SubmissionMarkComment,
+          CreatedAt = submission.SubmissionMarkCreatedAt.Value,
+          ChangedAt = submission.SubmissionMarkChangedAt
+        } : null
       };
     }
   }

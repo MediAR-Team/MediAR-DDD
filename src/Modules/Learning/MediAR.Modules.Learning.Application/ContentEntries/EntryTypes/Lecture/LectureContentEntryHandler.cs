@@ -12,7 +12,7 @@ namespace MediAR.Modules.Learning.Application.ContentEntries.EntryTypes.Lecture
     private readonly IExecutionContextAccessor _executionContextAccessor;
     private readonly IContentEntriesRepository _contentEntriesRepository;
 
-    public int TypeId => 2;
+    public int TypeId => 1;
 
     public LectureContentEntryHandler(IExecutionContextAccessor executionContextAccessor, IContentEntriesRepository contentEntriesRepository)
     {

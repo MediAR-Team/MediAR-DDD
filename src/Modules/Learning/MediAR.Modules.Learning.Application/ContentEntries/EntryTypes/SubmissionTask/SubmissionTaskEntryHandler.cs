@@ -34,7 +34,9 @@ namespace MediAR.Modules.Learning.Application.ContentEntries.EntryTypes.Submissi
     [ContentEntryAction("create")]
     public async Task<dynamic> CreateEntry(CreateCommand command)
     {
-      var entry = new SubmissionTaskContentEntry(null, _executionContextAccessor.TenantId, command.ModuleId, command.Title, new SubmissionTaskData(command.TextData), new SubmissionTaskConfiguration(command.MaxMark));
+      var entry = new SubmissionTaskContentEntry(null, _executionContextAccessor.TenantId, command.ModuleId, command.Title,
+        new SubmissionTaskData(command.TextData),
+        new SubmissionTaskConfiguration(command.MaxMark, command.DueTo));
 
       await _repo.SaveEntryAsync(entry);
       return entry;

@@ -12,5 +12,9 @@ namespace MediAR.Modules.Learning.Application.StudentSubmissions
     public DateTime CreatedAt { get; set; }
     public DateTime? ChangedAt { get; set; }
     public int TypeId { get; set; }
+    public int SubmissionMarkMarkValue { get; set; }
+    public string SubmissionMarkComment { get; set; }
+    public DateTime? SubmissionMarkCreatedAt { get; set; }
+    public DateTime? SubmissionMarkChangedAt { get; set; }
   }
 }

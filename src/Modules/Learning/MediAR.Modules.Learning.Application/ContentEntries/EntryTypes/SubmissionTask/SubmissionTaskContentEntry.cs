@@ -37,9 +37,12 @@ namespace MediAR.Modules.Learning.Application.ContentEntries.EntryTypes.Submissi
   {
     public int MaxMark { get; private set; }
 
-    public SubmissionTaskConfiguration(int maxMark)
+    public DateTime DueTo { get; private set; }
+
+    public SubmissionTaskConfiguration(int maxMark, DateTime dueTo)
     {
       MaxMark = maxMark;
+      DueTo = dueTo;
     }
 
     public SubmissionTaskConfiguration(){}
@@ -53,11 +56,13 @@ namespace MediAR.Modules.Learning.Application.ContentEntries.EntryTypes.Submissi
     {
       reader.MoveToContent();
       MaxMark = int.Parse(reader.GetAttribute("maxmark"));
+      DueTo = DateTime.Parse(reader.GetAttribute("dueto"));
     }
 
     public void WriteXml(XmlWriter writer)
     {
       writer.WriteAttributeString("maxmark", MaxMark.ToString());
+      writer.WriteAttributeString("dueto", DueTo.ToString());
     }
   }
 

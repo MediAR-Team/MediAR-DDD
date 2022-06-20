@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MediAR.Modules.Learning.Application.Groups.GetCoursesForGroup
 {
-  public class GetCoursesForGroupQuery : QueryBase<List<CourseDto>>
+  public class GetCoursesForGroupQuery : QueryBase<IEnumerable<CourseDto>>
   {
     public int GroupId { get; }
 

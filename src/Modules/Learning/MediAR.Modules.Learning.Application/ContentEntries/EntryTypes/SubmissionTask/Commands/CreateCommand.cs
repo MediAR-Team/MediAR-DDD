@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using System;
 
 namespace MediAR.Modules.Learning.Application.ContentEntries.EntryTypes.SubmissionTask.Commands
 {
@@ -8,6 +9,7 @@ namespace MediAR.Modules.Learning.Application.ContentEntries.EntryTypes.Submissi
     public int ModuleId { get; set; }
     public string TextData { get; set; }
     public int MaxMark { get; set; }
+    public DateTime DueTo { get; set; }
   }
 
   public class CreateCommandValidator : AbstractValidator<CreateCommand>

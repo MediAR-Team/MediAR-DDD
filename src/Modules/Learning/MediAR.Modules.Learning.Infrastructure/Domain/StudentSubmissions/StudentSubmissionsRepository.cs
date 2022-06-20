@@ -60,7 +60,11 @@ namespace MediAR.Modules.Learning.Infrastructure.Domain.StudentSubmissions
                           ss.[Data] AS [Data],
                           ss.CreatedAt AS CreatedAt,
                           ss.ChangedAt AS ChangedAt,
-                          ss.TypeId AS TypeId
+                          ss.TypeId AS TypeId,
+                          ss.SubmissionMarkMarkValue AS SubmissionMarkMarkValue,
+                          ss.SubmissionMarkComment AS SubmissionMarkComment,
+                          ss.SubmissionMarkCreatedAt AS SubmissionMarkCreatedAt,
+                          ss.SubmissionMarkChangedAt AS SubmissionMarkChangedAt
                           FROM learning.v_StudentSubmissions ss
                           WHERE TenantId = @TenantId
                           AND StudentId = @UserId

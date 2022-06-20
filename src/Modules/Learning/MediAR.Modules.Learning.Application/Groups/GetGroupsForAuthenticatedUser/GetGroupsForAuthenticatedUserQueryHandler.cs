@@ -23,11 +23,11 @@ namespace MediAR.Modules.Learning.Application.Groups.GetGroupsForAuthenticatedUs
     public async Task<List<GroupDto>> Handle(GetGroupsForAuthenticatedUserQuery request, CancellationToken cancellationToken)
     {
       const string sql = @"SELECT
-                          [GroupMember].[GroupId] AS [Id],
-                          [GroupMember].[GroupName] AS [Name],
-                          [GroupMember].[TenantId] AS [TenantId]
+                            [GroupMember].[GroupId] AS [Id],
+                            [GroupMember].[GroupName] AS [Name],
+                            [GroupMember].[TenantId] AS [TenantId]
                           FROM [learning].[v_GroupMembers] [GroupMember]
-                          WHERE [UserId] = @UserId";
+                          WHERE [StudentId] = @UserId";
 
       var queryParams = new
       {

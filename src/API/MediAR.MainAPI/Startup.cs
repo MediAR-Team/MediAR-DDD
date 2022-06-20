@@ -35,12 +35,12 @@ namespace MediAR.MainAPI
     public Startup(IConfiguration configuration)
     {
       _logger = new LoggerConfiguration()
-    .Enrich.FromLogContext()
-    .WriteTo.Console(
-        outputTemplate:
-        "[{Timestamp:HH:mm:ss} {Level:u3}] [{Module}] [{Context}] {Message:lj}{NewLine}{Exception}")
-    .WriteTo.File(new CompactJsonFormatter(), "logs/logs")
-    .CreateLogger();
+        .Enrich.FromLogContext()
+        .WriteTo.Console(
+          outputTemplate:
+          "[{Timestamp:HH:mm:ss} {Level:u3}] [{Module}] {Message:lj}{NewLine}{Exception}")
+        .WriteTo.File(new CompactJsonFormatter(), "logs/logs")
+        .CreateLogger();
 
       _loggerForApi = _logger.ForContext("Module", "API");
 

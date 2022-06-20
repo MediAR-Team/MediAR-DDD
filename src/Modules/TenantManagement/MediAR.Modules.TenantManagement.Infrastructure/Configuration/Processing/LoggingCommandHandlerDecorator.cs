@@ -1,4 +1,5 @@
-﻿using MediAR.Coreplatform.Infrastructure.CommandProcessing;
+﻿using MediAR.Coreplatform.Domain;
+using MediAR.Coreplatform.Infrastructure.CommandProcessing;
 using MediAR.Modules.TenantManagement.Application.Configuration.Commands;
 using MediAR.Modules.TenantManagement.Application.Contracts;
 using MediatR;
@@ -36,6 +37,9 @@ namespace MediAR.Modules.TenantManagement.Infrastructure.Configuration.Processin
         _logger.Information($"Command {request.GetType().Name} executed successfully");
 
         return result;
+      }
+      catch (BusinessRuleValidationException) {
+        throw;
       }
       catch (Exception ex)
       {
