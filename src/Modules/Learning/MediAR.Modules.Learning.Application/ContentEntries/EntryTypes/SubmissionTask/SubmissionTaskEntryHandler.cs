@@ -42,6 +42,21 @@ namespace MediAR.Modules.Learning.Application.ContentEntries.EntryTypes.Submissi
       return entry;
     }
 
+    [ContentEntryAction("getview")]
+    public async Task<dynamic> GetView(GetViewCommand command)
+    {
+      var entry = await _repo.GetContentEntry(command.EntryId);
+
+      if (entry == null || entry.TypeId != TypeId)
+      {
+        throw new NotFoundException("Entry not found");
+      }
+
+      var (data, config) = EntryMapper.MapEntry(entry);
+
+      return new SubmissionTaskContentEntry(entry.Id, entry.TenantId.Value, entry.ModuleId.Value, entry.Title, (SubmissionTaskData)data, (SubmissionTaskConfiguration)config);
+    }
+
     public async Task<dynamic> CreateSubmission(CreateSubmissionCommand command, int entryId)
     {
       var entry = await _repo.GetContentEntry(entryId);

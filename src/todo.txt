@@ -20,6 +20,7 @@ done -- !!FIX LINK OF IMAGE!! -- fixed link by adding "minio-alias" to hosts fil
 done -- add some documentation and workarounds
 done -- marks for submissions
 done -- get students
+done -- get view for submission task
 add permission checks in commands (is it your course that you are editing it or you are admin?)
 make tenant and origin relation O2M and connection string more granular (db server + db name); Dynamically connect to the needed database
 make user to role relationship o2m instead of m2m

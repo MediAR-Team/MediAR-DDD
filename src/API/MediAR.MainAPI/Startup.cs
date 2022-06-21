@@ -115,7 +115,6 @@ namespace MediAR.MainAPI
     {
       var httpContextAccessor = container.Resolve<IHttpContextAccessor>();
       var tenantManagement = container.Resolve<ITenantManagementModule>();
-      // var sqlFacade = container.Resolve<ISqlFacade>();
       var executionContextAccessor = new ExecutionContextAccessor(httpContextAccessor, tenantManagement);
 
       MembershipStartup.Initialize(_configuration, executionContextAccessor, _logger);

@@ -37,8 +37,7 @@ namespace MediAR.Modules.Learning.Infrastructure.Domain.ContentEntries
                               CE.[Data]
                               FROM [learning].[v_ContentEntries] CE
                               WHERE TenantId = @TenantId
-                              AND Id = @Id
-                              ";
+                              AND Id = @Id";
       var queryParams = new
       {
         _executionContextAccessor.TenantId,

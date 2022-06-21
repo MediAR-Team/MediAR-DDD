@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿
+using FluentValidation;
 
 namespace MediAR.Modules.Learning.Application.ContentEntries.EntryTypes.Lecture.Commands
 {
