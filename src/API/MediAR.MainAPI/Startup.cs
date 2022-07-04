@@ -22,6 +22,7 @@ using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using Serilog.Formatting.Compact;
 using System;
+using System.Net.Http;
 using System.Text;
 
 namespace MediAR.MainAPI
@@ -64,6 +65,8 @@ namespace MediAR.MainAPI
     {
       services.AddControllers();
 
+      services.AddCors();
+
       services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
       services.AddSingleton<IExecutionContextAccessor, ExecutionContextAccessor>();
 
@@ -89,6 +92,7 @@ namespace MediAR.MainAPI
 
       services.AddScoped<IAuthorizationHandler, HasPermissionAuthorizationHandler>();
       services.AddScoped<IAuthorizationPolicyProvider, HasPermissionPolicyProvider>();
+      services.AddHttpClient();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
@@ -100,6 +104,14 @@ namespace MediAR.MainAPI
       app.UseMiddleware<ErrorHandlingMiddleware>();
 
       app.UseRouting();
+
+      app.UseCors(builder =>
+        {
+          builder
+          .AllowAnyOrigin()
+          .AllowAnyMethod()
+          .AllowAnyHeader();
+        });
 
       app.UseAuthentication();
 
@@ -116,10 +128,11 @@ namespace MediAR.MainAPI
       var httpContextAccessor = container.Resolve<IHttpContextAccessor>();
       var tenantManagement = container.Resolve<ITenantManagementModule>();
       var executionContextAccessor = new ExecutionContextAccessor(httpContextAccessor, tenantManagement);
+      var httpClientFactory = container.Resolve<IHttpClientFactory>();
 
       MembershipStartup.Initialize(_configuration, executionContextAccessor, _logger);
       TenantManagementStartup.Initialize(_configuration, executionContextAccessor, _logger);
-      LearningStartup.Initialize(_configuration, executionContextAccessor, _logger);
+      LearningStartup.Initialize(_configuration, executionContextAccessor, _logger, httpClientFactory);
     }
   }
 }

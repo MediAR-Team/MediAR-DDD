@@ -1,0 +1,4 @@
+fastapi
+uvicorn
+md2pdf
+pydantic

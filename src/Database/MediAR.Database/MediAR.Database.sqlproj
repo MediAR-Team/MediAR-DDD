@@ -156,6 +156,7 @@
     <None Include="Scripts\Migrations\009_entries_view.sql" />
     <None Include="Scripts\Migrations\010_studentsubmissions.sql" />
     <None Include="Scripts\Migrations\011_submissionMarks.sql" />
+    <None Include="Scripts\Migrations\012_students.sql" />
   </ItemGroup>
   <Import Condition="'$(NetCoreBuild)' == 'true'" Project="$(NETCoreTargetsPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>

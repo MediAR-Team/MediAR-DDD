@@ -1,9 +1,11 @@
-﻿using MediAR.Modules.Learning.Application.ContentEntries.EntryTypeActions;
+﻿using MediAR.Modules.Learning.Application.ContentEntries;
+using MediAR.Modules.Learning.Application.ContentEntries.EntryTypeActions;
 using MediAR.Modules.Learning.Application.ContentEntries.ExecuteEntryAction;
 using MediAR.Modules.Learning.Application.ContentEntries.GetEntryTypes;
 using MediAR.Modules.Learning.Application.ContentEntries.ReorderContentEntries;
 using MediAR.Modules.Learning.Application.Contracts;
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -24,6 +26,11 @@ namespace MediAR.MainAPI.Modules.Learning.ContentEntries
     public async Task<IActionResult> PerformAction(ContentEntryActionDto request)
     {
       var result = await _learningModule.ExecuteCommandAsync(new ExecuteEntryActionCommand(request.TypeName, request.ActionName, request.Payload));
+
+      if (result is ActionFileResponse fileResult)
+      {
+        return fileResult.FileData != null ? File(fileResult.FileData, fileResult.FileType) : File(fileResult.FileStream, fileResult.FileType);
+      }
 
       return Ok(result);
     }

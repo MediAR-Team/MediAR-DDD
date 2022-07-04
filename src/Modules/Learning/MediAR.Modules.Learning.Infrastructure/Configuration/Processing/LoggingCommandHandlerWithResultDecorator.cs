@@ -27,7 +27,7 @@ namespace MediAR.Modules.Learning.Infrastructure.Configuration.Processing
 
         var result = await _decorated.Handle(request, cancellationToken);
 
-        _logger.Information($"Successfulle executed command {request.GetType().Name}");
+        _logger.Information($"Successfully executed command {request.GetType().Name}");
 
         return result;
       }

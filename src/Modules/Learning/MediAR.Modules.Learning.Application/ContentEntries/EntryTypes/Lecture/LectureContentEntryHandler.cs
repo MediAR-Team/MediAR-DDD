@@ -1,5 +1,6 @@
 ﻿using MediAR.Coreplatform.Application;
 using MediAR.Coreplatform.Application.Exceptions;
+using MediAR.Coreplatform.Application.PdfConversion;
 using MediAR.Coreplatform.Domain;
 using MediAR.Modules.Learning.Application.ContentEntries.EntryTypes.Lecture.Commands;
 using MediAR.Modules.Learning.Application.ContentEntries.TypeHandlers;
@@ -11,13 +12,15 @@ namespace MediAR.Modules.Learning.Application.ContentEntries.EntryTypes.Lecture
   {
     private readonly IExecutionContextAccessor _executionContextAccessor;
     private readonly IContentEntriesRepository _contentEntriesRepository;
+    private readonly IMarkdownToPdfConvertor _mdToPdf;
 
     public int TypeId => 1;
 
-    public LectureContentEntryHandler(IExecutionContextAccessor executionContextAccessor, IContentEntriesRepository contentEntriesRepository)
+    public LectureContentEntryHandler(IExecutionContextAccessor executionContextAccessor, IContentEntriesRepository contentEntriesRepository, IMarkdownToPdfConvertor mdToPdf)
     {
       _executionContextAccessor = executionContextAccessor;
       _contentEntriesRepository = contentEntriesRepository;
+      _mdToPdf = mdToPdf;
     }
 
     [ContentEntryAction("create")]
@@ -38,6 +41,28 @@ namespace MediAR.Modules.Learning.Application.ContentEntries.EntryTypes.Lecture
       await _contentEntriesRepository.UpdateEntryAsync(lecture);
 
       return lecture;
+    }
+
+    [ContentEntryAction("getpdf")]
+    public async Task<dynamic> GetPdf(GetPdfCommand command)
+    {
+      var entry = await _contentEntriesRepository.GetContentEntry(command.EntryId);
+
+      if (entry == null)
+      {
+        throw new NotFoundException($"Entry with id {command.EntryId} not found");
+      }
+
+      if (entry.TypeId != TypeId)
+      {
+        throw new BusinessRuleValidationException("Type mismatch");
+      }
+
+      var (data, _) = EntryMapper.MapEntry(entry);
+
+      var fileStream = _mdToPdf.ConvertMarkdownToPdf(((LectureData)data).Text);
+
+      return new ActionFileResponse("application/pdf", fileStream);
     }
 
     [ContentEntryAction("getview")]

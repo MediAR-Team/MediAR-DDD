@@ -39,6 +39,14 @@ services:
       SA_PASSWORD: "SqlServer2202Pass"
       ACCEPT_EULA: "Y"
 
+  mdtopdf:
+    build:
+      context: ../mdtopdf
+      dockerfile: ./Dockerfile
+    container_name: mdtopdf
+    expose:
+      - 80
+
   mediarapi:
     build:
       context: ../

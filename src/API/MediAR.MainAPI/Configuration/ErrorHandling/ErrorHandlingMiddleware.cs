@@ -50,7 +50,7 @@ namespace MediAR.MainAPI.Configuration.ErrorHandling
           ExceptionMessage = message,
           ExceptionType = ex.GetType().Name,
           StackTrace = stackTrace
-        }, typeof(DetailedErrorResponse)));
+        }, typeof(DetailedErrorResponse), new JsonSerializerOptions {PropertyNamingPolicy = JsonNamingPolicy.CamelCase}));
       }
     }
   }
